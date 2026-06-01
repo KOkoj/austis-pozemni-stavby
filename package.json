@@ -1,0 +1,11 @@
+{
+  "name": "austis-pozemni-stavby",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static website for AUSTIS Pozemni stavby.",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); ['index.html','styles.css','script.js'].forEach((file)=>{ if(!fs.existsSync(file)){ throw new Error(file + ' is missing'); } }); console.log('Static site ready for Vercel.');\"",
+    "dev": "vercel dev"
+  },
+  "devDependencies": {}
+}
