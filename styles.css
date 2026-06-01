@@ -218,9 +218,9 @@ img {
 
 .line-nav {
   z-index: 2;
-  left: var(--bleed-left);
+  left: 344px;
   top: 88px;
-  width: calc(1197px - var(--bleed-left));
+  width: 853px;
   height: 1px;
 }
 
