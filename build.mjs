@@ -2,7 +2,15 @@ import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { extname, join } from "node:path";
 
 const outputDir = "public";
-const requiredFiles = ["index.html", "styles.css", "script.js"];
+const requiredFiles = [
+  "index.html",
+  "sluzby.html",
+  "reference.html",
+  "o-spolecnosti.html",
+  "kontakt.html",
+  "styles.css",
+  "script.js",
+];
 const staticExtensions = new Set([".svg", ".ico", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"]);
 
 for (const file of requiredFiles) {
