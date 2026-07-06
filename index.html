@@ -5,10 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
     <title>AUSTIS Pozemní stavby | Generální dodavatel staveb</title>
+    <script>
+      (function () {
+        try {
+          if (sessionStorage.getItem("austis-hero-played")) {
+            document.documentElement.classList.add("hero-precommit");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="image" href="assets/hero-section-bg.png" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="site">
+      <!-- Fixed nav: hidden until artboard header scrolls out of view (desktop only) -->
+      <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
+        <div class="scroll-nav-bar">
+          <div class="scroll-nav-inner">
+            <header class="subpage-header">
+              <nav class="subpage-nav" aria-label="Hlavní navigace">
+                <a class="active" href="index.html" aria-current="page">Úvod</a>
+                <a href="sluzby.html">služby</a>
+                <a href="reference.html">reference</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+              <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+            </header>
+          </div>
+        </div>
+        <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+          <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+          <span class="logo-sub">pozemní stavby</span>
+        </a>
+      </div>
+
       <div class="desktop-shell" aria-label="AUSTIS homepage desktop design">
         <div class="artboard">
           <section class="hero hero-is-choreo" id="uvod">
@@ -26,6 +58,8 @@
                 class="hero-bg hero-bg-still"
                 src="assets/hero-section-bg.png"
                 alt="Chata Seibert"
+                fetchpriority="high"
+                decoding="async"
               />
             </div>
             <div class="hero-side"></div>
@@ -265,6 +299,8 @@
               src="assets/hero-section-bg.png"
               alt=""
               aria-hidden="true"
+              fetchpriority="high"
+              decoding="async"
             />
           </div>
           <span class="mobile-hero-label">Chata Seibert</span>
@@ -276,7 +312,6 @@
               <span>termíny a rozpočet</span>
             </div>
             <div class="mobile-hero-actions">
-              <a class="btn btn-red" href="#kontakt-mobile">poptat spolupráci</a>
               <a class="mobile-text-link" href="#reference-mobile">prohlédnout reference</a>
             </div>
           </div>

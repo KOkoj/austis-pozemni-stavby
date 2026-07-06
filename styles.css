@@ -45,6 +45,14 @@
   --hero-copy-split: calc(var(--content-left) + var(--hero-main-width));
   --bleed-width: max(1440px, calc(100vw / var(--scale)));
   --bleed-left: calc((1440px - var(--bleed-width)) / 2);
+  --scroll-nav-top-gap: 12px;
+  --scroll-nav-bar-height: 47px;
+  --scroll-nav-content-width: min(calc(100vw - 48px), var(--content-width));
+  --scroll-nav-logo-left: max(24px, calc((100vw - var(--scroll-nav-content-width)) / 2));
+  --scroll-nav-bar-left: calc(var(--scroll-nav-logo-left) + 122px);
+  --scroll-nav-bar-width: calc(var(--scroll-nav-content-width) - 122px);
+  --subpage-logo-overhang: calc(var(--header-offset) + 122px - (var(--nav-bar-offset) + var(--scroll-nav-bar-height)));
+  --subpage-bleed-left: max(24px, calc((100vw - min(calc(100vw - 48px), var(--content-width))) / 2));
   font-family: "Neue Haas Grotesk Text Pro", "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -434,6 +442,59 @@ img {
   visibility: visible;
 }
 
+/*
+ * On repeat visits the hero video is skipped entirely (see script.js /
+ * sessionStorage "austis-hero-played"), so there is no reason to keep the
+ * hero hidden behind visibility:hidden while waiting for script.js to fetch,
+ * parse and run. An inline head script sets `hero-precommit` on <html>
+ * synchronously (before first paint) whenever a previous play is detected,
+ * letting CSS alone render the settled hero immediately.
+ */
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready)::after {
+  opacity: 1;
+}
+
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .header,
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .slide-dots,
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .hero-copy,
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .hero-side,
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .hero .line {
+  visibility: visible;
+}
+
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .hero-bg-stack {
+  background: transparent;
+}
+
+html.hero-precommit .hero-is-choreo:not(.hero-is-ready) .hero-bg-stack .hero-bg-still {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+html.hero-precommit .hero-is-choreo .header .logo,
+html.hero-precommit .hero-is-choreo .header .nav a,
+html.hero-precommit .hero-is-choreo .header .btn,
+html.hero-precommit .hero-is-choreo .slide-dots,
+html.hero-precommit .hero-is-choreo .hero-copy-main,
+html.hero-precommit .hero-is-choreo .hero-copy .project-link,
+html.hero-precommit .hero-is-choreo .hero-copy h1,
+html.hero-precommit .hero-is-choreo .hero-copy-aside p,
+html.hero-precommit .hero-is-choreo .hero-signals span {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+html.hero-precommit .hero-is-choreo .hero-copy .project-link {
+  color: var(--ink);
+}
+
+html.hero-precommit .hero-is-choreo .hero-side {
+  clip-path: inset(0 0 0 0);
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .hero-is-choreo.hero-is-ready:not(.hero-is-settled) .hero-bg-stack .hero-bg-video.is-active {
   transition:
     opacity 480ms ease-in-out,
@@ -710,10 +771,11 @@ img {
   position: absolute;
   z-index: 1;
   left: 122px;
-  top: 14px;
+  top: 2px;
   display: flex;
   align-items: center;
   gap: 39px;
+  height: 47px;
   color: #fff;
   font-size: 15px;
   font-weight: 500;
@@ -723,10 +785,11 @@ img {
 
 .nav a {
   position: relative;
-  display: inline-grid;
-  min-height: 30px;
+  display: inline-flex;
   align-items: center;
-  padding: 0 0 4px;
+  height: 47px;
+  padding: 0;
+  min-height: auto;
   transition:
     color 220ms ease,
     transform 220ms ease;
@@ -737,7 +800,7 @@ img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 12px;
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
@@ -2149,77 +2212,233 @@ button.project-link {
     var(--page-bg);
 }
 
+.service-hero-page {
+  --service-hero-image-height: 96px;
+  --service-hero-panel-height: 156px;
+  --hero-panel-top: calc(var(--hero-image-top) + var(--service-hero-image-height));
+  --hero-panel-bottom: calc(var(--hero-panel-top) + var(--service-hero-panel-height));
+  --hero-overlay-height: calc(var(--hero-panel-bottom) + 36px);
+  --hero-bg-stack-height: calc(var(--hero-overlay-height) + var(--hero-bg-bleed));
+}
+
+.service-hero-page .desktop-shell {
+  height: calc(830px * var(--scale));
+}
+
+.service-hero-page .artboard {
+  height: 830px;
+}
+
+.service-hero-page .hero {
+  height: calc(var(--hero-panel-bottom) + 36px);
+}
+
+.service-hero-page .hero-bg-stack {
+  top: 0;
+  height: var(--hero-overlay-height);
+}
+
+.service-hero-page .hero-bg-stack .hero-bg {
+  object-position: center center;
+}
+
+.service-hero-page .hero::after {
+  -webkit-mask:
+    linear-gradient(#000 0 0) 0 0 / 100% var(--hero-image-top) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--hero-panel-top) / 100% calc(var(--service-hero-panel-height) + 36px) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--hero-image-top) / calc(var(--content-left) + 1px - var(--bleed-left)) var(--service-hero-image-height) no-repeat;
+  mask:
+    linear-gradient(#000 0 0) 0 0 / 100% var(--hero-image-top) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--hero-panel-top) / 100% calc(var(--service-hero-panel-height) + 36px) no-repeat,
+    linear-gradient(#000 0 0) 0 var(--hero-image-top) / calc(var(--content-left) + 1px - var(--bleed-left)) var(--service-hero-image-height) no-repeat;
+}
+
+.service-hero-page .hero-side {
+  height: var(--service-hero-image-height);
+}
+
+.service-hero-page .hero-copy {
+  height: var(--service-hero-panel-height);
+}
+
+.service-hero-page .hero-copy-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 120px;
+  border-right: 0;
+  text-align: center;
+}
+
+.service-hero-page .hero-copy h1 {
+  position: static;
+  width: min(100%, 650px);
+  font-size: 24px;
+  line-height: 1.28;
+}
+
+.service-hero-page .hero-copy-aside {
+  position: static;
+  display: block;
+}
+
+.service-hero-page .hero-copy p {
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+.service-hero-page .line-hero-mid {
+  display: none;
+}
+
+.service-hero-page .line-hero-right {
+  height: calc(var(--service-hero-panel-height) - 2px);
+}
+
+.service-types {
+  position: absolute;
+  z-index: 2;
+  left: var(--content-left);
+  top: calc(var(--hero-panel-bottom) + 54px);
+  width: var(--content-width);
+  min-height: 360px;
+}
+
+.service-types .section-line {
+  background: var(--grid);
+}
+
+.service-types-top,
+.service-types-bottom {
+  left: 0;
+  width: var(--content-width);
+  height: 1px;
+}
+
+.service-types-top {
+  top: 0;
+}
+
+.service-types-bottom {
+  bottom: 0;
+}
+
+.service-types-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 0 34px;
+}
+
+.service-types-heading h2 {
+  width: 560px;
+  margin: 0;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.18;
+  text-align: right;
+}
+
+.service-types-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.service-types-grid article {
+  position: relative;
+  min-height: 188px;
+  padding: 56px 28px 28px;
+  background: #fff;
+  border: 1px solid rgba(180, 181, 182, 0.62);
+  box-shadow: 0 18px 40px rgba(105, 106, 109, 0.08);
+}
+
+.service-types-grid article::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  background: var(--red);
+}
+
+.service-types-grid h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.22;
+  text-transform: uppercase;
+}
+
+.service-types-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
 .subpage-site {
   min-height: 100vh;
-  overflow: hidden;
+  overflow: clip; /* clip instead of hidden so position:sticky works on descendants */
   color: var(--ink);
+}
+
+.subpage-scroll-spacer {
+  min-height: 120vh;
 }
 
 .subpage-header {
   position: relative;
   z-index: 10;
-  width: min(100% - 48px, var(--content-width));
-  min-height: 136px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: 102px 1fr 224px;
+  grid-template-columns: 1fr 224px;
   align-items: start;
   gap: 20px;
-  padding-top: var(--header-offset);
 }
 
 .subpage-header::before {
-  content: "";
-  position: absolute;
-  left: 102px;
-  right: 0;
-  top: var(--nav-bar-offset);
-  height: 47px;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow);
-  pointer-events: none;
+  display: none;
 }
 
-.subpage-header::after {
-  content: "";
-  position: absolute;
-  left: 101px;
-  top: 0;
-  width: 1px;
-  height: var(--logo-line-height);
-  background: rgba(217, 217, 217, 0.5);
-  pointer-events: none;
-}
-
-.subpage-header .logo,
 .subpage-header .btn,
 .subpage-nav {
   position: relative;
   z-index: 1;
 }
 
+.subpage-header .btn {
+  margin-top: 2px;
+  align-self: start;
+}
+
 .subpage-nav {
   display: flex;
   align-items: center;
   gap: 31px;
-  min-height: 47px;
+  margin-top: 2px;
+  height: 47px;
+  align-self: start;
   color: #fff;
   font-size: 15px;
   font-weight: 500;
   text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(105, 106, 109, 0.1);
 }
 
 .subpage-nav a {
   position: relative;
-  display: inline-grid;
-  min-height: 30px;
+  display: inline-flex;
   align-items: center;
-  padding: 0 0 4px;
+  height: 47px;
+  padding: 0;
+  min-height: auto;
   transition:
     color 220ms ease,
     transform 220ms ease;
@@ -2230,7 +2449,7 @@ button.project-link {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 12px;
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
@@ -2242,13 +2461,265 @@ button.project-link {
   transform: scaleX(1);
 }
 
+/* ─────────────────────────────────────────────
+   Sticky subpage header (desktop)
+───────────────────────────────────────────── */
+
+.subpage-header-outer {
+  position: relative;
+  z-index: 100;
+  width: min(100% - 48px, var(--content-width));
+  min-height: 136px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 102px 1fr;
+  grid-template-rows: auto;
+  align-items: start;
+  gap: 20px;
+  padding-top: var(--header-offset);
+  transition:
+    grid-template-columns 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    grid-template-rows 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    gap 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    padding-top 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    min-height 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.subpage-header-outer::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: calc(var(--header-offset) + 2px);
+  height: 47px;
+  background: rgba(18, 18, 18, 0.93);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 40px rgba(0, 0, 0, 0.14);
+  pointer-events: none;
+}
+
+/* Logo sits left of nav in default state */
+.subpage-header-outer .logo {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  transition:
+    top 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    left 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.subpage-header-outer .subpage-header {
+  grid-column: 2;
+  grid-row: 1;
+  transition:
+    grid-column 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    grid-row 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    top 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    left 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    width 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    padding 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark backdrop slides in on scroll */
+.subpage-header-outer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.93);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    top 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    left 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    width 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scrolled: island nav strip, logo layered above with bottom overhang */
+.subpage-header-outer.is-scrolled {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  min-height: calc(var(--scroll-nav-bar-height) + var(--scroll-nav-top-gap));
+  height: calc(var(--scroll-nav-bar-height) + var(--scroll-nav-top-gap));
+  overflow: visible;
+  gap: 0;
+  background: transparent;
+}
+
+.subpage-header-outer.is-scrolled::before {
+  opacity: 1;
+  top: var(--scroll-nav-top-gap);
+  bottom: auto;
+  left: var(--scroll-nav-logo-left);
+  width: var(--scroll-nav-content-width);
+  height: var(--scroll-nav-bar-height);
+  transform: none;
+  border-radius: 0;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 40px rgba(0, 0, 0, 0.14);
+}
+
+.subpage-header-outer.is-scrolled .subpage-header {
+  position: absolute;
+  top: var(--scroll-nav-top-gap);
+  left: var(--scroll-nav-bar-left);
+  z-index: 1;
+  width: var(--scroll-nav-bar-width);
+  margin: 0;
+  padding: 0;
+  grid-column: unset;
+  grid-row: unset;
+}
+
+.subpage-header-outer.is-scrolled .subpage-nav {
+  margin-top: 0;
+}
+
+.subpage-header-outer.is-scrolled .subpage-header .btn {
+  margin-top: 0;
+}
+
+.subpage-header-outer.is-scrolled .logo {
+  position: absolute;
+  top: var(--scroll-nav-top-gap);
+  left: var(--scroll-nav-logo-left);
+  z-index: 2;
+  grid-column: unset;
+  grid-row: unset;
+  padding: 0;
+}
+
+.subpage-header-outer.is-scrolled::after {
+  display: none;
+}
+
+/* Decorative glass bar fades out on scroll */
+.subpage-header-outer .subpage-header::before {
+  transition: opacity 260ms ease;
+}
+
+.subpage-header-outer.is-scrolled .subpage-header::before {
+  opacity: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Layered scroll nav — shared island shell + logo
+───────────────────────────────────────────── */
+
+.scroll-nav-shell {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  height: calc(var(--scroll-nav-bar-height) + var(--scroll-nav-top-gap));
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-nav-shell.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-nav-shell.is-visible .scroll-nav-bar,
+.scroll-nav-shell.is-visible .scroll-nav-logo {
+  pointer-events: auto;
+}
+
+.scroll-nav-bar {
+  position: absolute;
+  top: var(--scroll-nav-top-gap);
+  left: var(--scroll-nav-logo-left);
+  width: var(--scroll-nav-content-width);
+  height: var(--scroll-nav-bar-height);
+  background: rgba(18, 18, 18, 0.93);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07),
+    0 12px 40px rgba(0, 0, 0, 0.14);
+}
+
+.scroll-nav-inner {
+  width: 100%;
+  height: 100%;
+  padding-left: 122px;
+}
+
+.scroll-nav-inner .subpage-header .btn {
+  margin-top: 0;
+}
+
+.scroll-nav-inner .subpage-nav {
+  margin-top: 0;
+}
+
+.scroll-nav-inner .subpage-header::before {
+  display: none;
+}
+
+.scroll-nav-logo {
+  position: absolute;
+  top: var(--scroll-nav-top-gap);
+  left: var(--scroll-nav-logo-left);
+  z-index: 2;
+  width: 102px;
+  pointer-events: auto;
+}
+
+/* Hidden on mobile — mobile already has sticky header */
+@media (max-width: 1024px) {
+  .scroll-nav-shell {
+    display: none;
+  }
+}
+
+/* Mobile header is only for small screens */
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .mobile-header {
+    display: block;
+  }
+}
+
 .subpage-hero {
   position: relative;
-  width: min(100% - 48px, 1174px);
+  width: min(100%, 1440px);
   min-height: 560px;
   margin: -1px auto 0;
   border-top: 1px solid rgba(217, 217, 217, 0.5);
   border-bottom: 1px solid var(--grid);
+}
+
+.subpage-hero-fullbleed {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-top: none;
 }
 
 .subpage-hero::before,
@@ -2342,8 +2813,161 @@ button.project-link {
 }
 
 .subpage-section {
-  width: min(100% - 48px, 1174px);
+  width: min(100%, 1440px);
   margin: 88px auto;
+}
+
+.subpage-intro {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  width: 100%;
+  max-width: none;
+  margin: calc(-1 * var(--subpage-logo-overhang)) 0 0;
+}
+
+.service-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 44vw, 680px);
+  width: 100%;
+  align-items: start;
+  background: #fff;
+  border-top: 1px solid rgba(180, 181, 182, 0.62);
+  border-bottom: 1px solid rgba(180, 181, 182, 0.62);
+  box-shadow: 0 22px 50px rgba(105, 106, 109, 0.12);
+}
+
+.service-intro .service-intro-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  margin-left: 0;
+  padding:
+    calc(var(--subpage-logo-overhang) + 32px)
+    48px
+    32px
+    calc(var(--subpage-bleed-left) + 122px);
+  background: #fff;
+  border: 0;
+  border-right: 1px solid rgba(180, 181, 182, 0.48);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+.service-intro .service-intro-main::before,
+.service-overview .subpage-card::before {
+  display: none;
+}
+
+.service-intro .service-intro-main .subpage-eyebrow,
+.service-intro .service-intro-main p {
+  color: var(--muted);
+}
+
+.service-intro .service-intro-main h1 {
+  max-width: 520px;
+  margin: 0 0 20px;
+  font-size: clamp(32px, 3.2vw, 46px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+}
+
+.service-intro .service-intro-main p {
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+.service-intro-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.service-intro .service-intro-main .subpage-text-link {
+  color: var(--ink);
+}
+
+.service-intro-image {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 32vw, 380px);
+  margin: 0;
+  overflow: hidden;
+  background: #d8d8d8;
+  border: 0;
+  box-shadow: none;
+}
+
+.service-intro-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 52%, rgba(0, 0, 0, 0.16));
+  pointer-events: none;
+}
+
+.service-intro-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.98) contrast(1.03);
+}
+
+.service-intro-next {
+  display: none;
+}
+
+.service-intro-next p {
+  color: var(--muted);
+}
+
+.service-intro-next .subpage-text-link {
+  color: var(--ink);
+}
+
+.service-intro-next h2 {
+  margin: 0 0 14px;
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.14;
+}
+
+.service-intro-next p {
+  margin: 0 0 28px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.service-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.service-overview .subpage-card {
+  min-height: 250px;
+  padding: 54px 34px 34px;
+}
+
+.service-overview .feature-index {
+  top: 24px;
+  left: 34px;
+}
+
+.service-process {
+  margin-top: 24px;
+}
+
+.service-process::after {
+  display: none;
 }
 
 .service-page-grid {
@@ -2689,6 +3313,12 @@ button.project-link {
     box-shadow: 0 22px 44px rgba(105, 106, 109, 0.16);
     transform: translateY(-4px);
   }
+
+  .service-intro .service-intro-main:hover {
+    border-color: transparent;
+    box-shadow: none;
+    transform: none;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -2807,6 +3437,8 @@ button.project-link {
     position: absolute;
     inset: 0;
     z-index: 0;
+    transform: scale(1.45);
+    transform-origin: center bottom;
   }
 
   .mobile-hero-bg {
@@ -3029,6 +3661,36 @@ button.project-link {
   .mobile-hero.hero-is-choreo.hero-is-ready::before,
   .mobile-hero.hero-is-choreo.hero-is-ready .mobile-hero-bg {
     visibility: visible;
+  }
+
+  /* Repeat visits: render the settled mobile hero immediately via CSS, see html.hero-precommit above */
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready) {
+    background: transparent;
+  }
+
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready) .mobile-hero-panel,
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready) .mobile-hero-label,
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready)::before {
+    visibility: visible;
+  }
+
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready) .mobile-hero-bg-stack {
+    background: transparent;
+  }
+
+  html.hero-precommit .mobile-hero.hero-is-choreo:not(.hero-is-ready) .mobile-hero-still {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  html.hero-precommit .mobile-hero.hero-is-choreo .mobile-hero-label,
+  html.hero-precommit .mobile-hero.hero-is-choreo .mobile-hero-panel,
+  html.hero-precommit .mobile-hero.hero-is-choreo .mobile-hero-signals span,
+  html.hero-precommit .mobile-hero.hero-is-choreo .mobile-hero-actions > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
   .mobile-hero.hero-is-choreo.hero-is-ready:not(.hero-is-settled) .mobile-hero-video.is-active {
@@ -3648,51 +4310,67 @@ button.project-link {
     background: var(--page-bg);
   }
 
-  .subpage-header {
+  .subpage-header-outer {
+    display: none;
     position: sticky;
     top: 0;
+    z-index: 10;
     width: 100%;
     min-height: auto;
-    display: grid;
     grid-template-columns: 64px 1fr;
     gap: 16px;
     padding: 18px 20px;
     background: rgba(0, 0, 0, 0.88);
     border-bottom: 1px solid rgba(180, 181, 182, 0.42);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  .subpage-header::before,
-  .subpage-header::after {
+  .subpage-header-outer::before,
+  .subpage-header-outer::after {
     display: none;
   }
 
-  .subpage-header .logo {
+  .subpage-header-outer .logo::after {
+    display: none;
+  }
+
+  .subpage-header-outer .logo {
     width: 64px;
   }
 
-  .subpage-header .logo-mark {
+  .subpage-header-outer .logo-mark {
     width: 64px;
     height: 64px;
   }
 
-  .subpage-header .logo-img {
+  .subpage-header-outer .logo-img {
     left: -6px;
     top: -6px;
     width: 76px;
     height: 76px;
   }
 
-  .subpage-header .logo-sub {
+  .subpage-header-outer .logo-sub {
     width: 64px;
     font-size: 6px;
     line-height: 6px;
     padding: 2px 0;
   }
 
+  .subpage-header {
+    position: static;
+    display: contents;
+  }
+
+  .subpage-header::before {
+    display: none;
+  }
+
   .subpage-header .btn {
     width: 124px;
     height: 42px;
+    margin-top: 0;
     justify-self: end;
     font-size: 13px;
   }
@@ -3701,9 +4379,43 @@ button.project-link {
     grid-column: 1 / -1;
     overflow-x: auto;
     gap: 22px;
-    min-height: auto;
+    margin-top: 0;
     padding: 8px 0 0;
     font-size: 13px;
+  }
+
+  .subpage-header-outer.is-scrolled {
+    display: grid;
+    position: sticky;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    grid-template-columns: 64px 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+    padding: 18px 20px;
+  }
+
+  .subpage-header-outer.is-scrolled::before {
+    display: none;
+  }
+
+  .subpage-header-outer.is-scrolled .subpage-header {
+    position: static;
+    display: contents;
+    left: auto;
+    top: auto;
+    width: auto;
+    padding: 0;
+  }
+
+  .subpage-header-outer.is-scrolled .logo {
+    position: relative;
+    left: auto;
+    top: auto;
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
   }
 
   .subpage-hero,
@@ -3738,6 +4450,8 @@ button.project-link {
   }
 
   .service-page-grid,
+  .service-intro,
+  .service-overview,
   .reference-list,
   .company-layout,
   .contact-grid,
@@ -3763,6 +4477,95 @@ button.project-link {
   .company-intro,
   .contact-card {
     padding: 46px 20px 30px;
+  }
+
+  .service-intro .service-intro-main {
+    min-height: 0;
+    margin-left: 0;
+    padding: 46px 20px 30px;
+    width: 100%;
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .subpage-intro {
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .service-intro {
+    display: grid;
+    width: 100%;
+    min-height: 0;
+    background: #fff;
+    border-top: 1px solid rgba(180, 181, 182, 0.62);
+    border-bottom: 1px solid rgba(180, 181, 182, 0.62);
+    box-shadow: none;
+    isolation: auto;
+  }
+
+  .service-intro .service-intro-main .subpage-eyebrow,
+  .service-intro .service-intro-main p {
+    color: var(--muted);
+  }
+
+  .service-intro .service-intro-main .subpage-text-link {
+    color: var(--ink);
+  }
+
+  .service-intro-image {
+    position: relative;
+    inset: auto;
+    border: 1px solid rgba(180, 181, 182, 0.62);
+    box-shadow: 0 18px 40px rgba(105, 106, 109, 0.08);
+  }
+
+  .service-intro-image img {
+    height: auto;
+    min-height: 240px;
+    max-height: none;
+    aspect-ratio: 1.18;
+  }
+
+  .service-intro-next {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    min-height: 0;
+    padding: 38px 20px;
+    background: #000;
+    color: #fff;
+    box-shadow: 0 18px 40px rgba(105, 106, 109, 0.08);
+  }
+
+  .service-intro-next .subpage-eyebrow,
+  .service-intro-next p {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .service-intro-next .subpage-text-link {
+    color: #fff;
+  }
+
+  .service-intro-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .service-overview {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .service-overview .subpage-card {
+    min-height: 0;
+    padding: 54px 20px 30px;
+  }
+
+  .service-overview .feature-index {
+    left: 20px;
   }
 
   .subpage-band {
@@ -3795,6 +4598,34 @@ button.project-link {
     flex-direction: column;
     align-items: flex-start;
     padding: 54px 20px 74px;
+  }
+
+  .service-hero-page .mobile-hero-panel {
+    padding-top: clamp(22px, 3.5vw, 30px);
+    padding-bottom: clamp(24px, 3.5vw, 32px);
+    text-align: center;
+  }
+
+  .service-hero-page .mobile-hero {
+    min-height: clamp(360px, 56vh, 520px);
+  }
+
+  .service-hero-page .mobile-hero-bg-stack {
+    transform-origin: center center;
+  }
+
+  .service-hero-page .mobile-hero-bg {
+    object-position: center center;
+  }
+
+  .service-hero-page .mobile-hero-panel h1,
+  .service-hero-page .mobile-hero-panel p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mobile-service-types {
+    background: #fff;
   }
 
 }

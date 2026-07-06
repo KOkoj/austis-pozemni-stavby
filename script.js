@@ -142,20 +142,48 @@
     mobileResponsibilitySection.classList.add("is-section-visible");
   }
 
-  function revealResponsibilityForHero(heroSection) {
-    if (heroSection?.classList.contains("hero")) {
-      revealDesktopResponsibility();
+  function initResponsibilityScrollReveal() {
+    const sections = [
+      { el: responsibilitySection, reveal: revealDesktopResponsibility },
+      { el: mobileResponsibilitySection, reveal: revealMobileResponsibility },
+    ].filter(({ el }) => el);
+
+    if (!sections.length) {
+      return;
     }
 
-    if (heroSection?.classList.contains("mobile-hero")) {
-      revealMobileResponsibility();
+    if (!("IntersectionObserver" in window)) {
+      sections.forEach(({ reveal }) => reveal());
+      return;
     }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const match = sections.find(({ el }) => el === entry.target);
+          match?.reveal();
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.05,
+      },
+    );
+
+    sections.forEach(({ el }) => observer.observe(el));
   }
 
+  const bodyDataset = document.body?.dataset ?? {};
+  const hasHeroVideoOverride = Object.prototype.hasOwnProperty.call(bodyDataset, "heroVideo");
   const heroSlide = {
-    src: "assets/hero-section-bg.png",
-    video: "assets/hf_20260610_082828_ad428852-aa92-4020-a9a1-d9139a428e20.mp4",
-    name: "Chata Seibert",
+    src: bodyDataset.heroImage || "assets/hero-section-bg.png",
+    video: hasHeroVideoOverride ? bodyDataset.heroVideo : "assets/hf_20260610_082828_ad428852-aa92-4020-a9a1-d9139a428e20.mp4",
+    name: bodyDataset.heroName || "Chata Seibert",
   };
 
   const referenceProjects = [
@@ -237,9 +265,7 @@
     { name: "copy-detail", at: 0.5 },
     { name: "emphasis", at: 0.8 },
     { name: "settled", at: 0.96 },
-    { name: "responsibility", at: 0.98 },
   ];
-  const responsibilityRevealDelayMs = 780;
 
   function applyHeroChoreoStage(section, stageName) {
     const className = `hero-stage-${stageName}`;
@@ -249,15 +275,6 @@
     }
 
     section.classList.add(className);
-
-    if (stageName === "responsibility") {
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const delay = prefersReducedMotion ? 0 : responsibilityRevealDelayMs;
-
-      window.setTimeout(() => {
-        revealResponsibilityForHero(section);
-      }, delay);
-    }
   }
 
   function syncHeroChoreo(section, currentTime, duration) {
@@ -371,6 +388,13 @@
         still: document.querySelector(".mobile-hero-still"),
       },
     ].filter(({ section, video, still }) => section && video && still);
+
+    const SESSION_KEY = "austis-hero-played";
+    const hasPlayedHero = !!sessionStorage.getItem(SESSION_KEY);
+    if (!hasPlayedHero) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    }
+
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const blendCrossfadeMs = 720;
     const blendLeadSeconds = blendCrossfadeMs / 1000;
@@ -435,11 +459,21 @@
     async function waitForHeroAssets() {
       const logoImages = Array.from(document.querySelectorAll(".logo-img"));
 
+      // Repeat visits render the settled hero straight from CSS via
+      // html.hero-precommit (set synchronously before first paint), so the
+      // still image is never gated behind JS/network timing here.
+      if (hasPlayedHero) {
+        return;
+      }
+
       await whenWindowLoaded();
       await whenFontsReady();
 
       await Promise.all([
-        ...heroPairs.flatMap(({ video, still }) => [whenVideoBuffered(video), whenImageReady(still)]),
+        ...heroPairs.flatMap(({ video, still }) => [
+          video.getAttribute("src") ? whenVideoBuffered(video) : Promise.resolve(),
+          whenImageReady(still),
+        ]),
         ...logoImages.map(whenImageReady),
       ]);
 
@@ -447,6 +481,17 @@
     }
 
     function setupHeroPlayback({ section, video, still }) {
+      const hasVideoSource = Boolean(video.getAttribute("src"));
+
+      if (!hasVideoSource) {
+        return function startStaticHero() {
+          still.classList.add("is-active", "is-settled");
+          section.classList.add("hero-is-settled");
+          heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
+          startHeroLines();
+        };
+      }
+
       if (prefersReducedMotion) {
         markHeroReady(section, video);
         still.classList.add("is-active", "is-settled");
@@ -582,13 +627,24 @@
       };
     }
 
-    const starters = heroPairs.map((pair) => setupHeroPlayback(pair));
+    const starters = hasPlayedHero ? [] : heroPairs.map((pair) => setupHeroPlayback(pair));
 
     void waitForHeroAssets().then(async () => {
-      heroPairs.forEach(({ section, video }, index) => {
+      heroPairs.forEach(({ section, video, still }, index) => {
         markHeroReady(section, video);
-        void starters[index]?.();
+
+        if (hasPlayedHero) {
+          still.classList.add("is-active", "is-settled");
+          section.classList.add("hero-is-settled");
+          heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
+        } else {
+          void starters[index]?.();
+        }
       });
+
+      if (hasPlayedHero) {
+        onHeroLinesReady?.();
+      }
     });
   }
 
@@ -600,19 +656,28 @@
     const mobileStill = document.querySelector(".mobile-hero-still");
     let pendingReferenceIndex = null;
 
-    if (mobileVideo) {
+    if (mobileVideo && heroSlide.video) {
       mobileVideo.src = heroSlide.video;
       mobileVideo.poster = heroSlide.src;
+    } else if (mobileVideo) {
+      mobileVideo.removeAttribute("src");
+      mobileVideo.poster = heroSlide.src;
+      mobileVideo.load();
     }
 
     if (mobileStill) {
       mobileStill.src = heroSlide.src;
     }
 
-    if (heroVideo) {
+    if (heroVideo && heroSlide.video) {
       heroVideo.src = heroSlide.video;
       heroVideo.poster = heroSlide.src;
       heroVideo.setAttribute("aria-label", heroSlide.name);
+    } else if (heroVideo) {
+      heroVideo.removeAttribute("src");
+      heroVideo.poster = heroSlide.src;
+      heroVideo.setAttribute("aria-label", heroSlide.name);
+      heroVideo.load();
     }
 
     if (heroStill) {
@@ -914,6 +979,35 @@
     sections.forEach((section) => observer.observe(section));
   }
 
+  // Desktop: fixed scroll nav appears once the page header leaves the viewport
+  function initScrollNavShell() {
+    const scrollNavConfigs = [
+      { shell: ".home-scroll-nav", trigger: ".artboard .header" },
+      { shell: ".subpage-scroll-nav", trigger: ".subpage-header-outer" },
+    ];
+
+    scrollNavConfigs.forEach(({ shell, trigger }) => {
+      const scrollNav = document.querySelector(shell);
+      const triggerEl = document.querySelector(trigger);
+
+      if (!scrollNav || !triggerEl) {
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          const show = !entry.isIntersecting;
+
+          scrollNav.classList.toggle("is-visible", show);
+          scrollNav.setAttribute("aria-hidden", String(!show));
+        },
+        { threshold: 0.05 },
+      );
+
+      observer.observe(triggerEl);
+    });
+  }
+
   updateScale();
   prepareDesignLines();
   const heroApi = prepareHeroDots();
@@ -921,6 +1015,8 @@
   prepareReferenceCarousel(heroApi);
   prepareNavState();
   revealScrollLines();
+  initResponsibilityScrollReveal();
+  initScrollNavShell();
 
   window.addEventListener("resize", updateScale, { passive: true });
   window.addEventListener("resize", () => designLines.forEach(setLineDirection), { passive: true });
