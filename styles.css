@@ -1956,16 +1956,20 @@ button.project-link {
 }
 
 .footer {
+  color: #fff;
+}
+
+/* Homepage artboard footer — absolute coordinates only inside the artboard */
+.artboard .footer {
   position: absolute;
   left: 0;
   top: calc(3152px - var(--layout-shift));
   width: 1441px;
   height: 596px;
   background: transparent;
-  color: #fff;
 }
 
-.footer::before {
+.artboard .footer::before {
   content: "";
   position: absolute;
   z-index: 0;
@@ -1976,13 +1980,13 @@ button.project-link {
   background: #000;
 }
 
-.footer .footer-line,
-.footer section,
-.footer small {
+.artboard .footer .footer-line,
+.artboard .footer section,
+.artboard .footer small {
   z-index: 1;
 }
 
-.footer-left {
+.artboard .footer-left {
   left: var(--content-right);
   top: 0;
   width: 1px;
@@ -1990,7 +1994,7 @@ button.project-link {
   background: rgba(180, 181, 182, 0.5);
 }
 
-.footer-top {
+.artboard .footer-top {
   left: var(--bleed-left);
   top: 361px;
   width: var(--bleed-width);
@@ -1998,7 +2002,7 @@ button.project-link {
   background: rgba(180, 181, 182, 0.5);
 }
 
-.footer-right {
+.artboard .footer-right {
   left: var(--bleed-left);
   top: 0;
   width: var(--bleed-width);
@@ -2006,14 +2010,14 @@ button.project-link {
   background: var(--grid);
 }
 
-.footer section:first-of-type {
+.artboard .footer section:first-of-type {
   position: absolute;
   left: calc(var(--content-left) + 22px);
   top: 83px;
   width: 421px;
 }
 
-.footer section:nth-of-type(2) {
+.artboard .footer section:nth-of-type(2) {
   position: absolute;
   left: calc(var(--content-left) + var(--content-width) * 552 / 953);
   top: 83px;
@@ -2072,7 +2076,7 @@ button.project-link {
   vertical-align: 1px;
 }
 
-.footer small {
+.artboard .footer small {
   position: absolute;
   left: calc(var(--content-left) + 22px);
   top: 388px;
@@ -2315,7 +2319,8 @@ button.project-link {
 
 .subpage-site {
   min-height: 100vh;
-  overflow: clip; /* clip instead of hidden so position:sticky works on descendants */
+  overflow-x: clip;
+  overflow-y: visible; /* allow flow footer to extend the page height */
   color: var(--ink);
 }
 
@@ -3217,9 +3222,10 @@ button.project-link {
    and content aligned to the shared content grid. */
 .subpage-body .footer {
   position: relative;
+  inset: auto;
   width: 100%;
   height: auto;
-  min-height: 440px;
+  min-height: 596px;
   margin: 96px 0 0;
   padding: 88px max(24px, calc((100% - var(--content-width)) / 2)) 0;
   background: #000;
@@ -3269,8 +3275,8 @@ button.project-link {
 .subpage-body .footer section:nth-of-type(2) {
   position: relative;
   z-index: 2;
-  left: auto;
   top: auto;
+  left: auto;
   width: auto;
   max-width: 460px;
   padding-bottom: 96px;
@@ -3279,8 +3285,8 @@ button.project-link {
 .subpage-body .footer small {
   position: relative;
   z-index: 2;
-  left: auto;
   top: auto;
+  left: auto;
   grid-column: 1 / -1;
   margin: 0;
   padding: 32px 0 110px;
