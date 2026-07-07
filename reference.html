@@ -8,111 +8,382 @@
       content="Reference AUSTIS Pozemní stavby — realizované i probíhající projekty generální dodávky, novostaveb a rekonstrukcí."
     />
     <title>Reference | AUSTIS Pozemní stavby</title>
+    <script>
+      (function () {
+        try {
+          if (sessionStorage.getItem("austis-hero-played")) {
+            document.documentElement.classList.add("hero-precommit");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="image" href="assets/hero 2.png" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="subpage-body">
+  <body
+    class="subpage-body flow-subpage reference-page"
+    data-hero-image="assets/hero 2.png"
+    data-hero-video=""
+    data-hero-name="Reference"
+  >
     <main class="subpage-site">
-      <header class="subpage-header">
-        <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+      <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
+        <div class="scroll-nav-bar">
+          <div class="scroll-nav-inner">
+            <header class="subpage-header">
+              <nav class="subpage-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Úvod</a>
+                <a href="sluzby.html">služby</a>
+                <a class="active" href="reference.html" aria-current="page">reference</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+              <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+            </header>
+          </div>
+        </div>
+        <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
           <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
           <span class="logo-sub">pozemní stavby</span>
         </a>
-        <nav class="subpage-nav" aria-label="Hlavní navigace">
-          <a href="index.html">Úvod</a>
-          <a href="sluzby.html">služby</a>
-          <a class="active" href="reference.html" aria-current="page">reference</a>
-          <a href="o-spolecnosti.html">o společnosti</a>
-          <a href="kontakt.html">kontakt</a>
-        </nav>
-        <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
-      </header>
+      </div>
 
-      <section class="subpage-hero" aria-labelledby="reference-hero-title">
-        <img src="assets/hero 2.png" alt="Chata Seibert — reference realizace" />
-        <div class="subpage-hero-panel">
-          <span class="subpage-eyebrow">Reference</span>
-          <h1 id="reference-hero-title">Projekty, za které ručíme</h1>
-          <p>
-            Od rekreačních staveb po komerční developmenty. Každý projekt vedeme jako generální dodavatel —
-            s důrazem na termíny, rozpočet a kvalitu provedení.
-          </p>
+      <div class="desktop-shell" aria-label="AUSTIS reference desktop design">
+        <div class="artboard">
+          <section class="hero hero-is-choreo">
+            <div class="hero-bg-stack">
+              <video
+                class="hero-bg hero-bg-video"
+                poster="assets/hero 2.png"
+                muted
+                playsinline
+                preload="auto"
+                aria-label="Reference"
+              ></video>
+              <img
+                class="hero-bg hero-bg-still"
+                src="assets/hero 2.png"
+                alt="Reference"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+            <div class="hero-side"></div>
+            <div class="line line-nav"></div>
+            <div class="line line-logo-vertical"></div>
+            <div class="line line-hero-image-top"></div>
+            <div class="line line-hero-top"></div>
+            <div class="line line-hero-mid"></div>
+            <div class="line line-hero-right"></div>
+            <div class="line line-hero-bottom"></div>
+            <div class="line line-hero-left" aria-hidden="true"></div>
+            <header class="header">
+              <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+                <span class="logo-sub">pozemní stavby</span>
+              </a>
+              <nav class="nav" aria-label="Hlavní navigace">
+                <a href="index.html">Úvod</a>
+                <a href="sluzby.html">služby</a>
+                <a class="active" href="reference.html" aria-current="page">reference</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+              <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+            </header>
+            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <h1>Projekty, za které ručíme</h1>
+                <div class="hero-copy-aside">
+                  <p>
+                    Od rekreačních staveb po komerční developmenty. Každý projekt vedeme jako generální dodavatel —
+                    s důrazem na termíny, rozpočet a kvalitu provedení.
+                  </p>
+                </div>
+              </div>
+              <a class="project-link" href="#reference-list" aria-label="přehled projektů">
+                <span class="project-link-text" aria-hidden="true">
+                  <span class="project-link-ghost">přehled<br />projektů</span>
+                  <span class="project-link-visible">přehled<br />projektů</span>
+                </span>
+              </a>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="mobile-page" aria-label="AUSTIS reference mobile layout">
+        <header class="mobile-header">
+          <div class="mobile-header-row">
+            <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-sub">pozemní stavby</span>
+            </a>
+            <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+          </div>
+          <nav class="mobile-nav" aria-label="Hlavní navigace">
+            <a href="index.html">Úvod</a>
+            <a href="sluzby.html">služby</a>
+            <a class="active" href="reference.html" aria-current="page">reference</a>
+            <a href="o-spolecnosti.html">o společnosti</a>
+            <a href="kontakt.html">kontakt</a>
+          </nav>
+        </header>
+        <section class="mobile-hero hero-is-choreo">
+          <div class="mobile-hero-bg-stack" aria-hidden="true">
+            <video
+              class="mobile-hero-bg mobile-hero-video"
+              poster="assets/hero 2.png"
+              muted
+              playsinline
+              preload="auto"
+              aria-hidden="true"
+            ></video>
+            <img
+              class="mobile-hero-bg mobile-hero-still"
+              src="assets/hero 2.png"
+              alt=""
+              aria-hidden="true"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+          <div class="mobile-hero-panel">
+            <h1>Projekty, za které ručíme</h1>
+            <p>
+              Od rekreačních staveb po komerční developmenty. Každý projekt vedeme jako generální dodavatel —
+              s důrazem na termíny, rozpočet a kvalitu provedení.
+            </p>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="#reference-list">přehled projektů</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="reference-list" class="sp-responsibility" aria-labelledby="reference-overview-title">
+        <div class="responsibility is-section-visible">
+          <div class="panel"></div>
+          <div class="grid-line grid-left"></div>
+          <div class="grid-line grid-top"></div>
+          <div class="grid-line grid-right"></div>
+          <div class="responsibility-header">
+            <h2 id="reference-overview-title">Realizované i probíhající projekty</h2>
+            <p class="responsibility-lead">
+              Každý projekt vedeme jako generální dodavatel — jedna smlouva, jeden odpovědný tým a průběžný
+              reporting pro investora.
+            </p>
+          </div>
+          <article class="feature-card one">
+            <span class="feature-index" aria-hidden="true">01</span>
+            <i></i>
+            <h3>Rekreační stavby</h3>
+            <p>Rekonstrukce a novostavby v náročných lokalitách — od logistiky montáží po předání v provozu.</p>
+          </article>
+          <article class="feature-card two">
+            <span class="feature-index" aria-hidden="true">02</span>
+            <i></i>
+            <h3>Provozní areály</h3>
+            <p>Výstavba provozních objektů včetně inženýrských sítí a zpevněných ploch pod jednou smlouvou.</p>
+          </article>
+          <article class="feature-card three">
+            <span class="feature-index" aria-hidden="true">03</span>
+            <i></i>
+            <h3>Komerční developmenty</h3>
+            <p>Realizace developerských projektů s důrazem na termíny, náklady i návaznost na další fáze záměru.</p>
+          </article>
         </div>
       </section>
 
-      <section class="subpage-section" aria-label="Seznam referencí">
-        <div class="reference-list">
-          <article class="reference-card">
-            <img src="assets/hero 2.png" alt="Chata Seibert — pohled na realizaci" />
-            <div>
-              <span class="subpage-eyebrow">Rekreační stavba</span>
-              <h2>Chata Seibert</h2>
+      <div class="ref-projects">
+        <article class="ref-project" id="ref-1" aria-labelledby="ref-1-title">
+          <div class="ref-project-head">
+            <span class="ref-project-index" aria-hidden="true">01</span>
+            <div class="ref-project-heading">
+              <span class="ref-project-tag">Rekreační stavba</span>
+              <h2 id="ref-1-title">Chata Seibert</h2>
               <p>
-                Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších — od logistiky montáží
-                v náročném terénu po předání v sezónním provozu.
+                Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších — od logistiky
+                montáží v náročném terénu po předání v sezónním provozu.
               </p>
-              <dl>
-                <div><dt>Typ</dt><dd>Rekreační stavba</dd></div>
-                <div><dt>Místo</dt><dd>Krkonoše</dd></div>
-                <div><dt>Termín</dt><dd>2024 – 2025</dd></div>
-              </dl>
             </div>
-          </article>
-          <article class="reference-card">
-            <img src="assets/hero 1.png" alt="Vraňany Farma Hanč — pohled na areál" />
-            <div>
-              <span class="subpage-eyebrow">Zemědělský areál</span>
-              <h2>Vraňany Farma Hanč</h2>
+            <dl class="ref-project-meta">
+              <div><dt>Místo</dt><dd>Krkonoše</dd></div>
+              <div><dt>Termín</dt><dd>2024 – 2025</dd></div>
+              <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
+            </dl>
+          </div>
+          <div class="ref-gallery" data-lightbox="chata-seibert">
+            <button class="ref-shot ref-shot-feature" type="button" data-full="assets/hero 2.png">
+              <img src="assets/hero 2.png" alt="Chata Seibert — celkový pohled na realizaci" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 3.png">
+              <img src="assets/image 3.png" alt="Chata Seibert — detail konstrukce" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/sluzby-rekonstrukce.png">
+              <img src="assets/sluzby-rekonstrukce.png" alt="Chata Seibert — interiér po rekonstrukci" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 7.png">
+              <img src="assets/image 7.png" alt="Chata Seibert — pohled na fasádu" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="pexels-ivan-s-4458205 (1).jpg">
+              <img src="pexels-ivan-s-4458205 (1).jpg" alt="Chata Seibert — okolní terén" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="ref-project" id="ref-2" aria-labelledby="ref-2-title">
+          <div class="ref-project-head">
+            <span class="ref-project-index" aria-hidden="true">02</span>
+            <div class="ref-project-heading">
+              <span class="ref-project-tag">Zemědělský areál</span>
+              <h2 id="ref-2-title">Vraňany Farma Hanč</h2>
               <p>
                 Výstavba provozních objektů a technického zázemí farmy. Jeden smluvní partner pro celý
                 areál — včetně inženýrských sítí a zpevněných ploch.
               </p>
-              <dl>
-                <div><dt>Typ</dt><dd>Zemědělský areál</dd></div>
-                <div><dt>Místo</dt><dd>Vraňany</dd></div>
-                <div><dt>Termín</dt><dd>2023 – 2024</dd></div>
-              </dl>
             </div>
-          </article>
-          <article class="reference-card">
-            <img src="assets/hero 2.png" alt="Rodinný dům Roztoky — vizualizace novostavby" />
-            <div>
-              <span class="subpage-eyebrow">Novostavba RD · Probíhá</span>
-              <h2>Rodinný dům Roztoky</h2>
+            <dl class="ref-project-meta">
+              <div><dt>Místo</dt><dd>Vraňany</dd></div>
+              <div><dt>Termín</dt><dd>2023 – 2024</dd></div>
+              <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
+            </dl>
+          </div>
+          <div class="ref-gallery" data-lightbox="vranany-farma">
+            <button class="ref-shot ref-shot-feature" type="button" data-full="assets/hero 1.png">
+              <img src="assets/hero 1.png" alt="Vraňany Farma Hanč — pohled na areál" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/sluzby-generalni-dodavka.png">
+              <img src="assets/sluzby-generalni-dodavka.png" alt="Vraňany Farma Hanč — koordinace výstavby" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 4.png">
+              <img src="assets/image 4.png" alt="Vraňany Farma Hanč — provozní objekt" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="pexels-ivan-s-4458210 1.png">
+              <img src="pexels-ivan-s-4458210 1.png" alt="Vraňany Farma Hanč — zpevněné plochy" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="ref-project" id="ref-3" aria-labelledby="ref-3-title">
+          <div class="ref-project-head">
+            <span class="ref-project-index" aria-hidden="true">03</span>
+            <div class="ref-project-heading">
+              <span class="ref-project-tag">Novostavba RD · Probíhá</span>
+              <h2 id="ref-3-title">Rodinný dům Roztoky</h2>
               <p>
                 Novostavba rodinného domu na klíč v rámci generální dodávky. Investor jedná s jedním
                 partnerem a má průběžný reporting i pevný harmonogram.
               </p>
-              <dl>
-                <div><dt>Typ</dt><dd>Novostavba RD</dd></div>
-                <div><dt>Místo</dt><dd>Roztoky</dd></div>
-                <div><dt>Termín</dt><dd>říjen 2025 – prosinec 2026</dd></div>
-              </dl>
             </div>
-          </article>
-          <article class="reference-card">
-            <img src="assets/hero 3.png" alt="Novo Plaza — komerční objekt" />
-            <div>
-              <span class="subpage-eyebrow">Komerční development · Probíhá</span>
-              <h2>Novo Plaza</h2>
+            <dl class="ref-project-meta">
+              <div><dt>Místo</dt><dd>Roztoky</dd></div>
+              <div><dt>Termín</dt><dd>říjen 2025 – prosinec 2026</dd></div>
+              <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
+            </dl>
+          </div>
+          <div class="ref-gallery" data-lightbox="rd-roztoky">
+            <button class="ref-shot ref-shot-feature" type="button" data-full="assets/hero 2.png">
+              <img src="assets/hero 2.png" alt="Rodinný dům Roztoky — vizualizace novostavby" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/sluzby-pozemni-stavby.png">
+              <img src="assets/sluzby-pozemni-stavby.png" alt="Rodinný dům Roztoky — hrubá stavba" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 7.png">
+              <img src="assets/image 7.png" alt="Rodinný dům Roztoky — detail realizace" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="pexels-thirdman-8482551 1.png">
+              <img src="pexels-thirdman-8482551 1.png" alt="Rodinný dům Roztoky — příprava stavby" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <article class="ref-project" id="ref-4" aria-labelledby="ref-4-title">
+          <div class="ref-project-head">
+            <span class="ref-project-index" aria-hidden="true">04</span>
+            <div class="ref-project-heading">
+              <span class="ref-project-tag">Komerční development · Probíhá</span>
+              <h2 id="ref-4-title">Novo Plaza</h2>
               <p>
                 Realizace komerčního objektu v rámci developerského projektu. Řídíme termíny, náklady i
                 návaznost na další fáze celého záměru.
               </p>
-              <dl>
-                <div><dt>Typ</dt><dd>Komerční development</dd></div>
-                <div><dt>Místo</dt><dd>Praha</dd></div>
-                <div><dt>Termín</dt><dd>2025 – 2026</dd></div>
-              </dl>
             </div>
-          </article>
-        </div>
-      </section>
+            <dl class="ref-project-meta">
+              <div><dt>Místo</dt><dd>Praha</dd></div>
+              <div><dt>Termín</dt><dd>2025 – 2026</dd></div>
+              <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
+            </dl>
+          </div>
+          <div class="ref-gallery" data-lightbox="novo-plaza">
+            <button class="ref-shot ref-shot-feature" type="button" data-full="assets/hero 3.png">
+              <img src="assets/hero 3.png" alt="Novo Plaza — komerční objekt" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 4.png">
+              <img src="assets/image 4.png" alt="Novo Plaza — vstupní část" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/sluzby-generalni-dodavka.png">
+              <img src="assets/sluzby-generalni-dodavka.png" alt="Novo Plaza — řízení realizace" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+            <button class="ref-shot" type="button" data-full="assets/image 3.png">
+              <img src="assets/image 3.png" alt="Novo Plaza — konstrukční detail" loading="lazy" decoding="async" />
+              <span class="ref-shot-zoom" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+      </div>
 
-      <footer class="subpage-footer">
-        <p>Máte projekt, který chcete realizovat pod jednou smlouvou?</p>
-        <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+      <footer class="footer" id="kontakt">
+        <div class="footer-line footer-left"></div>
+        <div class="footer-line footer-top"></div>
+        <div class="footer-line footer-right"></div>
+        <section>
+          <h2>Kontakt</h2>
+          <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
+          <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci — probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
+          <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
+        </section>
+        <section>
+          <h2>Kariéra</h2>
+          <p>Rozšiřujeme tým. Aktuálně obsazujeme pozice:</p>
+          <ul class="footer-roles">
+            <li>stavbyvedoucí</li>
+            <li>výrobní příprava staveb</li>
+          </ul>
+          <p>Ozvěte se nám přes kontaktní formulář — rádi se s vámi potkáme.</p>
+        </section>
+        <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galerie projektu">
+      <div class="lightbox-backdrop" data-lightbox-close></div>
+      <button class="lightbox-close" type="button" aria-label="Zavřít galerii" data-lightbox-close>&times;</button>
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Předchozí fotografie" data-lightbox-prev>&#8249;</button>
+      <figure class="lightbox-stage">
+        <img class="lightbox-img" src="" alt="" />
+        <figcaption class="lightbox-caption"></figcaption>
+      </figure>
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="Další fotografie" data-lightbox-next>&#8250;</button>
+      <div class="lightbox-counter" aria-hidden="true"></div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

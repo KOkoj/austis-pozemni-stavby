@@ -1001,6 +1001,18 @@ html.hero-precommit .hero-is-choreo .hero-side {
   letter-spacing: 0.01em;
 }
 
+.flow-subpage .hero-copy-aside {
+  justify-content: center;
+}
+
+.flow-subpage .hero-copy h1 {
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .hero-copy p {
   margin: 0;
   color: rgba(255, 255, 255, 0.92);
@@ -2204,14 +2216,6 @@ button.project-link {
   display: none;
 }
 
-.subpage-body {
-  min-height: 100vh;
-  background:
-    linear-gradient(90deg, transparent 0, transparent calc(50% - 587px), rgba(180, 181, 182, 0.32) calc(50% - 587px), rgba(180, 181, 182, 0.32) calc(50% - 586px), transparent calc(50% - 586px)),
-    linear-gradient(90deg, transparent 0, transparent calc(50% + 587px), rgba(180, 181, 182, 0.32) calc(50% + 587px), rgba(180, 181, 182, 0.32) calc(50% + 588px), transparent calc(50% + 588px)),
-    var(--page-bg);
-}
-
 .service-hero-page {
   --service-hero-image-height: 96px;
   --service-hero-panel-height: 156px;
@@ -2289,6 +2293,10 @@ button.project-link {
   line-height: 1.5;
 }
 
+.service-hero-page .line-hero-left {
+  display: none;
+}
+
 .service-hero-page .line-hero-mid {
   display: none;
 }
@@ -2297,91 +2305,12 @@ button.project-link {
   height: calc(var(--service-hero-panel-height) - 2px);
 }
 
-.service-types {
-  position: absolute;
-  z-index: 2;
-  left: var(--content-left);
-  top: calc(var(--hero-panel-bottom) + 54px);
-  width: var(--content-width);
-  min-height: 360px;
-}
-
-.service-types .section-line {
-  background: var(--grid);
-}
-
-.service-types-top,
-.service-types-bottom {
-  left: 0;
-  width: var(--content-width);
-  height: 1px;
-}
-
-.service-types-top {
-  top: 0;
-}
-
-.service-types-bottom {
-  bottom: 0;
-}
-
-.service-types-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 40px;
-  padding: 40px 0 34px;
-}
-
-.service-types-heading h2 {
-  width: 560px;
-  margin: 0;
-  font-size: 34px;
-  font-weight: 500;
-  line-height: 1.18;
-  text-align: right;
-}
-
-.service-types-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.service-types-grid article {
-  position: relative;
-  min-height: 188px;
-  padding: 56px 28px 28px;
-  background: #fff;
-  border: 1px solid rgba(180, 181, 182, 0.62);
-  box-shadow: 0 18px 40px rgba(105, 106, 109, 0.08);
-}
-
-.service-types-grid article::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 11px;
-  height: 11px;
-  background: var(--red);
-}
-
-.service-types-grid h3 {
-  margin: 0 0 10px;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1.22;
-  text-transform: uppercase;
-}
-
-.service-types-grid p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.55;
+.subpage-body {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, transparent 0, transparent calc(50% - 587px), rgba(180, 181, 182, 0.32) calc(50% - 587px), rgba(180, 181, 182, 0.32) calc(50% - 586px), transparent calc(50% - 586px)),
+    linear-gradient(90deg, transparent 0, transparent calc(50% + 587px), rgba(180, 181, 182, 0.32) calc(50% + 587px), rgba(180, 181, 182, 0.32) calc(50% + 588px), transparent calc(50% + 588px)),
+    var(--page-bg);
 }
 
 .subpage-site {
@@ -2815,6 +2744,19 @@ button.project-link {
 .subpage-section {
   width: min(100%, 1440px);
   margin: 88px auto;
+  padding: 0 clamp(24px, 4vw, 60px);
+}
+
+.subpage-section > .subpage-eyebrow {
+  margin-bottom: 14px;
+}
+
+.subpage-section > h2 {
+  margin: 0 0 32px;
+  max-width: 640px;
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .subpage-intro {
@@ -2868,11 +2810,11 @@ button.project-link {
 }
 
 .service-intro .service-intro-main h1 {
-  max-width: 520px;
+  max-width: 580px;
   margin: 0 0 20px;
-  font-size: clamp(32px, 3.2vw, 46px);
+  font-size: clamp(38px, 4.4vw, 58px);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.1;
   letter-spacing: 0.01em;
 }
 
@@ -3178,7 +3120,19 @@ button.project-link {
 }
 
 .company-values {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 24px;
+  padding: 50px 44px 42px;
+}
+
+.company-values h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .company-values article {
@@ -3202,6 +3156,8 @@ button.project-link {
 }
 
 .contact-card-dark {
+  min-height: 320px;
+  padding: 52px 32px 34px;
   background: #000;
   color: #fff;
 }
@@ -3229,6 +3185,10 @@ button.project-link {
   background: currentColor;
 }
 
+.contact-card .subpage-text-link {
+  color: var(--ink);
+}
+
 .subpage-footer {
   width: min(100% - 48px, 1174px);
   min-height: 220px;
@@ -3249,6 +3209,110 @@ button.project-link {
   font-size: clamp(26px, 3vw, 38px);
   font-weight: 500;
   line-height: 1.18;
+}
+
+/* Full-bleed Kontakt/Kariéra footer reused on flow-based subpages —
+   spans the full page width like the homepage, keeps the homepage
+   design lines (top rule, right rule at the content edge, mid divider)
+   and content aligned to the shared content grid. */
+.subpage-body .footer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 440px;
+  margin: 96px 0 0;
+  padding: 88px max(24px, calc((100% - var(--content-width)) / 2)) 0;
+  background: #000;
+  color: #fff;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 5vw, 96px);
+  row-gap: 0;
+}
+
+.subpage-body .footer::before {
+  display: none;
+}
+
+/* Re-enable the homepage design lines on the flow footer */
+.subpage-body .footer .footer-line {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  background: rgba(180, 181, 182, 0.5);
+}
+
+.subpage-body .footer .footer-right {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--grid);
+}
+
+.subpage-body .footer .footer-left {
+  top: 0;
+  bottom: 0;
+  left: calc(50% + var(--content-width) / 2);
+  width: 1px;
+  height: auto;
+}
+
+.subpage-body .footer .footer-top {
+  left: 0;
+  bottom: 150px;
+  width: 100%;
+  height: 1px;
+}
+
+.subpage-body .footer section:first-of-type,
+.subpage-body .footer section:nth-of-type(2) {
+  position: relative;
+  z-index: 2;
+  left: auto;
+  top: auto;
+  width: auto;
+  max-width: 460px;
+  padding-bottom: 96px;
+}
+
+.subpage-body .footer small {
+  position: relative;
+  z-index: 2;
+  left: auto;
+  top: auto;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 32px 0 110px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 720px) {
+  .subpage-body .footer {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    row-gap: 0;
+  }
+
+  .subpage-body .footer section:first-of-type,
+  .subpage-body .footer section:nth-of-type(2) {
+    padding-bottom: 40px;
+  }
+
+  .subpage-body .footer .footer-left {
+    display: none;
+  }
+
+  .subpage-body .footer .footer-top {
+    top: auto;
+    bottom: 128px;
+  }
+
+  .subpage-body .footer small {
+    padding: 28px 0 64px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -4624,10 +4688,6 @@ button.project-link {
     margin-right: auto;
   }
 
-  .mobile-service-types {
-    background: #fff;
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4763,5 +4823,1436 @@ button.project-link {
   .project-link:hover .project-link-visible,
   .project-link:focus-visible .project-link-visible {
     opacity: 0;
+  }
+}
+
+/* ============================================================
+   Sluzby page - redesign per "sluzby page.png" mockup.
+   Hero reuses the homepage hero component unchanged (only the
+   image and copy differ); the artboard is cut right below the
+   hero so the flow sections can take over. Flow sections use
+   viewport-centered calcs that line up with the artboard's
+   1080px content grid (edges at 50vw -/+ 539.5px).
+   ============================================================ */
+.flow-subpage {
+  /* Hero overlay bottom (50 + 448 + 223 + 120) — nothing else lives in the artboard */
+  --artboard-height: 841px;
+  --sp-dark: #2b2a29;
+  /* No responsibility block in this artboard: run the left line to the panel bottom */
+  --hero-left-line-height: calc(var(--hero-panel-bottom) - var(--hero-left-line-top));
+}
+
+/* Placeholder surfaces - swapped for real photos later */
+.sp-ph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(45deg, rgba(30, 30, 30, 0.06) 0 14px, transparent 14px 28px),
+    #cfcfcf;
+  box-shadow: inset 0 0 0 1px rgba(30, 30, 30, 0.16);
+}
+
+.sp-ph-label {
+  padding: 8px 14px;
+  border: 1px dashed rgba(30, 30, 30, 0.4);
+  background: rgba(255, 255, 255, 0.55);
+  color: rgba(30, 30, 30, 0.55);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* "Co pro vas zajistime" white panel overlapping the hero bottom */
+.sp-overview {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 48px, 1080px);
+  margin: calc(-62px * var(--scale)) auto 66px;
+  padding: 46px 24px 76px;
+  background: #fff;
+  scroll-margin-top: 90px;
+}
+
+.sp-overview::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% + 353px);
+  width: 1px;
+  background: rgba(180, 181, 182, 0.42);
+  pointer-events: none;
+}
+
+.sp-overview > h2 {
+  margin: 0 0 44px;
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.sp-overview-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 224px);
+  gap: 20px;
+  justify-content: center;
+}
+
+.sp-card {
+  position: relative;
+  min-height: 188px;
+  padding: 32px 22px 28px;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+}
+
+.sp-card::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  background: #b4b5b6;
+}
+
+.sp-card h3 {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.sp-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 19px;
+}
+
+/* ------------------------------------------------------------
+   Subpage overview — deliberately NOT the homepage panel.
+   Flowing grid of tall cards with a big red index and a red
+   top rule, left-aligned header. Homepage keeps its own look
+   because these rules are scoped to .sp-responsibility.
+   ------------------------------------------------------------ */
+.sp-responsibility {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 48px, var(--content-width));
+  margin: 44px auto 56px;
+  scroll-margin-top: 96px;
+}
+
+.sp-responsibility .responsibility {
+  position: static;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  transform: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Strip the homepage-only decorations */
+.sp-responsibility .panel,
+.sp-responsibility .grid-line,
+.sp-responsibility .feature-card::before,
+.sp-responsibility .feature-card i {
+  display: none;
+}
+
+.sp-responsibility .responsibility-header {
+  position: static;
+  grid-column: 1 / -1;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 14px;
+  padding: 0 0 12px;
+}
+
+.sp-responsibility .responsibility-header h2 {
+  max-width: 760px;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.sp-responsibility .responsibility-lead {
+  max-width: 760px;
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.sp-responsibility .feature-card {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  min-height: 216px;
+  padding: 28px 26px 26px;
+  background: #fff;
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  border-top: 3px solid var(--red);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-responsibility .feature-index {
+  position: static;
+  margin-bottom: 20px;
+  color: var(--red);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.sp-responsibility .feature-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.22;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.sp-responsibility .feature-card p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sp-responsibility .feature-card {
+    transition:
+      border-color 260ms ease,
+      box-shadow 260ms ease,
+      transform 260ms ease;
+  }
+
+  .sp-responsibility .feature-card:hover {
+    border-color: rgba(30, 30, 30, 0.1);
+    border-top-color: var(--red);
+    box-shadow: 0 20px 40px rgba(105, 106, 109, 0.14);
+    transform: translateY(-4px);
+  }
+
+  .sp-responsibility .feature-card:hover .feature-index,
+  .sp-responsibility .feature-card:focus-within .feature-index {
+    color: var(--red);
+  }
+}
+
+@media (max-width: 1024px) {
+  .sp-responsibility {
+    width: calc(100% - 32px);
+    margin: 28px auto 40px;
+  }
+
+  .sp-responsibility .responsibility {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+  }
+
+  .sp-responsibility .responsibility-header h2 {
+    font-size: 24px;
+  }
+
+  .sp-responsibility .feature-card {
+    min-height: 190px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sp-responsibility .responsibility {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------
+   Per-page overview variations — each subpage reads a little
+   differently while keeping the same grid skeleton.
+   • Služby        → white cards, red TOP rule (base)
+   • Reference     → light cards, red LEFT rule, inline index
+   • O společnosti → borderless editorial, big outline index
+   • Kontakt       → dark cards, white text, red index
+   ------------------------------------------------------------ */
+
+/* Reference — red left rule, softer card fill, index beside title */
+.reference-page .sp-responsibility .feature-card {
+  border-top: 1px solid rgba(30, 30, 30, 0.1);
+  border-left: 3px solid var(--red);
+  background: #f6f6f6;
+}
+
+.reference-page .sp-responsibility .feature-index {
+  margin-bottom: 14px;
+  font-size: 22px;
+}
+
+.reference-page .sp-responsibility .feature-card h3 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(30, 30, 30, 0.12);
+}
+
+/* O společnosti — borderless, editorial, thin top divider only */
+.o-spolecnosti-page .sp-responsibility .responsibility {
+  gap: 0 40px;
+}
+
+.o-spolecnosti-page .sp-responsibility .feature-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(30, 30, 30, 0.22);
+  padding: 24px 28px 24px 0;
+  min-height: 200px;
+}
+
+.o-spolecnosti-page .sp-responsibility .feature-index {
+  margin-bottom: 22px;
+  color: var(--ink);
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.o-spolecnosti-page .sp-responsibility .feature-card h3 {
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Kontakt — dark cards, inverted text, red index */
+.kontakt-page .sp-responsibility .feature-card {
+  background: var(--ink);
+  border: 0;
+  border-top: 3px solid var(--red);
+}
+
+.kontakt-page .sp-responsibility .feature-card h3 {
+  color: #fff;
+}
+
+.kontakt-page .sp-responsibility .feature-card p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reference-page .sp-responsibility .feature-card:hover {
+    border-left-color: var(--red);
+    box-shadow: 0 20px 40px rgba(105, 106, 109, 0.16);
+  }
+
+  .o-spolecnosti-page .sp-responsibility .feature-card:hover {
+    border-top-color: rgba(30, 30, 30, 0.22);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .o-spolecnosti-page .sp-responsibility .feature-card:hover .feature-index,
+  .o-spolecnosti-page .sp-responsibility .feature-card:focus-within .feature-index {
+    color: var(--ink);
+  }
+
+  .kontakt-page .sp-responsibility .feature-card:hover {
+    background: #262625;
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.24);
+  }
+}
+
+/* Service detail cards — glass panels in the homepage visual language */
+.sp-detail {
+  position: relative;
+  width: min(100% - 48px, var(--content-width));
+  margin: 72px auto 0;
+}
+
+.sp-detail::before {
+  content: "";
+  position: absolute;
+  top: -36px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(180, 181, 182, 0.42);
+  pointer-events: none;
+}
+
+.sp-detail:first-of-type {
+  margin-top: 0;
+}
+
+.sp-detail:first-of-type::before {
+  display: none;
+}
+
+.sp-detail-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 415px);
+  min-height: 400px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(105, 106, 109, 0.08);
+  overflow: hidden;
+}
+
+.sp-detail-flip .sp-detail-inner {
+  grid-template-columns: minmax(280px, 415px) minmax(0, 1.15fr);
+}
+
+.sp-detail-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 52px 44px 44px;
+  color: #fff;
+  background-color: rgba(22, 22, 22, 0.92);
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.02) 42%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  isolation: isolate;
+}
+
+.sp-detail-copy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 48%,
+    transparent 100%
+  );
+}
+
+.sp-detail-flip .sp-detail-copy {
+  border-right: 0;
+  border-left: 1px solid var(--glass-border);
+}
+
+.sp-detail-index {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.sp-detail-copy h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 18px;
+  max-width: 505px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.sp-detail-copy > p {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 26px;
+  max-width: 505px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.sp-detail-scope {
+  position: relative;
+  z-index: 1;
+  max-width: 505px;
+  padding: 20px 22px 18px;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(235, 235, 235, 0.55) 100%
+  );
+  backdrop-filter: var(--glass-light-blur);
+  -webkit-backdrop-filter: var(--glass-light-blur);
+  border: 1px solid var(--glass-light-border);
+  box-shadow: inset 0 1px 0 var(--glass-light-highlight);
+}
+
+.sp-detail-scope .sp-scope-label {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.sp-scope {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sp-scope li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 5px 0;
+  color: #3a3b3d;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.sp-scope li::before {
+  content: "";
+  flex: none;
+  width: 11px;
+  height: 11px;
+  margin-top: 3px;
+  background: var(--red);
+}
+
+.sp-scope a,
+.sp-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sp-detail .sp-photo {
+  position: relative;
+  min-height: 100%;
+}
+
+.sp-detail .sp-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+}
+
+.sp-detail .sp-photo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  width: 11px;
+  height: 11px;
+  background: var(--red);
+}
+
+.sp-detail-flip .sp-photo::after {
+  right: auto;
+  left: 0;
+}
+
+/* Full-bleed black footer */
+.sp-footer {
+  position: relative;
+  margin-top: 120px;
+  padding: 118px 0 0;
+  background: #000;
+  color: #fff;
+}
+
+.sp-footer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% + 539.5px);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+
+.sp-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 500px) minmax(0, 1fr);
+  column-gap: 90px;
+  row-gap: 32px;
+  width: min(100% - 48px, 1038px);
+  margin: 0 auto;
+  padding-bottom: 56px;
+}
+
+.sp-footer h2 {
+  margin: 0 0 24px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.sp-footer p {
+  max-width: 400px;
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.sp-footer p strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.sp-footer .sp-footer-chip {
+  display: inline-block;
+  margin: 16px 0 0;
+  padding: 9px 18px;
+  background: #3a3a3a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sp-footer-roles {
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.sp-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 32px 0 110px;
+}
+
+.sp-footer-bottom small {
+  display: block;
+  width: min(100% - 48px, 1038px);
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .sp-overview {
+    width: calc(100% - 32px);
+    margin: 28px auto 48px;
+    padding: 34px 20px 44px;
+  }
+
+  .sp-overview::after {
+    display: none;
+  }
+
+  .sp-overview > h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+
+  .sp-overview-cards {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 224px));
+  }
+
+  .sp-detail,
+  .sp-detail-flip {
+    width: calc(100% - 32px);
+    margin: 40px auto 0;
+  }
+
+  .sp-detail::before {
+    display: none;
+  }
+
+  .sp-detail-inner,
+  .sp-detail-flip .sp-detail-inner {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .sp-detail-copy,
+  .sp-detail-flip .sp-detail-copy {
+    padding: 34px 24px 32px;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--glass-border);
+    order: 1;
+  }
+
+  .sp-detail .sp-photo,
+  .sp-detail-flip .sp-photo {
+    order: 2;
+    min-height: 240px;
+  }
+
+  .sp-footer {
+    margin-top: 72px;
+    padding-top: 64px;
+  }
+
+  .sp-footer::after {
+    display: none;
+  }
+
+  .sp-footer-grid {
+    grid-template-columns: 1fr;
+    width: calc(100% - 48px);
+    padding-bottom: 40px;
+  }
+
+  .sp-footer-bottom {
+    padding: 22px 0 60px;
+  }
+
+  .sp-footer-bottom small {
+    width: calc(100% - 48px);
+  }
+}
+
+/* ============================================================
+   Kontakt — clear contact card + numbered process stepper.
+   White surfaces, prominent e-mail, easy to orient.
+   ============================================================ */
+.contact-eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-detail {
+  width: min(100% - 48px, var(--content-width));
+  margin: 64px auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 0;
+  background: #fff;
+  border: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.contact-detail-lead {
+  padding: 48px clamp(28px, 4vw, 56px);
+}
+
+.contact-detail-lead h2 {
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.14;
+}
+
+.contact-detail-lead p {
+  margin: 0 0 28px;
+  max-width: 520px;
+  color: #46474a;
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.contact-mail {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 28px;
+  background: var(--ink);
+  color: #fff;
+  transition: background 220ms ease;
+}
+
+.contact-mail-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contact-mail-value {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-mail:hover {
+    background: var(--red);
+  }
+}
+
+.contact-mail:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+.contact-facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f4;
+  border-left: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.contact-facts div {
+  padding: 22px clamp(24px, 3vw, 34px);
+  border-bottom: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.contact-facts div:last-child {
+  border-bottom: 0;
+}
+
+.contact-facts dt {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contact-facts dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.contact-steps-section {
+  width: min(100% - 48px, var(--content-width));
+  margin: 20px auto 0;
+  padding: 48px clamp(28px, 4vw, 56px);
+  background: #fff;
+  border: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.contact-steps-head {
+  max-width: 620px;
+  margin-bottom: 36px;
+}
+
+.contact-steps-head h2 {
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.contact-steps-head p {
+  margin: 0;
+  color: #46474a;
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.contact-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(30, 30, 30, 0.1);
+  border: 1px solid rgba(30, 30, 30, 0.1);
+}
+
+.contact-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px 24px 30px;
+  background: #fff;
+}
+
+.contact-step-num {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: -0.02em;
+}
+
+.contact-steps li p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .contact-detail {
+    width: calc(100% - 32px);
+    margin-top: 40px;
+    grid-template-columns: 1fr;
+  }
+
+  .contact-detail-lead {
+    padding: 30px 22px;
+  }
+
+  .contact-detail-lead h2 {
+    font-size: 24px;
+  }
+
+  .contact-facts {
+    border-left: 0;
+    border-top: 1px solid rgba(30, 30, 30, 0.1);
+  }
+
+  .contact-steps-section {
+    width: calc(100% - 32px);
+    padding: 30px 22px;
+  }
+
+  .contact-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .contact-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   O společnosti — simple white text blocks (no photos).
+   Lighter than the služby glass panels: plain white cards with
+   a two-column head/body split.
+   ============================================================ */
+.about-blocks {
+  width: min(100% - 48px, var(--content-width));
+  margin: 64px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-block {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 24px 48px;
+  padding: 44px clamp(28px, 4vw, 56px);
+  background: #fff;
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  scroll-margin-top: 96px;
+}
+
+.about-block-head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-block-index {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--red);
+}
+
+.about-block-head h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.about-block-body {
+  min-width: 0;
+}
+
+.about-block-body p {
+  margin: 0;
+  color: #46474a;
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.about-list {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-list li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.about-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  background: var(--red);
+}
+
+@media (max-width: 1024px) {
+  .about-blocks {
+    width: calc(100% - 32px);
+    margin-top: 40px;
+    gap: 14px;
+  }
+
+  .about-block {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 30px 22px;
+  }
+
+  .about-block-head h2 {
+    font-size: 22px;
+  }
+}
+
+/* ============================================================
+   Reference page — project galleries (distinct from sp-detail)
+   Editorial layout: text header + asymmetric photo mosaic with
+   a lightbox. Deliberately lighter/flatter than the služby
+   glass panels so the two pages read differently.
+   ============================================================ */
+.ref-projects {
+  width: min(100% - 48px, var(--content-width));
+  margin: 64px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.ref-project {
+  position: relative;
+  scroll-margin-top: 96px;
+}
+
+.ref-project-head {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 240px;
+  gap: 8px 32px;
+  align-items: start;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(30, 30, 30, 0.16);
+}
+
+.ref-project-index {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: -0.02em;
+}
+
+.ref-project-heading {
+  min-width: 0;
+}
+
+.ref-project-tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.ref-project-heading h2 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.14;
+}
+
+.ref-project-heading p {
+  margin: 0;
+  max-width: 560px;
+  color: #46474a;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.ref-project-meta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.ref-project-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 14px;
+  border-left: 2px solid var(--red);
+}
+
+.ref-project-meta dt {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ref-project-meta dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Photo mosaic: one large feature + smaller supporting shots */
+.ref-gallery {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 132px;
+  gap: 12px;
+}
+
+.ref-shot {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  overflow: hidden;
+  background: #d4d4d4;
+  cursor: pointer;
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.ref-shot-feature {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.ref-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ref-shot-zoom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.55);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+  pointer-events: none;
+}
+
+.ref-shot-zoom::before,
+.ref-shot-zoom::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+}
+
+.ref-shot-zoom::before {
+  left: 9px;
+  top: 14px;
+  width: 12px;
+  height: 2px;
+}
+
+.ref-shot-zoom::after {
+  left: 14px;
+  top: 9px;
+  width: 2px;
+  height: 12px;
+}
+
+.ref-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(147, 44, 56, 0);
+  transition: background 260ms ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ref-shot:hover img,
+  .ref-shot:focus-visible img {
+    transform: scale(1.06);
+  }
+
+  .ref-shot:hover::after,
+  .ref-shot:focus-visible::after {
+    background: rgba(147, 44, 56, 0.14);
+  }
+
+  .ref-shot:hover .ref-shot-zoom,
+  .ref-shot:focus-visible .ref-shot-zoom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ref-shot:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1024px) {
+  .ref-projects {
+    width: calc(100% - 32px);
+    gap: 64px;
+    margin-top: 40px;
+  }
+
+  .ref-project-head {
+    grid-template-columns: 44px 1fr;
+    gap: 6px 18px;
+  }
+
+  .ref-project-index {
+    font-size: 30px;
+  }
+
+  .ref-project-heading {
+    grid-column: 2;
+  }
+
+  .ref-project-meta {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 16px;
+  }
+
+  .ref-project-heading h2 {
+    font-size: 24px;
+  }
+
+  .ref-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 44vw;
+    gap: 8px;
+  }
+
+  .ref-shot-feature {
+    grid-column: span 2;
+    grid-row: span 1;
+    grid-auto-rows: 56vw;
+  }
+
+  .ref-shot-zoom {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .ref-gallery {
+    grid-auto-rows: 40vw;
+  }
+}
+
+/* ---- Lightbox ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 64px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 260ms ease,
+    visibility 0s linear 260ms;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 260ms ease,
+    visibility 0s;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 12, 12, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.lightbox-stage {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: min(1100px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transform: scale(0.97);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lightbox.is-open .lightbox-stage {
+  transform: scale(1);
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: calc(100vh - 168px);
+  object-fit: contain;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  background: #1a1a1a;
+}
+
+.lightbox-caption {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 220ms ease,
+    transform 220ms ease;
+}
+
+.lightbox-close {
+  top: clamp(14px, 3vw, 30px);
+  right: clamp(14px, 3vw, 30px);
+  width: 48px;
+  height: 48px;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.lightbox-prev {
+  left: clamp(10px, 2.5vw, 28px);
+}
+
+.lightbox-next {
+  right: clamp(10px, 2.5vw, 28px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lightbox-close:hover,
+  .lightbox-nav:hover {
+    background: var(--red);
+  }
+}
+
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.lightbox-counter {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(14px, 3vw, 28px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+  }
+
+  .lightbox-img {
+    max-height: calc(100vh - 140px);
   }
 }

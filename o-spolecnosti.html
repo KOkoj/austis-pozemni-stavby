@@ -8,81 +8,193 @@
       content="O společnosti AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery."
     />
     <title>O společnosti | AUSTIS Pozemní stavby</title>
+    <script>
+      (function () {
+        try {
+          if (sessionStorage.getItem("austis-hero-played")) {
+            document.documentElement.classList.add("hero-precommit");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="image" href="assets/image 7.png" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="subpage-body">
+  <body
+    class="subpage-body flow-subpage o-spolecnosti-page"
+    data-hero-image="assets/image 7.png"
+    data-hero-video=""
+    data-hero-name="O společnosti"
+  >
     <main class="subpage-site">
-      <header class="subpage-header">
-        <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+      <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
+        <div class="scroll-nav-bar">
+          <div class="scroll-nav-inner">
+            <header class="subpage-header">
+              <nav class="subpage-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Úvod</a>
+                <a href="sluzby.html">služby</a>
+                <a href="reference.html">reference</a>
+                <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+              <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+            </header>
+          </div>
+        </div>
+        <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
           <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
           <span class="logo-sub">pozemní stavby</span>
         </a>
-        <nav class="subpage-nav" aria-label="Hlavní navigace">
-          <a href="index.html">Úvod</a>
-          <a href="sluzby.html">služby</a>
-          <a href="reference.html">reference</a>
-          <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
-          <a href="kontakt.html">kontakt</a>
-        </nav>
-        <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
-      </header>
+      </div>
 
-      <section class="subpage-hero" aria-labelledby="about-hero-title">
-        <img src="assets/image 7.png" alt="AUSTIS Pozemní stavby — stavební realizace" />
-        <div class="subpage-hero-panel">
-          <span class="subpage-eyebrow">O společnosti</span>
-          <h1 id="about-hero-title">Generální dodavatel, se kterým jednáte napřímo</h1>
-          <p>
-            Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů. Každou
-            stavbu řídíme s důrazem na náklady, termíny a kvalitu provedení.
-          </p>
+      <div class="desktop-shell" aria-label="AUSTIS o společnosti desktop design">
+        <div class="artboard">
+          <section class="hero hero-is-choreo">
+            <div class="hero-bg-stack">
+              <video
+                class="hero-bg hero-bg-video"
+                poster="assets/image 7.png"
+                muted
+                playsinline
+                preload="auto"
+                aria-label="O společnosti"
+              ></video>
+              <img
+                class="hero-bg hero-bg-still"
+                src="assets/image 7.png"
+                alt="O společnosti"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+            <div class="hero-side"></div>
+            <div class="line line-nav"></div>
+            <div class="line line-logo-vertical"></div>
+            <div class="line line-hero-image-top"></div>
+            <div class="line line-hero-top"></div>
+            <div class="line line-hero-mid"></div>
+            <div class="line line-hero-right"></div>
+            <div class="line line-hero-bottom"></div>
+            <div class="line line-hero-left" aria-hidden="true"></div>
+            <header class="header">
+              <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+                <span class="logo-sub">pozemní stavby</span>
+              </a>
+              <nav class="nav" aria-label="Hlavní navigace">
+                <a href="index.html">Úvod</a>
+                <a href="sluzby.html">služby</a>
+                <a href="reference.html">reference</a>
+                <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+              <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+            </header>
+            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <h1>Generální dodavatel, se kterým jednáte napřímo</h1>
+                <div class="hero-copy-aside">
+                  <p>
+                    Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů. Každou
+                    stavbu řídíme s důrazem na náklady, termíny a kvalitu provedení.
+                  </p>
+                </div>
+              </div>
+              <a class="project-link" href="#o-spolecnosti" aria-label="více o společnosti">
+                <span class="project-link-text" aria-hidden="true">
+                  <span class="project-link-ghost">více o<br />společnosti</span>
+                  <span class="project-link-visible">více o<br />společnosti</span>
+                </span>
+              </a>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
 
-      <section class="subpage-section" aria-labelledby="about-intro-title">
-        <div class="company-layout">
-          <article class="subpage-card company-intro">
-            <h2 id="about-intro-title">Jeden partner pro celou stavbu</h2>
+      <div class="mobile-page" aria-label="AUSTIS o společnosti mobile layout">
+        <header class="mobile-header">
+          <div class="mobile-header-row">
+            <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-sub">pozemní stavby</span>
+            </a>
+            <a class="btn btn-red" href="kontakt.html">poptat spolupráci</a>
+          </div>
+          <nav class="mobile-nav" aria-label="Hlavní navigace">
+            <a href="index.html">Úvod</a>
+            <a href="sluzby.html">služby</a>
+            <a href="reference.html">reference</a>
+            <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
+            <a href="kontakt.html">kontakt</a>
+          </nav>
+        </header>
+        <section class="mobile-hero hero-is-choreo">
+          <div class="mobile-hero-bg-stack" aria-hidden="true">
+            <video
+              class="mobile-hero-bg mobile-hero-video"
+              poster="assets/image 7.png"
+              muted
+              playsinline
+              preload="auto"
+              aria-hidden="true"
+            ></video>
+            <img
+              class="mobile-hero-bg mobile-hero-still"
+              src="assets/image 7.png"
+              alt=""
+              aria-hidden="true"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+          <div class="mobile-hero-panel">
+            <h1>Generální dodavatel, se kterým jednáte napřímo</h1>
             <p>
-              Jsme generální dodavatel pozemních staveb pro investory a developery, kteří chtějí jednoho
-              odpovědného partnera. Celou realizaci zastřešujeme jednou smlouvou — od přípravy a koordinace
-              profesí až po předání klíčů.
+              Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů. Každou
+              stavbu řídíme s důrazem na náklady, termíny a kvalitu provedení.
             </p>
-            <p>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="#o-spolecnosti">více o společnosti</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="o-spolecnosti" class="sp-responsibility" aria-labelledby="about-overview-title">
+        <div class="responsibility is-section-visible">
+          <div class="panel"></div>
+          <div class="grid-line grid-left"></div>
+          <div class="grid-line grid-top"></div>
+          <div class="grid-line grid-right"></div>
+          <div class="responsibility-header">
+            <h2 id="about-overview-title">Jak pracujeme</h2>
+            <p class="responsibility-lead">
               Stavbu vedeme tak, aby realizace běžela plynule, rizika zůstala pod kontrolou a investor měl
               vždy aktuální přehled o stavu prací i čerpání rozpočtu.
             </p>
-            <ul>
-              <li>realizace rezidenčních i komerčních projektů</li>
-              <li>stabilní síť prověřených subdodavatelů</li>
-              <li>řízení zakázek v roli generálního dodavatele</li>
-            </ul>
-          </article>
-          <aside class="company-mark">
-            <img src="logo b.svg" alt="" aria-hidden="true" />
-            <strong>AUSTIS Pozemní stavby s.r.o.</strong>
-          </aside>
-        </div>
-
-        <div class="subpage-card company-values">
-          <article>
+          </div>
+          <article class="feature-card one">
             <span class="feature-index" aria-hidden="true">01</span>
+            <i></i>
             <h3>Náš přístup</h3>
             <p>
               Plánujeme návaznosti profesí, hlídáme klíčové milníky a informujeme investora průběžně —
               ne až na konci projektu.
             </p>
           </article>
-          <article>
+          <article class="feature-card two">
             <span class="feature-index" aria-hidden="true">02</span>
+            <i></i>
             <h3>Odpovědnost</h3>
             <p>
               Subdodavatele vybíráme, řídíme i kontrolujeme my. Odpovědnost za výsledek neseme od
               přípravy po předání.
             </p>
           </article>
-          <article>
+          <article class="feature-card three">
             <span class="feature-index" aria-hidden="true">03</span>
+            <i></i>
             <h3>Reporting</h3>
             <p>
               V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je
@@ -92,9 +204,79 @@
         </div>
       </section>
 
-      <footer class="subpage-footer">
-        <p>Hledáte partnera, který převezme odpovědnost za celou stavbu?</p>
-        <a class="btn btn-red" href="kontakt.html">domluvit konzultaci</a>
+      <div class="about-blocks">
+        <article class="about-block" aria-labelledby="about-intro-title">
+          <div class="about-block-head">
+            <span class="about-block-index" aria-hidden="true">01</span>
+            <h2 id="about-intro-title">Jeden partner pro celou stavbu</h2>
+          </div>
+          <div class="about-block-body">
+            <p>
+              Jsme generální dodavatel pozemních staveb pro investory a developery, kteří chtějí jednoho
+              odpovědného partnera. Celou realizaci zastřešujeme jednou smlouvou — od přípravy a koordinace
+              profesí až po předání klíčů.
+            </p>
+            <ul class="about-list">
+              <li>realizace rezidenčních i komerčních projektů</li>
+              <li>stabilní síť prověřených subdodavatelů</li>
+              <li>řízení zakázek v roli generálního dodavatele</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="about-block" aria-labelledby="about-clients-title">
+          <div class="about-block-head">
+            <span class="about-block-index" aria-hidden="true">02</span>
+            <h2 id="about-clients-title">S kým spolupracujeme</h2>
+          </div>
+          <div class="about-block-body">
+            <p>Stavíme pro investory, developery i provozovatele — vždy jako generální dodavatel s jednou smlouvou a plnou odpovědností za výsledek.</p>
+            <ul class="about-list">
+              <li>investoři — jednotlivé stavební záměry od přípravy po předání</li>
+              <li>developeři — rezidenční i komerční projekty s důrazem na termíny</li>
+              <li>firmy a provozovatelé — areály a rekonstrukce za provozu</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="about-block" aria-labelledby="about-career-title">
+          <div class="about-block-head">
+            <span class="about-block-index" aria-hidden="true">03</span>
+            <h2 id="about-career-title">Přidejte se k našemu týmu</h2>
+          </div>
+          <div class="about-block-body">
+            <p>
+              Rozšiřujeme tým o lidi, kteří chtějí vést stavby samostatně a mít výsledky své práce vidět.
+              Napište nám, rádi se s vámi potkáme.
+            </p>
+            <ul class="about-list">
+              <li>stavbyvedoucí — samostatné vedení staveb v roli generálního dodavatele</li>
+              <li>výrobní příprava staveb — příprava zakázek, rozpočty a harmonogramy</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <footer class="footer" id="kontakt">
+        <div class="footer-line footer-left"></div>
+        <div class="footer-line footer-top"></div>
+        <div class="footer-line footer-right"></div>
+        <section>
+          <h2>Kontakt</h2>
+          <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
+          <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci — probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
+          <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
+        </section>
+        <section>
+          <h2>Kariéra</h2>
+          <p>Rozšiřujeme tým. Aktuálně obsazujeme pozice:</p>
+          <ul class="footer-roles">
+            <li>stavbyvedoucí</li>
+            <li>výrobní příprava staveb</li>
+          </ul>
+          <p>Ozvěte se nám přes kontaktní formulář — rádi se s vámi potkáme.</p>
+        </section>
+        <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
     <script src="script.js"></script>
