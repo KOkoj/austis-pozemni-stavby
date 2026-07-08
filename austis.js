@@ -397,7 +397,7 @@
       },
     ].filter(({ section, video, still }) => section && video && still);
 
-    const SESSION_KEY = "austis-hero-played";
+    const SESSION_KEY = "austis-as-hero-played";
     const hasPlayedHero = !!sessionStorage.getItem(SESSION_KEY);
     if (!hasPlayedHero) {
       sessionStorage.setItem(SESSION_KEY, "1");
@@ -936,6 +936,165 @@
     applyProjectContent(referenceProjects[0], 0);
   }
 
+  // Rotating hero background: after the intro settles, gently crossfade the
+  // still image through hero shots borrowed from the other site pages, looping.
+  function initHeroBackgroundCycle() {
+    const raw = document.body?.dataset?.heroCycle;
+
+    if (!raw) {
+      return;
+    }
+
+    const images = raw
+      .split(",")
+      .map((src) => src.trim())
+      .filter(Boolean);
+
+    if (images.length < 2) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const fadeMs = 1200;
+    const intervalMs = Math.max(
+      fadeMs + 1500,
+      parseInt(document.body.dataset.heroCycleInterval || "5500", 10) || 5500,
+    );
+
+    // Two stacked overlay layers per hero. The base still image is never
+    // touched; we ping-pong between the two overlays so the currently visible
+    // pixels stay on screen until the next (already decoded) image is faded in.
+    const targets = [
+      { stack: ".hero-bg-stack", layerClass: "hero-cycle-layer" },
+      { stack: ".mobile-hero-bg-stack", layerClass: "mobile-hero-cycle-layer" },
+    ]
+      .map(({ stack, layerClass }) => {
+        const stackEl = document.querySelector(stack);
+
+        if (!stackEl) {
+          return null;
+        }
+
+        const makeLayer = () => {
+          const layer = document.createElement("img");
+          layer.className = layerClass;
+          layer.alt = "";
+          layer.setAttribute("aria-hidden", "true");
+          layer.decoding = "async";
+          stackEl.appendChild(layer);
+          return layer;
+        };
+
+        return { layers: [makeLayer(), makeLayer()], frontIdx: -1 };
+      })
+      .filter(Boolean);
+
+    if (!targets.length) {
+      return;
+    }
+
+    // Warm the browser cache so each crossfade decodes quickly.
+    images.forEach((src) => {
+      const preload = new Image();
+      preload.src = src;
+    });
+
+    let index = 0;
+    let advancing = false;
+
+    async function decodeInto(layer, src) {
+      layer.src = src;
+
+      if (typeof layer.decode === "function") {
+        try {
+          await layer.decode();
+        } catch (e) {
+          /* fall through: fade in anyway */
+        }
+      }
+    }
+
+    async function advance() {
+      if (advancing) {
+        return;
+      }
+
+      advancing = true;
+      const next = (index + 1) % images.length;
+      const src = images[next];
+
+      await Promise.all(
+        targets.map(async (target) => {
+          const incomingIdx = target.frontIdx === 0 ? 1 : 0;
+          const incoming = target.layers[incomingIdx];
+          target.incomingIdx = incomingIdx;
+
+          await decodeInto(incoming, src);
+          incoming.style.zIndex = "3";
+          void incoming.offsetWidth;
+          incoming.classList.add("is-visible");
+        }),
+      );
+
+      window.setTimeout(() => {
+        targets.forEach((target) => {
+          if (target.frontIdx >= 0) {
+            const previous = target.layers[target.frontIdx];
+            previous.classList.remove("is-visible");
+            previous.style.zIndex = "2";
+          }
+
+          target.frontIdx = target.incomingIdx;
+        });
+
+        index = next;
+        advancing = false;
+      }, fadeMs + 80);
+    }
+
+    function start() {
+      window.setInterval(advance, intervalMs);
+    }
+
+    // Hold off until the hero intro choreography has settled.
+    const heroSection = document.querySelector(".hero, .mobile-hero");
+
+    if (heroSection?.classList.contains("hero-is-settled")) {
+      start();
+      return;
+    }
+
+    let started = false;
+    const kickoff = () => {
+      if (started) {
+        return;
+      }
+      started = true;
+      start();
+    };
+
+    const settleObserver = new MutationObserver(() => {
+      const settled = document.querySelector(".hero.hero-is-settled, .mobile-hero.hero-is-settled");
+      if (settled) {
+        settleObserver.disconnect();
+        kickoff();
+      }
+    });
+
+    document.querySelectorAll(".hero, .mobile-hero").forEach((el) => {
+      settleObserver.observe(el, { attributes: true, attributeFilter: ["class"] });
+    });
+
+    // Fallback in case the settle class never toggles (e.g. reduced timing paths).
+    window.setTimeout(() => {
+      settleObserver.disconnect();
+      kickoff();
+    }, 6000);
+  }
+
   function prepareNavState() {
     const navLinks = Array.from(document.querySelectorAll(".nav a[href^='#']"));
     const sectionMap = new Map(
@@ -1159,6 +1318,7 @@
   const heroApi = prepareHeroDots();
   initHeroVideo(revealHeroLines);
   prepareReferenceCarousel(heroApi);
+  initHeroBackgroundCycle();
   prepareNavState();
   revealScrollLines();
   initResponsibilityScrollReveal();

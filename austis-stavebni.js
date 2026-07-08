@@ -397,7 +397,7 @@
       },
     ].filter(({ section, video, still }) => section && video && still);
 
-    const SESSION_KEY = "austis-hero-played";
+    const SESSION_KEY = "austis-stavebni-hero-played";
     const hasPlayedHero = !!sessionStorage.getItem(SESSION_KEY);
     if (!hasPlayedHero) {
       sessionStorage.setItem(SESSION_KEY, "1");

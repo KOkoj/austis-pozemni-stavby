@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AUSTIS Admin — jednotný správní panel pro weby AUSTIS a.s., AUSTIS Stavební, AUSTIS Real a ETERNAL. Ukázka rozhraní."
+    />
+    <title>AUSTIS Admin · Správní panel</title>
+    <link rel="stylesheet" href="austis-admin.css?v=20260708" />
+  </head>
+  <body class="admin-body">
+    <div class="admin-demo-flag" aria-hidden="true">Ukázka rozhraní — data jsou demonstrační</div>
+
+    <div class="admin-shell">
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="admin-sidebar" aria-label="Hlavní navigace">
+        <a class="admin-brand" href="austis.html">
+          <span class="admin-brand-mark"><img src="logo.svg" alt="" /></span>
+          <span class="admin-brand-text">
+            <strong>AUSTIS</strong>
+            <span>Admin panel</span>
+          </span>
+        </a>
+
+        <nav class="admin-nav" aria-label="Sekce">
+          <span class="admin-nav-label">Přehled</span>
+          <button class="admin-nav-item" data-view="dashboard" data-icon="grid">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Nástěnka</span>
+          </button>
+          <button class="admin-nav-item" data-view="inquiries" data-icon="inbox">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Poptávky &amp; formuláře</span>
+            <span class="admin-nav-badge" data-badge="inquiries">0</span>
+          </button>
+
+          <span class="admin-nav-label">Obsah webů</span>
+          <button class="admin-nav-item" data-view="news" data-icon="news">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Aktuality</span>
+          </button>
+          <button class="admin-nav-item" data-view="properties" data-icon="building">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Nemovitosti</span>
+          </button>
+          <button class="admin-nav-item" data-view="jobs" data-icon="briefcase">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Kariéra</span>
+          </button>
+
+          <span class="admin-nav-label">Nastavení</span>
+          <button class="admin-nav-item" data-view="contacts" data-icon="pin">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Kontaktní údaje</span>
+          </button>
+          <button class="admin-nav-item" data-view="settings" data-icon="cog">
+            <span class="admin-nav-ico" aria-hidden="true"></span>
+            <span class="admin-nav-text">Nastavení webů</span>
+          </button>
+        </nav>
+
+        <div class="admin-user">
+          <span class="admin-user-avatar" aria-hidden="true">JN</span>
+          <span class="admin-user-meta">
+            <strong>Jan Novák</strong>
+            <span>Správce obsahu</span>
+          </span>
+          <button class="admin-user-logout" title="Odhlásit se" aria-label="Odhlásit se"></button>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN ============ -->
+      <div class="admin-main">
+        <header class="admin-topbar">
+          <button class="admin-menu-toggle" aria-label="Menu"><span></span></button>
+          <div class="admin-topbar-title">
+            <h1 id="view-title">Nástěnka</h1>
+            <p id="view-subtitle">Souhrn napříč všemi weby</p>
+          </div>
+
+          <div class="admin-topbar-tools">
+            <label class="admin-search">
+              <span class="admin-search-ico" aria-hidden="true"></span>
+              <input type="search" id="global-search" placeholder="Hledat…" aria-label="Hledat" />
+            </label>
+
+            <div class="admin-site-switch" role="group" aria-label="Přepnout web">
+              <button class="admin-site-pill is-active" data-site="all">Všechny</button>
+              <button class="admin-site-pill" data-site="austis" data-accent="austis">AUSTIS a.s.</button>
+              <button class="admin-site-pill" data-site="stavebni" data-accent="stavebni">Stavební</button>
+              <button class="admin-site-pill" data-site="real" data-accent="real">Real</button>
+              <button class="admin-site-pill" data-site="eternal" data-accent="eternal">ETERNAL</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="admin-view" id="admin-view" tabindex="-1">
+          <!-- Rendered by austis-admin.js -->
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal host -->
+    <div class="admin-modal-root" id="modal-root" hidden>
+      <div class="admin-modal-backdrop" data-close-modal></div>
+      <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="admin-modal-head">
+          <h2 id="modal-title">Detail</h2>
+          <button class="admin-modal-close" data-close-modal aria-label="Zavřít"></button>
+        </header>
+        <div class="admin-modal-body" id="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- Toasts -->
+    <div class="admin-toasts" id="toasts" aria-live="polite"></div>
+
+    <script src="austis-admin.js?v=20260708"></script>
+  </body>
+</html>
