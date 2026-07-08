@@ -598,8 +598,12 @@ a {
   width: 16px;
   height: 16px;
   background: currentColor;
-  -webkit-mask: center / contain no-repeat;
-  mask: center / contain no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 .ico-plus {
   -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4'><path d='M12 5v14M5 12h14'/></svg>");
@@ -767,8 +771,12 @@ a {
   width: 22px;
   height: 22px;
   background: var(--accent);
-  -webkit-mask: center / contain no-repeat;
-  mask: center / contain no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 .quick-action strong {
   font-size: 13px;
@@ -886,8 +894,12 @@ table.data tr.is-unread td:first-child {
   width: 16px;
   height: 16px;
   background: var(--muted);
-  -webkit-mask: center / contain no-repeat;
-  mask: center / contain no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 .icon-btn:hover .i {
   background: var(--ink);
