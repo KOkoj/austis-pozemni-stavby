@@ -3,6 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="https://TODO-DOMAIN/poptavka" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Poptat spolupráci | AUSTIS Pozemní stavby" />
+    <meta property="og:description" content="Poptávka spolupráce — AUSTIS Pozemní stavby. Nezávazná konzultace k vašemu stavebnímu záměru." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://TODO-DOMAIN/poptavka" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="AUSTIS Pozemní stavby" />
+    <meta property="og:image" content="https://TODO-DOMAIN/assets/image%204.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["Organization", "GeneralContractor"],
+      "name": "AUSTIS Pozemní stavby s.r.o.",
+      "url": "https://TODO-DOMAIN",
+      "email": "info@austis.cz",
+      "telephone": "+420 251 099 111",
+      "vatID": "CZ07093322",
+      "identifier": "07093322",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "TODO: street",
+        "addressLocality": "TODO: city",
+        "postalCode": "TODO: postal code",
+        "addressCountry": "CZ"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Úvod",
+          "item": "https://TODO-DOMAIN/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Poptávka",
+          "item": "https://TODO-DOMAIN/poptavka"
+        }
+      ]
+    }
+    </script>
     <meta
       name="description"
       content="Poptávka spolupráce — AUSTIS Pozemní stavby. Nezávazná konzultace k vašemu stavebnímu záměru."
@@ -18,7 +67,7 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/image 4.png" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260708" />
+    <link rel="stylesheet" href="styles.css?v=20260716ac" />
   </head>
   <body
     class="subpage-body flow-subpage poptavka-page"
@@ -34,7 +83,7 @@
               <nav class="subpage-nav" aria-label="Hlavní navigace">
                 <a href="index.html">Úvod</a>
                 <a href="sluzby.html">služby</a>
-                <a href="reference.html">reference</a>
+                <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
@@ -79,13 +128,13 @@
             <div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
                 <span class="logo-sub">pozemní stavby</span>
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
                 <a href="index.html">Úvod</a>
                 <a href="sluzby.html">služby</a>
-                <a href="reference.html">reference</a>
+                <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
@@ -116,7 +165,7 @@
         <header class="mobile-header">
           <div class="mobile-header-row">
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
               <span class="logo-sub">pozemní stavby</span>
             </a>
             <a class="btn btn-red active" href="#poptavka-form" aria-current="page">poptat spolupráci</a>
@@ -124,7 +173,7 @@
           <nav class="mobile-nav" aria-label="Hlavní navigace">
             <a href="index.html">Úvod</a>
             <a href="sluzby.html">služby</a>
-            <a href="reference.html">reference</a>
+            <a href="projekty.html">projekty</a>
             <a href="o-spolecnosti.html">o společnosti</a>
             <a href="kontakt.html">kontakt</a>
           </nav>
@@ -149,7 +198,7 @@
             />
           </div>
           <div class="mobile-hero-panel">
-            <h1>Poptat spolupráci</h1>
+            <p class="mobile-hero-title">Poptat spolupráci</p>
             <p>
               Vyplňte formulář a ozveme se vám s návrhem dalšího postupu. Stačí stručný popis záměru.
             </p>
@@ -193,6 +242,15 @@
           </div>
           <div class="inquiry-form-row">
             <div class="inquiry-field">
+              <label for="service">Služba</label>
+              <select id="service" name="service">
+                <option value="">Vyberte službu</option>
+                <option value="generalni-dodavka">Generální dodávka</option>
+                <option value="pozemni-stavby">Pozemní stavby</option>
+                <option value="rekonstrukce">Rekonstrukce a revitalizace</option>
+              </select>
+            </div>
+            <div class="inquiry-field">
               <label for="project-type">Typ stavby</label>
               <select id="project-type" name="project-type">
                 <option value="">Vyberte typ</option>
@@ -203,10 +261,10 @@
                 <option value="jine">Jiné</option>
               </select>
             </div>
-            <div class="inquiry-field">
-              <label for="location">Lokalita</label>
-              <input type="text" id="location" name="location" placeholder="Město / kraj" />
-            </div>
+          </div>
+          <div class="inquiry-field inquiry-field--full">
+            <label for="location">Lokalita</label>
+            <input type="text" id="location" name="location" placeholder="Město / kraj" />
           </div>
           <div class="inquiry-field inquiry-field--full">
             <label for="message">Popis projektu</label>
@@ -239,19 +297,22 @@
           <h2>Kontakt</h2>
           <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
           <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci.</p>
+          <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
           <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
+          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+          <p class="footer-nap">TODO: street address<br />TODO: postal code + city</p>
         </section>
         <section>
           <h2>Odkazy</h2>
           <ul class="footer-roles">
             <li><a href="sluzby.html">Služby</a></li>
-            <li><a href="reference.html">Reference</a></li>
+            <li><a href="projekty.html">Projekty</a></li>
             <li><a href="kontakt.html">Kontakt</a></li>
           </ul>
         </section>
         <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
-    <script src="script.js?v=20260708"></script>
+    <script src="script.js?v=20260716x"></script>
   </body>
 </html>

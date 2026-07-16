@@ -441,7 +441,7 @@ Expected pages (per `build.mjs`):
 |------|---------|
 | `index.html` | Homepage |
 | `sluzby.html` | Services detail |
-| `reference.html` | Full reference list |
+| `projekty.html` | Full projects list |
 | `o-spolecnosti.html` | Company page |
 | `kontakt.html` | Contact |
 
@@ -489,7 +489,7 @@ Subpages **do not** use artboard scaling or hero choreography. Reuse header, but
 ├── assets/           # Photography, video
 ├── index.html
 ├── sluzby.html
-├── reference.html
+├── projekty.html
 ├── o-spolecnosti.html
 ├── kontakt.html
 ├── styles.css        # Shared stylesheet

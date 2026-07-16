@@ -3,19 +3,78 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="https://TODO-DOMAIN/" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <meta property="og:title" content="AUSTIS Pozemní stavby | Generální dodavatel staveb" />
+    <meta property="og:description" content="AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://TODO-DOMAIN/" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="AUSTIS Pozemní stavby" />
+    <meta property="og:image" content="https://TODO-DOMAIN/assets/hero-section-bg.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["Organization", "GeneralContractor"],
+      "name": "AUSTIS Pozemní stavby s.r.o.",
+      "url": "https://TODO-DOMAIN",
+      "email": "info@austis.cz",
+      "telephone": "+420 251 099 111",
+      "vatID": "CZ07093322",
+      "identifier": "07093322",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "TODO: street",
+        "addressLocality": "TODO: city",
+        "postalCode": "TODO: postal code",
+        "addressCountry": "CZ"
+      }
+    }
+    </script>
     <meta name="description" content="AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
     <title>AUSTIS Pozemní stavby | Generální dodavatel staveb</title>
     <script>
       (function () {
+        // Skip hero choreography only on hard reload of this page.
+        // Page-to-page navigation always plays. Keep in sync with script.js.
         try {
-          if (sessionStorage.getItem("austis-hero-played")) {
+          var nav = performance.getEntriesByType("navigation")[0];
+          if (nav && nav.type === "reload") {
             document.documentElement.classList.add("hero-precommit");
           }
         } catch (e) {}
+
+        // Set --scale before first paint so the artboard does not flash at 1
+        // then jump when script.js runs. Keep in sync with updateScale() in script.js.
+        try {
+          var desktopMin = 1025;
+          var designWidth = 1440;
+          var maxDesktopWidth = 2200;
+          var widthCropAllowance = 260;
+          var maxScale = 1.32;
+          var headerOffset = 28;
+          var width = window.innerWidth;
+          var height = window.innerHeight;
+          var scale = 1;
+
+          if (width >= desktopMin) {
+            var layoutWidth = Math.min(width, maxDesktopWidth);
+            var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
+            var scaleByHeight = (height - 24) / (headerOffset + 448 + 223);
+            scale = Math.min(scaleByWidth, scaleByHeight, maxScale);
+            scale = Math.min(Math.max(scale, 0.5), maxScale);
+          }
+
+          document.documentElement.style.setProperty("--scale", scale.toFixed(5));
+          document.documentElement.classList.add("is-layout-ready");
+        } catch (e) {
+          document.documentElement.classList.add("is-layout-ready");
+        }
       })();
     </script>
     <link rel="preload" as="image" href="assets/hero-section-bg.png" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260707" />
+    <link rel="stylesheet" href="styles.css?v=20260716ad" />
   </head>
   <body>
     <main class="site">
@@ -27,7 +86,7 @@
               <nav class="subpage-nav" aria-label="Hlavní navigace">
                 <a class="active" href="index.html" aria-current="page">Úvod</a>
                 <a href="sluzby.html">služby</a>
-                <a href="reference.html">reference</a>
+                <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
@@ -72,13 +131,13 @@
             <div class="line line-hero-bottom"></div>
             <header class="header">
               <a class="logo" href="#uvod" aria-label="AUSTIS Pozemní stavby">
-                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
                 <span class="logo-sub">pozemní stavby</span>
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
                 <a class="active" href="index.html" aria-current="page">Úvod</a>
                 <a href="sluzby.html">služby</a>
-                <a href="reference.html">reference</a>
+                <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
@@ -93,15 +152,15 @@
                 <div class="hero-copy-aside">
                   <p>Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu — od přípravy až po předání klíčů.</p>
                   <div class="hero-signals" aria-label="Hlavní výhody">
-                    <span>jedna odpovědnost</span>
-                    <span>termíny a rozpočet</span>
+                    <span>jedna smlouva</span>
+                    <span>termíny · rozpočet · kvalita</span>
                   </div>
                 </div>
               </div>
-              <a class="project-link" href="#reference" aria-label="prohlédnout reference">
+              <a class="project-link" href="#projekty" aria-label="prohlédnout projekty">
                 <span class="project-link-text" aria-hidden="true">
-                  <span class="project-link-ghost">prohlédnout<br />reference</span>
-                  <span class="project-link-visible">prohlédnout<br />reference</span>
+                  <span class="project-link-ghost">prohlédnout<br />projekty</span>
+                  <span class="project-link-visible">prohlédnout<br />projekty</span>
                 </span>
               </a>
             </div>
@@ -120,41 +179,36 @@
             <div class="grid-line grid-lower-bottom"></div>
             <div class="responsibility-header">
               <h2 id="responsibility-title">Jedna odpovědnost za celou realizaci</h2>
-              <p class="responsibility-lead">Jako generální dodavatel neseme odpovědnost za koordinaci profesí, termíny i kvalitu provedení. Vy jednáte s jedním partnerem a o každé fázi stavby máte průběžný přehled.</p>
+              <p class="responsibility-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem — a o každé fázi stavby máte jasný přehled.</p>
             </div>
             <article class="feature-card one">
-              <span class="feature-index" aria-hidden="true">01</span>
               <i></i>
               <h3>Jeden smluvní partner</h3>
               <p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my — od přípravy po předání.</p>
             </article>
             <article class="feature-card two">
-              <span class="feature-index" aria-hidden="true">02</span>
               <i></i>
               <h3>Řízení harmonogramu</h3>
               <p>Plánujeme návaznosti profesí a hlídáme klíčové milníky, aby stavba postupovala bez zbytečných prostojů.</p>
             </article>
             <article class="feature-card three">
-              <span class="feature-index" aria-hidden="true">03</span>
               <i></i>
               <h3>Kontrola nákladů</h3>
               <p>Rozpočet sledujeme průběžně a na odchylky upozorníme včas. Žádná překvapení na konci projektu.</p>
             </article>
             <article class="feature-card four">
-              <span class="feature-index" aria-hidden="true">04</span>
               <i></i>
               <h3>Koordinace subdodavatelů</h3>
               <p>Pracujeme se stabilní sítí prověřených firem. Subdodavatele vybíráme, řídíme i kontrolujeme my.</p>
             </article>
             <article class="feature-card five">
-              <span class="feature-index" aria-hidden="true">05</span>
               <i></i>
               <h3>Reporting pro investora</h3>
               <p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je potřebujete.</p>
             </article>
             <aside class="responsibility-aside">
-              <p>Hledáte partnera, který převezme odpovědnost za celou stavbu?</p>
-              <a class="responsibility-link" href="#kontakt">domluvit konzultaci</a>
+              <p>Chcete jednoho partnera za celou realizaci — od smlouvy po předání?</p>
+              <a class="responsibility-link" href="poptavka.html#poptavka-form">domluvit konzultaci</a>
             </aside>
           </section>
 
@@ -162,7 +216,6 @@
             <div class="section-line service-top"></div>
             <div class="section-line service-label-top"></div>
             <div class="section-line service-bottom"></div>
-            <div class="section-line service-rail-left"></div>
             <div class="section-line service-rail-one-a"></div>
             <div class="section-line service-rail-one-b"></div>
             <div class="section-line service-rail-two-a"></div>
@@ -172,72 +225,121 @@
             <div class="service-square square-two"></div>
             <div class="service-square square-three"></div>
             <article class="service-card service-one">
-              <img src="assets/hero 1.png" alt="Generální dodávka stavby" />
-              <div>
+              <img src="assets/sluzby-generalni-dodavka.png" alt="Generální dodávka stavby" />
+              <div class="service-card-body">
                 <h3>Generální dodávka</h3>
                 <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu — od výběru subdodavatelů po předání klíčů.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#generalni-dodavka">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=generalni-dodavka#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
             <article class="service-card service-two">
-              <img src="assets/hero 2.png" alt="Pozemní stavby" />
-              <div>
+              <img src="assets/sluzby-pozemni-stavby.png" alt="Pozemní stavby" />
+              <div class="service-card-body">
                 <h3>Pozemní stavby</h3>
                 <p>Novostavby rezidenčních, komerčních i provozních objektů. Od hrubé stavby po technická zařízení budov.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#pozemni-stavby">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=pozemni-stavby#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
             <article class="service-card service-three">
-              <img src="assets/hero 3.png" alt="Rekonstrukce a revitalizace" />
-              <div>
+              <img src="assets/sluzby-rekonstrukce.png" alt="Rekonstrukce a revitalizace" />
+              <div class="service-card-body">
                 <h3>Rekonstrukce a revitalizace</h3>
                 <p>Modernizace a přestavby stávajících objektů — s respektem k technickému stavu, provozu i rozpočtu.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#rekonstrukce">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=rekonstrukce#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
-            <a class="btn btn-dark all-services" href="#sluzby">všechny služby</a>
+            <a class="btn btn-dark all-services" href="sluzby.html">všechny služby</a>
+          </section>
+
+
+          <section class="process" id="spoluprace" aria-labelledby="process-title">
+            <div class="section-line process-top"></div>
+            <div class="section-line process-bottom"></div>
+            <div class="process-header">
+              <h2 id="process-title">Jak probíhá spolupráce</h2>
+              <p class="process-lead">Od první konzultace po předání stavby — jasný postup a jeden odpovědný partner.</p>
+            </div>
+            <ol class="process-steps">
+              <li class="process-step">
+                <span class="process-step-num" aria-hidden="true">01</span>
+                <h3>Úvodní konzultace</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </li>
+              <li class="process-step">
+                <span class="process-step-num" aria-hidden="true">02</span>
+                <h3>Prohlídka a zadání</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </li>
+              <li class="process-step">
+                <span class="process-step-num" aria-hidden="true">03</span>
+                <h3>Nabídka a smlouva</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </li>
+              <li class="process-step">
+                <span class="process-step-num" aria-hidden="true">04</span>
+                <h3>Realizace</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </li>
+              <li class="process-step">
+                <span class="process-step-num" aria-hidden="true">05</span>
+                <h3>Předání a záruka</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </li>
+            </ol>
+            <a class="btn btn-red process-cta" href="poptavka.html#poptavka-form">Nezávazná konzultace</a>
           </section>
 
           <div class="section-line project-top-line"></div>
-          <section class="project" id="reference" aria-labelledby="project-title">
-            <img class="project-left-img" src="assets/image 3.png" alt="" aria-hidden="true" />
+          <section class="project" id="projekty" aria-labelledby="project-title">
+            <img class="project-left-img" src="pexels-ivan-s-4458205 (1).jpg" alt="" aria-hidden="true" />
             <div class="project-overlay"></div>
             <img class="project-right-img" src="assets/hero 2.png" alt="Chata Seibert — pohled na realizaci" />
             <div class="project-copy" aria-live="polite">
-              <span class="project-eyebrow">Reference</span>
+              <span class="project-eyebrow">Projekty</span>
               <h2 id="project-title">Chata Seibert</h2>
-              <p class="project-desc">Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších — od logistiky montáží v náročném terénu po předání v sezónním provozu.</p>
-              <div class="stats" aria-label="Parametry projektu">
-                <div><strong>Typ projektu</strong><span class="project-stat-type">Rekreační stavba</span></div>
-                <div><strong>Místo realizace</strong><span class="project-stat-location">Krkonoše</span></div>
-                <div><strong>Termín realizace</strong><span class="project-stat-timeline">2024 – 2025</span></div>
-              </div>
-              <h3>Rozsah prací</h3>
-              <ul class="project-scope"></ul>
+              <p class="project-meta">
+                <span class="project-stat-location">Krkonoše</span>
+                <span class="project-meta-sep" aria-hidden="true">·</span>
+                <span class="project-stat-type">Rekreační stavba</span>
+              </p>
+              <p class="project-desc">Kompletní rekonstrukce horské chaty v Krkonoších.</p>
+              <a class="project-more" href="projekty.html#ref-1">více o projektu</a>
             </div>
-            <button class="project-link project-next" type="button" aria-label="Zobrazit další referenci">
+            <a class="project-link project-next" href="projekty.html" aria-label="Všechny projekty">
               <span class="project-link-text" aria-hidden="true">
-                <span class="project-link-ghost">další<br />reference</span>
-                <span class="project-link-visible">další<br />reference</span>
+                <span class="project-link-ghost">všechny<br />projekty</span>
+                <span class="project-link-visible">všechny<br />projekty</span>
               </span>
-            </button>
+            </a>
           </section>
 
           <section class="about" id="spolecnost" aria-labelledby="about-title">
-            <div class="about-card"></div>
-            <h2 id="about-title">O společnosti</h2>
-            <p class="lead">Jsme generální dodavatel pozemních staveb pro investory a developery, kteří chtějí jednoho odpovědného partnera.</p>
-            <p class="about-text">Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů. Každou stavbu řídíme s důrazem na náklady, termíny a kvalitu provedení.</p>
-            <div class="approach">
-              <h3>Náš přístup</h3>
-              <p>Stavbu vedeme tak, aby realizace běžela plynule, rizika zůstala pod kontrolou a investor měl vždy aktuální přehled.</p>
+            <div class="about-card">
+              <span class="about-eyebrow">O společnosti</span>
+              <h2 id="about-title">Jeden partner za celou stavbu</h2>
+              <p class="lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty — s jasnou odpovědností za výsledek.</p>
+              <div class="about-career">
+                <strong>Kariéra</strong>
+                <p>Rozšiřujeme tým. Aktuálně hledáme stavbyvedoucí a výrobní přípravu staveb.</p>
+                <a class="about-career-link" href="o-spolecnosti.html#kariera">volné pozice</a>
+              </div>
+              <div class="about-actions">
+                <a class="about-link" href="o-spolecnosti.html">více o společnosti</a>
+                <a class="btn btn-red about-cta" href="kontakt.html">kontaktovat</a>
+              </div>
             </div>
-            <div class="experience">
-              <h3>Zkušenosti</h3>
-              <ul>
-                <li>realizace rezidenčních i komerčních projektů</li>
-                <li>stabilní síť prověřených subdodavatelů</li>
-                <li>řízení zakázek v roli generálního dodavatele</li>
-              </ul>
+            <div class="about-photo">
+              <img src="assets/austis-hq.png" alt="Sídlo AUSTIS Pozemní stavby" />
             </div>
-            <img class="logo-large" src="logo b.svg" alt="" aria-hidden="true" />
             <strong class="company-name">AUSTIS Pozemní stavby s.r.o</strong>
           </section>
 
@@ -249,17 +351,19 @@
             <section>
               <h2>Kontakt</h2>
               <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-              <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci — probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
+              <p>Připravujete stavební záměr? Domluvte si konzultaci — projdeme váš projekt a navrhneme další postup.</p>
+              <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
               <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
+              <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+              <p class="footer-nap">TODO: street address<br />TODO: postal code + city</p>
             </section>
             <section>
-              <h2>Kariéra</h2>
+              <h2><a class="footer-heading-link" href="o-spolecnosti.html#kariera">Kariéra</a></h2>
               <p>Rozšiřujeme tým. Aktuálně obsazujeme pozice:</p>
               <ul class="footer-roles">
-                <li>stavbyvedoucí</li>
-                <li>výrobní příprava staveb</li>
+                <li><a href="o-spolecnosti.html#kariera">stavbyvedoucí</a></li>
+                <li><a href="o-spolecnosti.html#kariera">výrobní příprava staveb</a></li>
               </ul>
-              <p>Ozvěte se nám přes kontaktní formulář — rádi se s vámi potkáme.</p>
             </section>
             <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
           </footer>
@@ -270,7 +374,7 @@
         <header class="mobile-header">
           <div class="mobile-header-row">
             <a class="logo" href="#uvod-mobile" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
               <span class="logo-sub">pozemní stavby</span>
             </a>
             <a class="btn btn-red" href="poptavka.html#poptavka-form">poptat spolupráci</a>
@@ -278,7 +382,7 @@
           <nav class="mobile-nav" aria-label="Hlavní navigace">
             <a class="active" href="index.html" aria-current="page">Úvod</a>
             <a href="sluzby.html">služby</a>
-            <a href="reference.html">reference</a>
+            <a href="projekty.html">projekty</a>
             <a href="o-spolecnosti.html">o společnosti</a>
             <a href="kontakt.html">kontakt</a>
           </nav>
@@ -305,29 +409,29 @@
           </div>
           <span class="mobile-hero-label">Chata Seibert</span>
           <div class="mobile-hero-panel">
-            <h1>Generální dodavatel pozemních staveb pro investory a developery</h1>
+            <p class="mobile-hero-title">Generální dodavatel pozemních staveb pro investory a developery</p>
             <p>Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu — od přípravy až po předání klíčů.</p>
             <div class="mobile-hero-signals" aria-label="Hlavní výhody">
-              <span>jedna odpovědnost</span>
-              <span>termíny a rozpočet</span>
+              <span>jedna smlouva</span>
+              <span>termíny · rozpočet · kvalita</span>
             </div>
             <div class="mobile-hero-actions">
-              <a class="mobile-text-link" href="#reference-mobile">prohlédnout reference</a>
+              <a class="mobile-text-link" href="#projekty-mobile">prohlédnout projekty</a>
             </div>
           </div>
         </section>
         <section class="mobile-section mobile-responsibility">
           <span class="mobile-eyebrow">Generální dodavatel</span>
           <h2>Jedna odpovědnost za celou realizaci</h2>
-          <p class="mobile-section-lead">Jako generální dodavatel neseme odpovědnost za koordinaci profesí, termíny i kvalitu provedení. Vy jednáte s jedním partnerem a o každé fázi stavby máte průběžný přehled.</p>
+          <p class="mobile-section-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem — a o každé fázi stavby máte jasný přehled.</p>
           <div class="mobile-grid">
-            <article><span class="feature-index" aria-hidden="true">01</span><h3>Jeden smluvní partner</h3><p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my — od přípravy po předání.</p></article>
-            <article><span class="feature-index" aria-hidden="true">02</span><h3>Řízení harmonogramu</h3><p>Plánujeme návaznosti profesí a hlídáme klíčové milníky, aby stavba postupovala bez zbytečných prostojů.</p></article>
-            <article><span class="feature-index" aria-hidden="true">03</span><h3>Kontrola nákladů</h3><p>Rozpočet sledujeme průběžně a na odchylky upozorníme včas. Žádná překvapení na konci projektu.</p></article>
-            <article><span class="feature-index" aria-hidden="true">04</span><h3>Koordinace subdodavatelů</h3><p>Pracujeme se stabilní sítí prověřených firem. Subdodavatele vybíráme, řídíme i kontrolujeme my.</p></article>
-            <article><span class="feature-index" aria-hidden="true">05</span><h3>Reporting pro investora</h3><p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je potřebujete.</p></article>
+            <article><h3>Jeden smluvní partner</h3><p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my — od přípravy po předání.</p></article>
+            <article><h3>Řízení harmonogramu</h3><p>Plánujeme návaznosti profesí a hlídáme klíčové milníky, aby stavba postupovala bez zbytečných prostojů.</p></article>
+            <article><h3>Kontrola nákladů</h3><p>Rozpočet sledujeme průběžně a na odchylky upozorníme včas. Žádná překvapení na konci projektu.</p></article>
+            <article><h3>Koordinace subdodavatelů</h3><p>Pracujeme se stabilní sítí prověřených firem. Subdodavatele vybíráme, řídíme i kontrolujeme my.</p></article>
+            <article><h3>Reporting pro investora</h3><p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je potřebujete.</p></article>
             <aside class="mobile-cta-card">
-              <p>Hledáte partnera, který převezme odpovědnost za celou stavbu?</p>
+              <p>Chcete jednoho partnera za celou realizaci — od smlouvy po předání?</p>
               <a class="mobile-cta-link" href="poptavka.html#poptavka-form">domluvit konzultaci</a>
             </aside>
           </div>
@@ -337,59 +441,119 @@
           <h2>Co pro vás zajistíme</h2>
           <div class="mobile-cards">
             <article>
-              <img src="assets/hero 1.png" alt="Generální dodávka stavby" />
+              <img src="assets/sluzby-generalni-dodavka.png" alt="Generální dodávka stavby" />
               <div>
                 <h3>Generální dodávka</h3>
                 <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu — od výběru subdodavatelů po předání klíčů.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#generalni-dodavka">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=generalni-dodavka#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
             <article>
-              <img src="assets/hero 2.png" alt="Pozemní stavby" />
+              <img src="assets/sluzby-pozemni-stavby.png" alt="Pozemní stavby" />
               <div>
                 <h3>Pozemní stavby</h3>
                 <p>Novostavby rezidenčních, komerčních i provozních objektů. Od hrubé stavby po technická zařízení budov.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#pozemni-stavby">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=pozemni-stavby#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
             <article>
-              <img src="assets/hero 3.png" alt="Rekonstrukce a revitalizace" />
+              <img src="assets/sluzby-rekonstrukce.png" alt="Rekonstrukce a revitalizace" />
               <div>
                 <h3>Rekonstrukce a revitalizace</h3>
                 <p>Modernizace a přestavby stávajících objektů — s respektem k technickému stavu, provozu i rozpočtu.</p>
+                <div class="service-card-actions">
+                  <a class="service-card-link" href="sluzby.html#rekonstrukce">více o službě</a>
+                  <a class="btn btn-red service-card-cta" href="poptavka.html?service=rekonstrukce#poptavka-form">poptat</a>
+                </div>
               </div>
             </article>
           </div>
           <a class="btn btn-dark mobile-services-btn" href="sluzby.html">všechny služby</a>
         </section>
-        <section class="mobile-project" id="reference-mobile" aria-labelledby="mobile-project-title">
-          <span class="mobile-project-eyebrow">Reference</span>
-          <h2 id="mobile-project-title">Chata Seibert</h2>
-          <p class="mobile-project-desc">Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších — od logistiky montáží v náročném terénu po předání v sezónním provozu.</p>
-          <div class="mobile-project-stats" aria-label="Parametry projektu">
-            <div><strong>Typ projektu</strong><span class="mobile-project-stat-type">Rekreační stavba</span></div>
-            <div><strong>Místo</strong><span class="mobile-project-stat-location">Krkonoše</span></div>
-            <div><strong>Termín</strong><span class="mobile-project-stat-timeline">2024 – 2025</span></div>
+
+        <section class="mobile-section mobile-process" id="spoluprace-mobile" aria-labelledby="mobile-process-title">
+          <h2 id="mobile-process-title">Jak probíhá spolupráce</h2>
+          <p class="mobile-section-lead">Od první konzultace po předání stavby — jasný postup a jeden odpovědný partner.</p>
+          <ol class="mobile-process-steps">
+            <li>
+              <span class="mobile-process-num" aria-hidden="true">01</span>
+              <div>
+                <h3>Úvodní konzultace</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </div>
+            </li>
+            <li>
+              <span class="mobile-process-num" aria-hidden="true">02</span>
+              <div>
+                <h3>Prohlídka a zadání</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </div>
+            </li>
+            <li>
+              <span class="mobile-process-num" aria-hidden="true">03</span>
+              <div>
+                <h3>Nabídka a smlouva</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </div>
+            </li>
+            <li>
+              <span class="mobile-process-num" aria-hidden="true">04</span>
+              <div>
+                <h3>Realizace</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </div>
+            </li>
+            <li>
+              <span class="mobile-process-num" aria-hidden="true">05</span>
+              <div>
+                <h3>Předání a záruka</h3>
+                <p>TODO: 1-2 sentences describing this step</p>
+              </div>
+            </li>
+          </ol>
+          <a class="btn btn-red" href="poptavka.html#poptavka-form">Nezávazná konzultace</a>
+        </section>
+
+        <section class="mobile-project" id="projekty-mobile" aria-labelledby="mobile-project-title">
+          <div class="mobile-project-media" aria-hidden="true">
+            <img class="mobile-project-photo" src="assets/hero 2.png" alt="Chata Seibert" />
           </div>
-          <h3 class="mobile-project-scope-title">Rozsah prací</h3>
-          <ul class="mobile-project-scope"></ul>
-          <button class="mobile-project-next" type="button" aria-label="Zobrazit další referenci">další reference</button>
+          <div class="mobile-project-body">
+            <span class="mobile-project-eyebrow">Projekty</span>
+            <h2 id="mobile-project-title">Chata Seibert</h2>
+            <p class="mobile-project-meta">
+              <span class="mobile-project-stat-location">Krkonoše</span>
+              <span class="project-meta-sep" aria-hidden="true">·</span>
+              <span class="mobile-project-stat-type">Rekreační stavba</span>
+            </p>
+            <p class="mobile-project-desc">Kompletní rekonstrukce horské chaty v Krkonoších.</p>
+            <a class="mobile-project-more" href="projekty.html#ref-1">více o projektu</a>
+            <a class="mobile-project-next" href="projekty.html" aria-label="Všechny projekty">
+              <span class="mobile-project-next-label">všechny projekty</span>
+            </a>
+          </div>
         </section>
         <section class="mobile-section mobile-about" id="spolecnost-mobile">
           <span class="mobile-eyebrow">O společnosti</span>
-          <h2>Stavíme jako generální dodavatel</h2>
-          <p class="mobile-section-lead">Jsme generální dodavatel pozemních staveb pro investory a developery, kteří chtějí jednoho odpovědného partnera. Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů.</p>
-          <div class="mobile-about-cols">
-            <div>
-              <h3>Náš přístup</h3>
-              <p>Stavbu vedeme tak, aby realizace běžela plynule, rizika zůstala pod kontrolou a investor měl vždy aktuální přehled.</p>
-            </div>
-            <div>
-              <h3>Zkušenosti</h3>
-              <ul>
-                <li>realizace rezidenčních i komerčních projektů</li>
-                <li>stabilní síť prověřených subdodavatelů</li>
-                <li>řízení zakázek v roli generálního dodavatele</li>
-              </ul>
-            </div>
+          <h2>Jeden partner za celou stavbu</h2>
+          <p class="mobile-section-lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty — s jasnou odpovědností za výsledek.</p>
+          <div class="mobile-about-photo">
+            <img src="assets/austis-hq.png" alt="Sídlo AUSTIS Pozemní stavby" />
+          </div>
+          <div class="mobile-about-career">
+            <strong>Kariéra</strong>
+            <p>Rozšiřujeme tým. Aktuálně hledáme stavbyvedoucí a výrobní přípravu staveb.</p>
+            <a href="o-spolecnosti.html#kariera">volné pozice</a>
+          </div>
+          <div class="mobile-about-actions">
+            <a class="mobile-about-link" href="o-spolecnosti.html">více o společnosti</a>
+            <a class="btn btn-red" href="kontakt.html">kontaktovat</a>
           </div>
           <div class="mobile-about-brand">
             <img src="logo b.svg" alt="" aria-hidden="true" />
@@ -400,22 +564,24 @@
           <section>
             <h2>Kontakt</h2>
             <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-            <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci — probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
+            <p>Připravujete stavební záměr? Domluvte si konzultaci — projdeme váš projekt a navrhneme další postup.</p>
+            <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
             <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
+            <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+            <p class="footer-nap">TODO: street address<br />TODO: postal code + city</p>
           </section>
           <section>
-            <h2>Kariéra</h2>
+            <h2><a class="footer-heading-link" href="o-spolecnosti.html#kariera">Kariéra</a></h2>
             <p>Rozšiřujeme tým. Aktuálně obsazujeme pozice:</p>
             <ul class="footer-roles">
-              <li>stavbyvedoucí</li>
-              <li>výrobní příprava staveb</li>
+              <li><a href="o-spolecnosti.html#kariera">stavbyvedoucí</a></li>
+              <li><a href="o-spolecnosti.html#kariera">výrobní příprava staveb</a></li>
             </ul>
-            <p>Ozvěte se nám přes kontaktní formulář — rádi se s vámi potkáme.</p>
           </section>
           <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
         </footer>
       </div>
     </main>
-    <script src="script.js?v=20260708"></script>
+    <script src="script.js?v=20260716z"></script>
   </body>
 </html>

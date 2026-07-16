@@ -18,7 +18,7 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/austis-stavebni-hero.png" fetchpriority="high" />
-    <link rel="stylesheet" href="austis-stavebni.css?v=20260708b" />
+    <link rel="stylesheet" href="austis-stavebni.css?v=20260716f" />
   </head>
   <body
     class="subpage-body flow-subpage austis-page austis-stavebni austis-stavebni-poptavka-page"
@@ -96,8 +96,8 @@
                 <h1>Sestavit nabídku</h1>
                 <div class="hero-copy-aside">
                   <p>
-                    Chystáte stavbu nebo rekonstrukci? Napište nám údaje o projektu a připravíme
-                    nezávaznou nabídku technického dozoru a koordinace BOZP.
+                    Rádi vám vytvoříme orientační cenovou nabídku na základě vašich podkladů.
+                    Po vyplnění formuláře vám ji zašleme na uvedený e-mail — do 7 pracovních dnů.
                   </p>
                 </div>
               </div>
@@ -150,7 +150,7 @@
           </div>
           <div class="mobile-hero-panel">
             <h1>Sestavit nabídku</h1>
-            <p>Napište údaje o projektu a připravíme nabídku dozoru a BOZP.</p>
+            <p>Orientační cenovou nabídku vám zašleme do 7 pracovních dnů na uvedený e-mail.</p>
             <div class="mobile-hero-actions">
               <a class="mobile-text-link" href="#poptavka-form">vyplnit formulář</a>
             </div>
@@ -160,11 +160,12 @@
 
       <section id="poptavka-form" class="inquiry-section" aria-labelledby="inquiry-title">
         <div class="inquiry-lead">
-          <span class="contact-eyebrow">Poptávka</span>
-          <h2 id="inquiry-title">Dozor a BOZP na míru</h2>
+          <span class="contact-eyebrow">Sestavení nabídky</span>
+          <h2 id="inquiry-title">Orientační cenová nabídka</h2>
           <p>
-            Potřebujete technický dozor stavebníka, koordinátora BOZP nebo obojí?
-            Popište stavbu a navrhneme optimální rozsah služeb.
+            Máte zájem o služby nabízené naší společností? Rádi vám vytvoříme orientační cenovou
+            nabídku na základě vašich podkladů. Po vyplnění formuláře vám ji zašleme na uvedenou
+            e-mailovou adresu — do 7 pracovních dnů.
           </p>
         </div>
 
@@ -175,39 +176,67 @@
               <input type="text" id="name" name="name" autocomplete="name" required />
             </div>
             <div class="inquiry-field">
-              <label for="company">Investor / společnost</label>
-              <input type="text" id="company" name="company" autocomplete="organization" />
-            </div>
-          </div>
-          <div class="inquiry-form-row">
-            <div class="inquiry-field">
               <label for="email">E-mail</label>
               <input type="email" id="email" name="email" autocomplete="email" required />
             </div>
+          </div>
+          <div class="inquiry-form-row">
             <div class="inquiry-field">
               <label for="phone">Telefon</label>
               <input type="tel" id="phone" name="phone" autocomplete="tel" />
             </div>
+            <div class="inquiry-field">
+              <label for="address">Adresa stavby (rekonstrukce) *</label>
+              <input type="text" id="address" name="address" required />
+            </div>
           </div>
           <div class="inquiry-form-row">
             <div class="inquiry-field">
-              <label for="service">Požadovaná služba</label>
-              <select id="service" name="service">
-                <option value="">Vyberte službu</option>
-                <option value="tds">Technický dozor stavebníka (TDS)</option>
-                <option value="bozp">Koordinátor BOZP</option>
-                <option value="oboji">TDS + koordinátor BOZP</option>
-                <option value="nevim">Nevím — poradit</option>
-              </select>
+              <label for="project-name">Název stavby (rekonstrukce)</label>
+              <input type="text" id="project-name" name="project-name" />
             </div>
             <div class="inquiry-field">
-              <label for="project-name">Název stavby</label>
-              <input type="text" id="project-name" name="project-name" placeholder="Název nebo lokalita" />
+              <label for="budget">Odhadované investiční náklady stavby</label>
+              <input type="text" id="budget" name="budget" placeholder="např. 5 mil. Kč" />
+            </div>
+          </div>
+          <div class="inquiry-form-row">
+            <div class="inquiry-field">
+              <label for="date-from">Termín realizace — od</label>
+              <input type="date" id="date-from" name="date-from" />
+            </div>
+            <div class="inquiry-field">
+              <label for="date-to">Termín realizace — do</label>
+              <input type="date" id="date-to" name="date-to" />
+            </div>
+          </div>
+          <div class="inquiry-form-row">
+            <div class="inquiry-field">
+              <label>Poptávám</label>
+              <label class="inquiry-consent">
+                <input type="checkbox" name="service-tds" value="tds" />
+                <span>technický dozor stavebníka (TDS)</span>
+              </label>
+              <label class="inquiry-consent">
+                <input type="checkbox" name="service-bozp" value="bozp" />
+                <span>koordinátora BOZP</span>
+              </label>
+            </div>
+            <div class="inquiry-field">
+              <label>Rozsah požadovaného výkonu</label>
+              <label class="inquiry-consent">
+                <input type="radio" name="scope" value="denni" />
+                <span>denní</span>
+              </label>
+              <label class="inquiry-consent">
+                <input type="radio" name="scope" value="prubezny" />
+                <span>průběžný</span>
+              </label>
             </div>
           </div>
           <div class="inquiry-field inquiry-field--full">
-            <label for="message">Popis projektu</label>
-            <textarea id="message" name="message" placeholder="Typ stavby, rozsah, plánovaný termín zahájení…" required></textarea>
+            <label for="message">Upřesnění vaší poptávky</label>
+            <textarea id="message" name="message" placeholder="Popis stavebního díla, další požadavky na výkon atd." required></textarea>
           </div>
           <label class="inquiry-consent">
             <input type="checkbox" name="consent" required />
@@ -219,12 +248,12 @@
         <aside class="inquiry-aside">
           <h3>Co se stane dál</h3>
           <ol class="inquiry-aside-steps">
-            <li><span>01</span> Posoudíme rozsah dozoru a BOZP pro vaši stavbu.</li>
-            <li><span>02</span> Ozveme se a upřesníme podklady.</li>
-            <li><span>03</span> Navrhneme tým a harmonogram služeb.</li>
-            <li><span>04</span> Předložíme nezávaznou cenovou nabídku.</li>
+            <li><span>01</span> Potvrdíme přijetí poptávky a případně si vyžádáme doplňující podklady.</li>
+            <li><span>02</span> Do 7 pracovních dnů zašleme orientační cenovou nabídku na váš e-mail.</li>
+            <li><span>03</span> Upřesníme rozsah výkonu TDS či koordinátora BOZP podle projektu.</li>
+            <li><span>04</span> Po odsouhlasení nabídky uzavřeme smlouvu a zahájíme výkon dozoru.</li>
           </ol>
-          <p>Telefon: <strong>+420 251 099 111</strong> (po–pá 8:00–16:00)</p>
+          <p>Preferujete e-mail? Pište přímo na <strong>riha@austis.cz</strong> nebo volejte <strong>+420 731 607 370</strong>.</p>
         </aside>
       </section>
 
@@ -234,8 +263,9 @@
         <div class="footer-line footer-right"></div>
         <section>
           <h2>Kontakt</h2>
-          <p><strong>AUSTIS Stavební</strong></p>
-          <p>K Austisu 680, 154 00 Praha 5 – Slivenec<br />+420 251 099 111 · austis@austis.cz</p>
+          <p><strong>AUSTIS stavební s.r.o.</strong> — dceřiná společnost AUSTIS a.s.</p>
+          <p>K Austisu 680, 154 00 Praha 5 – Slivenec<br />+420 602 550 303 · alexander@austis.cz</p>
+          <p class="highlight">IČO: 281 84 343&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ28184343</p>
         </section>
         <section>
           <h2>Odkazy</h2>
@@ -245,7 +275,7 @@
             <li><a href="austis-stavebni-reference.html">Reference</a></li>
           </ul>
         </section>
-        <small>© 2026 AUSTIS a.s. — AUSTIS Stavební</small>
+        <small>© 2026 AUSTIS stavební s.r.o.</small>
       </footer>
     </main>
     <script src="austis-stavebni.js?v=20260708"></script>

@@ -17,7 +17,7 @@
   const maxScale = 1.32;
 
   function getDesignHeroHeight() {
-    const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 50;
+    const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 28;
     // Keep in sync with --hero-panel-bottom in styles.css.
     return headerOffset + 448 + 223;
   }

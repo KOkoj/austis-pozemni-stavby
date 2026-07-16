@@ -5,10 +5,12 @@ const outputDir = "public";
 const requiredFiles = [
   "index.html",
   "sluzby.html",
-  "reference.html",
+  "projekty.html",
   "o-spolecnosti.html",
   "kontakt.html",
   "poptavka.html",
+  "robots.txt",
+  "sitemap.xml",
   "styles.css",
   "script.js",
   "austis.html",

@@ -21,7 +21,7 @@
     linear-gradient(135deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0.38) 100%),
     rgba(255, 255, 255, 0.46);
   --scale: 1;
-  --header-offset: 50px;
+  --header-offset: 28px;
   --nav-bar-offset: calc(var(--header-offset) + 2px);
   --logo-line-height: calc(var(--header-offset) + 100px);
   --layout-shift: calc(86px - var(--header-offset));
@@ -45,7 +45,7 @@
   --hero-copy-split: calc(var(--content-left) + var(--hero-main-width));
   --bleed-width: max(1440px, calc(100vw / var(--scale)));
   --bleed-left: calc((1440px - var(--bleed-width)) / 2);
-  --scroll-nav-top-gap: 12px;
+  --scroll-nav-top-gap: 8px;
   --scroll-nav-bar-height: 47px;
   --scroll-nav-content-width: min(calc(100vw - 48px), var(--content-width));
   --scroll-nav-logo-left: max(24px, calc((100vw - var(--scroll-nav-content-width)) / 2));
@@ -3405,7 +3405,7 @@ button.project-link {
     position: sticky;
     z-index: 10;
     top: 0;
-    padding: 12px clamp(20px, 4vw, 36px) 0;
+    padding: 8px clamp(20px, 4vw, 36px) 0;
     background: rgba(16, 16, 16, 0.88);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(14px) saturate(1.15);
@@ -4389,7 +4389,7 @@ button.project-link {
     min-height: auto;
     grid-template-columns: 64px 1fr;
     gap: 16px;
-    padding: 18px 20px;
+    padding: 10px 20px;
     background: rgba(0, 0, 0, 0.88);
     border-bottom: 1px solid rgba(180, 181, 182, 0.42);
     backdrop-filter: blur(10px);
@@ -4463,7 +4463,7 @@ button.project-link {
     grid-template-columns: 64px 1fr;
     grid-template-rows: auto;
     gap: 16px;
-    padding: 18px 20px;
+    padding: 10px 20px;
   }
 
   .subpage-header-outer.is-scrolled::before {
@@ -4841,8 +4841,8 @@ button.project-link {
    1080px content grid (edges at 50vw -/+ 539.5px).
    ============================================================ */
 .flow-subpage {
-  /* Hero overlay bottom (50 + 448 + 223 + 120) — nothing else lives in the artboard */
-  --artboard-height: 841px;
+  /* Hero overlay bottom (header-offset + 448 + 223 + 120) — nothing else lives in the artboard */
+  --artboard-height: calc(var(--header-offset) + 448px + 223px + 120px);
   --sp-dark: #2b2a29;
   /* No responsibility block in this artboard: run the left line to the panel bottom */
   --hero-left-line-height: calc(var(--hero-panel-bottom) - var(--hero-left-line-top));

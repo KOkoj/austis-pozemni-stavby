@@ -17,7 +17,7 @@
   const maxScale = 1.32;
 
   function getDesignHeroHeight() {
-    const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 50;
+    const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 28;
     // Keep in sync with --hero-panel-bottom in styles.css.
     return headerOffset + 448 + 223;
   }
@@ -37,7 +37,11 @@
       scale = Math.min(Math.max(scale, 0.5), maxScale);
     }
 
-    root.style.setProperty("--scale", scale.toFixed(5));
+    const next = scale.toFixed(5);
+    if (root.style.getPropertyValue("--scale") !== next) {
+      root.style.setProperty("--scale", next);
+    }
+    root.classList.add("is-layout-ready");
     desktopShell?.setAttribute("aria-hidden", String(!isDesktop));
     mobilePage?.setAttribute("aria-hidden", String(isDesktop));
   }
@@ -186,6 +190,50 @@
     sections.forEach(({ el }) => observer.observe(el));
   }
 
+  function initMidpageScrollReveal() {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const targets = [
+      document.querySelector(".artboard .services"),
+      document.querySelector(".artboard .project"),
+      document.querySelector(".artboard .about"),
+      document.querySelector(".mobile-services"),
+      document.querySelector(".mobile-project"),
+      document.querySelector(".mobile-about"),
+    ].filter(Boolean);
+
+    if (!targets.length) {
+      return;
+    }
+
+    function reveal(el) {
+      el.classList.add("is-section-visible");
+    }
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      targets.forEach(reveal);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          reveal(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.08,
+      },
+    );
+
+    targets.forEach((el) => observer.observe(el));
+  }
+
   const bodyDataset = document.body?.dataset ?? {};
   const hasHeroVideoOverride = Object.prototype.hasOwnProperty.call(bodyDataset, "heroVideo");
   const heroSlide = {
@@ -198,69 +246,49 @@
     {
       title: "Chata Seibert",
       type: "Rekreační stavba",
-      description:
-        "Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších — od logistiky montáží v náročném terénu po předání v sezónním provozu.",
+      description: "Kompletní rekonstrukce horské chaty v Krkonoších.",
       location: "Krkonoše",
       timeline: "2024 – 2025",
       status: null,
-      scope: [
-        "generální dodávka stavby",
-        "koordinace subdodavatelů",
-        "řízení harmonogramu a návazností",
-      ],
-      leftImg: "assets/image 3.png",
+      detailHref: "projekty.html#ref-1",
+      leftImg: "pexels-ivan-s-4458205 (1).jpg",
       rightImg: "assets/hero 2.png",
       rightAlt: "Chata Seibert — pohled na realizaci",
     },
     {
       title: "Vraňany Farma Hanč",
       type: "Zemědělský areál",
-      description:
-        "Výstavba provozních objektů a technického zázemí farmy. Jeden smluvní partner pro celý areál — včetně inženýrských sítí a zpevněných ploch.",
+      description: "Výstavba provozních objektů a zázemí farmy.",
       location: "Vraňany",
       timeline: "2023 – 2024",
       status: null,
-      scope: [
-        "pozemní stavby areálu",
-        "inženýrské sítě a zpevněné plochy",
-        "generální řízení realizace",
-      ],
-      leftImg: "assets/image 4.png",
+      detailHref: "projekty.html#ref-2",
+      leftImg: "assets/sluzby-generalni-dodavka.png",
       rightImg: "assets/hero 1.png",
       rightAlt: "Vraňany Farma Hanč — pohled na areál",
     },
     {
       title: "Rodinný dům Roztoky",
       type: "Novostavba RD",
-      description:
-        "Novostavba rodinného domu na klíč v rámci generální dodávky. Investor jedná s jedním partnerem a má průběžný reporting i pevný harmonogram.",
+      description: "Novostavba rodinného domu na klíč.",
       location: "Roztoky",
-      timeline: "říjen 2025 – prosinec 2026",
+      timeline: "2025 – 2026",
       status: "Probíhá",
-      scope: [
-        "generální dodávka stavby",
-        "koordinace subdodavatelů",
-        "řízení harmonogramu a návazností",
-      ],
-      leftImg: "assets/image 3.png",
-      rightImg: "assets/hero 2.png",
+      detailHref: "projekty.html#ref-3",
+      leftImg: "pexels-thirdman-8482551 1.png",
+      rightImg: "assets/hero 3.png",
       rightAlt: "Rodinný dům Roztoky — vizualizace novostavby",
     },
     {
       title: "Novo Plaza",
       type: "Komerční development",
-      description:
-        "Realizace komerčního objektu v rámci developerského projektu. Řídíme termíny, náklady i návaznost na další fáze celého záměru.",
+      description: "Komerční objekt v rámci developerského projektu.",
       location: "Praha",
       timeline: "2025 – 2026",
       status: "Probíhá",
-      scope: [
-        "generální dodávka stavby",
-        "komerční pozemní stavba",
-        "reporting pro investora",
-      ],
-      leftImg: "assets/image 7.png",
-      rightImg: "assets/hero 3.png",
+      detailHref: "projekty.html#ref-4",
+      leftImg: "assets/sluzby-pozemni-stavby.png",
+      rightImg: "assets/image 7.png",
       rightAlt: "Novo Plaza — komerční objekt",
     },
   ];
@@ -397,11 +425,14 @@
       },
     ].filter(({ section, video, still }) => section && video && still);
 
-    const SESSION_KEY = "austis-hero-played";
-    const hasPlayedHero = !!sessionStorage.getItem(SESSION_KEY);
-    if (!hasPlayedHero) {
-      sessionStorage.setItem(SESSION_KEY, "1");
-    }
+    const skipHeroChoreo = (() => {
+      try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        return Boolean(nav && nav.type === "reload");
+      } catch (e) {
+        return false;
+      }
+    })();
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const blendCrossfadeMs = 720;
@@ -467,10 +498,9 @@
     async function waitForHeroAssets() {
       const logoImages = Array.from(document.querySelectorAll(".logo-img"));
 
-      // Repeat visits render the settled hero straight from CSS via
-      // html.hero-precommit (set synchronously before first paint), so the
-      // still image is never gated behind JS/network timing here.
-      if (hasPlayedHero) {
+      // Hard reloads render the settled hero from CSS via html.hero-precommit
+      // (set synchronously before first paint). Page-to-page navigations play.
+      if (skipHeroChoreo) {
         return;
       }
 
@@ -635,13 +665,13 @@
       };
     }
 
-    const starters = hasPlayedHero ? [] : heroPairs.map((pair) => setupHeroPlayback(pair));
+    const starters = skipHeroChoreo ? [] : heroPairs.map((pair) => setupHeroPlayback(pair));
 
     void waitForHeroAssets().then(async () => {
       heroPairs.forEach(({ section, video, still }, index) => {
         markHeroReady(section, video);
 
-        if (hasPlayedHero) {
+        if (skipHeroChoreo) {
           still.classList.add("is-active", "is-settled");
           section.classList.add("hero-is-settled");
           heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
@@ -650,7 +680,7 @@
         }
       });
 
-      if (hasPlayedHero) {
+      if (skipHeroChoreo) {
         onHeroLinesReady?.();
       }
     });
@@ -720,17 +750,14 @@
     const projectDesc = document.querySelector(".project-desc");
     const projectStatType = document.querySelector(".project-stat-type");
     const projectStatLocation = document.querySelector(".project-stat-location");
-    const projectStatTimeline = document.querySelector(".project-stat-timeline");
-    const projectScope = document.querySelector(".project-scope");
-    const projectNext = document.querySelector(".project-next");
+    const projectMore = document.querySelector(".project-more");
     const mobileTitle = document.querySelector("#mobile-project-title");
     const mobileDesc = document.querySelector(".mobile-project-desc");
     const mobileStatType = document.querySelector(".mobile-project-stat-type");
     const mobileStatLocation = document.querySelector(".mobile-project-stat-location");
-    const mobileStatTimeline = document.querySelector(".mobile-project-stat-timeline");
-    const mobileScope = document.querySelector(".mobile-project-scope");
-    const mobileNext = document.querySelector(".mobile-project-next");
-    const referenceLinks = Array.from(document.querySelectorAll('a[href="#reference"], a[href="#reference-mobile"]'));
+    const mobileMore = document.querySelector(".mobile-project-more");
+    const mobileProjectPhoto = document.querySelector(".mobile-project-photo");
+    const referenceLinks = Array.from(document.querySelectorAll('a[href="#projekty"], a[href="#projekty-mobile"]'));
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let activeIndex = 0;
     let isUpdating = false;
@@ -741,20 +768,6 @@
       }
 
       return `${project.title} <span class="project-status">${project.status}</span>`;
-    }
-
-    function renderScope(listElement, items) {
-      if (!listElement) {
-        return;
-      }
-
-      listElement.replaceChildren(
-        ...items.map((item) => {
-          const li = document.createElement("li");
-          li.textContent = item;
-          return li;
-        }),
-      );
     }
 
     function applyProjectContent(project, index) {
@@ -776,11 +789,9 @@
         projectStatLocation.textContent = project.location;
       }
 
-      if (projectStatTimeline) {
-        projectStatTimeline.textContent = project.timeline;
+      if (projectMore && project.detailHref) {
+        projectMore.setAttribute("href", project.detailHref);
       }
-
-      renderScope(projectScope, project.scope);
 
       if (mobileTitle) {
         mobileTitle.innerHTML = buildTitle(project);
@@ -798,26 +809,14 @@
         mobileStatLocation.textContent = project.location;
       }
 
-      if (mobileStatTimeline) {
-        mobileStatTimeline.textContent = project.timeline;
+      if (mobileMore && project.detailHref) {
+        mobileMore.setAttribute("href", project.detailHref);
       }
 
-      renderScope(mobileScope, project.scope);
-
-      if (mobileProjectSection) {
-        mobileProjectSection.style.backgroundImage = [
-          "linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75))",
-          `url("${project.rightImg}")`,
-        ].join(", ");
-        mobileProjectSection.style.backgroundSize = "cover";
-        mobileProjectSection.style.backgroundPosition = "center";
+      if (mobileProjectPhoto) {
+        mobileProjectPhoto.src = project.rightImg;
+        mobileProjectPhoto.alt = project.rightAlt || "";
       }
-
-      const nextProject = referenceProjects[(index + 1) % referenceProjects.length];
-      const nextLabel = nextProject ? `Zobrazit další referenci: ${nextProject.title}` : "Zobrazit další referenci";
-
-      projectNext?.setAttribute("aria-label", nextLabel);
-      mobileNext?.setAttribute("aria-label", nextLabel);
     }
 
     function swapImages(project, animate) {
@@ -889,13 +888,6 @@
         isUpdating = false;
       });
     }
-
-    function showNextReference() {
-      showReference((activeIndex + 1) % referenceProjects.length);
-    }
-
-    projectNext?.addEventListener("click", showNextReference);
-    mobileNext?.addEventListener("click", showNextReference);
 
     referenceLinks.forEach((link) => {
       link.addEventListener("click", () => {
@@ -1057,6 +1049,24 @@
     });
   }
 
+  function initServicePrefill() {
+    const select = document.getElementById("service");
+    if (!select) {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const service = params.get("service");
+    if (!service) {
+      return;
+    }
+
+    const option = Array.from(select.options).find((item) => item.value === service);
+    if (option) {
+      select.value = service;
+    }
+  }
+
   function initLightbox() {
     const galleries = Array.from(document.querySelectorAll("[data-lightbox]"));
     const lightbox = document.getElementById("lightbox");
@@ -1162,9 +1172,11 @@
   prepareNavState();
   revealScrollLines();
   initResponsibilityScrollReveal();
+  initMidpageScrollReveal();
   initScrollNavShell();
   initLightbox();
   initInquiryHashScroll();
+  initServicePrefill();
 
   window.addEventListener("resize", updateScale, { passive: true });
   window.addEventListener("resize", () => designLines.forEach(setLineDirection), { passive: true });
