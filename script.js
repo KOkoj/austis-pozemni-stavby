@@ -15,11 +15,13 @@
   // Allow the design to scale ABOVE 1 on roomy viewports so the (natively small) text
   // grows to a comfortable reading size. Capped so it never becomes oversized.
   const maxScale = 1.32;
+  // Global ease-back so 100% browser zoom matches the preferred ~90% look.
+  const comfortScale = 0.9;
 
   function getDesignHeroHeight() {
     const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 15;
     // Keep in sync with --hero-panel-bottom in styles.css.
-    return headerOffset + 448 + 223;
+    return headerOffset + 448 + 224;
   }
 
   function updateScale() {
@@ -33,7 +35,7 @@
       const scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
       const viewportMargin = 24;
       const scaleByHeight = (height - viewportMargin) / getDesignHeroHeight();
-      scale = Math.min(scaleByWidth, scaleByHeight, maxScale);
+      scale = Math.min(scaleByWidth, scaleByHeight, maxScale) * comfortScale;
       scale = Math.min(Math.max(scale, 0.5), maxScale);
     }
 
@@ -255,7 +257,7 @@
       detailHref: "projekty.html#ref-1",
       leftImg: "pexels-ivan-s-4458205 (1).jpg",
       rightImg: "assets/hero 2.png",
-      rightAlt: "Chata Seibert — pohled na realizaci",
+      rightAlt: "Chata Seibert: pohled na realizaci",
     },
     {
       title: "Vraňany Farma Hanč",
@@ -267,7 +269,7 @@
       detailHref: "projekty.html#ref-2",
       leftImg: "assets/sluzby-generalni-dodavka.png",
       rightImg: "assets/hero 1.png",
-      rightAlt: "Vraňany Farma Hanč — pohled na areál",
+      rightAlt: "Vraňany Farma Hanč: pohled na areál",
     },
     {
       title: "Rodinný dům Roztoky",
@@ -279,7 +281,7 @@
       detailHref: "projekty.html#ref-3",
       leftImg: "pexels-thirdman-8482551 1.png",
       rightImg: "assets/hero 3.png",
-      rightAlt: "Rodinný dům Roztoky — vizualizace novostavby",
+      rightAlt: "Rodinný dům Roztoky: vizualizace novostavby",
     },
     {
       title: "Novo Plaza",
@@ -291,7 +293,7 @@
       detailHref: "projekty.html#ref-4",
       leftImg: "assets/sluzby-pozemni-stavby.png",
       rightImg: "assets/image 7.png",
-      rightAlt: "Novo Plaza — komerční objekt",
+      rightAlt: "Novo Plaza: komerční objekt",
     },
   ];
 
@@ -511,7 +513,7 @@
         return;
       }
 
-      // Paint the still as soon as possible — do not wait for window load or video.
+      // Paint the still as soon as possible; do not wait for window load or video.
       await Promise.all([
         whenFontsReady(),
         ...heroPairs.map(({ still }) => whenImageReady(still)),

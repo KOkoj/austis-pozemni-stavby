@@ -52,7 +52,8 @@
   --hero-left-line-top: var(--hero-image-top);
   --hero-left-line-height: calc(var(--responsibility-bottom) - var(--hero-left-line-top));
   --hero-panel-top: calc(var(--header-offset) + 448px);
-  --hero-panel-bottom: calc(var(--hero-panel-top) + 223px);
+  --hero-panel-height: 224px;
+  --hero-panel-bottom: calc(var(--hero-panel-top) + var(--hero-panel-height));
   --hero-label-top: calc(var(--hero-panel-top) - 38px);
   --hero-overlay-height: calc(var(--hero-panel-bottom) + 120px);
   --hero-bg-bleed: 238px;
@@ -692,7 +693,7 @@ html.hero-precommit .hero-is-choreo .hero-side {
   left: var(--hero-copy-split);
   top: var(--hero-panel-top);
   width: 1px;
-  height: 224px;
+  height: var(--hero-panel-height);
 }
 
 .line-hero-right {
@@ -700,7 +701,7 @@ html.hero-precommit .hero-is-choreo .hero-side {
   left: var(--content-right);
   top: calc(var(--hero-panel-top) + 1px);
   width: 1px;
-  height: 222px;
+  height: calc(var(--hero-panel-height) - 2px);
 }
 
 .line-hero-bottom {
@@ -1010,14 +1011,24 @@ html.hero-precommit .hero-is-choreo .hero-side {
   left: var(--content-left);
   top: var(--hero-panel-top);
   width: var(--content-width);
-  height: 223px;
+  height: var(--hero-panel-height);
   display: flex;
   align-items: stretch;
   overflow: hidden;
   background: transparent;
   border-left: 1px solid rgba(255, 255, 255, 0.18);
   border-top: 1px solid rgba(255, 255, 255, 0.18);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* Bottom edge is line-hero-bottom — no border here or the CTA sits 1px short */
+}
+
+.hero-copy .project-link {
+  position: relative;
+  right: auto;
+  top: auto;
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 224px;
+  height: auto;
 }
 
 .hero-copy-main {
@@ -1141,15 +1152,6 @@ html.hero-precommit .hero-is-choreo .hero-side {
   margin-right: 9px;
   background: var(--red);
   vertical-align: 1px;
-}
-
-.hero-copy .project-link {
-  position: relative;
-  right: auto;
-  top: auto;
-  flex-shrink: 0;
-  align-self: stretch;
-  height: auto;
 }
 
 .project-link {
@@ -1296,6 +1298,7 @@ button.project-link {
   gap: 18px;
   padding: 28px 64px 26px;
   text-align: center;
+  border-bottom: 1px solid var(--page-bg);
 }
 
 .responsibility-header h2 {
@@ -1314,68 +1317,6 @@ button.project-link {
   font-size: 15px;
   font-weight: 300;
   line-height: 24px;
-}
-
-.grid-left {
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: var(--responsibility-panel-height);
-  background: var(--page-bg);
-}
-
-.grid-top {
-  left: 0;
-  top: var(--responsibility-header-height);
-  width: var(--content-width);
-  height: 1px;
-  background: var(--page-bg);
-}
-
-.grid-right {
-  left: calc(var(--content-width) - var(--responsibility-inset));
-  top: 0;
-  width: 1px;
-  height: var(--responsibility-panel-height);
-  background: var(--page-bg);
-}
-
-.grid-mid-h {
-  left: 0;
-  top: calc(var(--responsibility-header-height) + var(--responsibility-card-height));
-  width: calc(var(--content-width) - var(--responsibility-inset));
-  height: 1px;
-  background: var(--page-bg);
-}
-
-.grid-mid-v {
-  left: calc(
-    var(--responsibility-inset) + (var(--responsibility-card-width) + var(--responsibility-card-gap)) * 2
-  );
-  top: var(--responsibility-row2-top);
-  width: 1px;
-  height: var(--responsibility-card-height);
-  background: var(--page-bg);
-}
-
-.grid-lower-top {
-  left: 0;
-  top: var(--responsibility-row2-top);
-  width: calc(
-    var(--responsibility-inset) + (var(--responsibility-card-width) + var(--responsibility-card-gap)) * 2
-  );
-  height: 1px;
-  background: var(--page-bg);
-}
-
-.grid-lower-bottom {
-  left: 0;
-  top: calc(var(--responsibility-row2-top) + var(--responsibility-card-height));
-  width: calc(
-    var(--responsibility-inset) + (var(--responsibility-card-width) + var(--responsibility-card-gap)) * 2
-  );
-  height: 1px;
-  background: var(--page-bg);
 }
 
 .feature-card {
@@ -1400,6 +1341,13 @@ button.project-link {
 
 .artboard .feature-card {
   transition: none;
+}
+
+/* Header already draws the divider — avoid stacking a second top border on row 1 */
+.artboard .feature-card.one,
+.artboard .feature-card.two,
+.artboard .feature-card.three {
+  border-top: 0;
 }
 
 .feature-card::before {
@@ -1620,34 +1568,6 @@ button.project-link {
   background: var(--grid);
 }
 
-.service-rail-one-a,
-.service-rail-one-b,
-.service-rail-two-a,
-.service-rail-two-b {
-  top: 380px;
-  width: 1px;
-  height: 210px;
-  background: var(--grid);
-}
-
-.service-rail-one-a {
-  left: calc(var(--content-left) + var(--services-card-width) - 1px);
-}
-
-.service-rail-one-b {
-  left: calc(var(--content-left) + var(--services-card-width) + var(--services-card-gap));
-}
-
-.service-rail-two-a {
-  left: calc(
-    var(--content-left) + var(--services-card-width) * 2 + var(--services-card-gap) - 1px
-  );
-}
-
-.service-rail-two-b {
-  left: calc(var(--content-left) + (var(--services-card-width) + var(--services-card-gap)) * 2);
-}
-
 .service-square {
   position: absolute;
   z-index: 3;
@@ -1679,8 +1599,12 @@ button.project-link {
 }
 
 .service-card img {
+  display: block;
   width: var(--services-card-width);
-  height: 380px;
+  /* 381px paint + -1px margin keeps layout at 380 so the divider
+     covers the seam instead of sitting beside a second edge */
+  height: 381px;
+  margin-bottom: -1px;
   object-fit: cover;
   object-position: center;
   filter: saturate(0.96) contrast(1.05);
@@ -1748,11 +1672,13 @@ button.project-link {
 .service-card-body {
   display: flex;
   flex-direction: column;
-  width: calc(var(--services-card-width) - 1px);
+  width: 100%;
   height: 210px;
   padding: 20px 18px 16px;
   background: #fff;
+  /* Top/bottom come from service-label-top + service-bottom — sides only here */
   border-left: 1px solid var(--grid);
+  border-right: 1px solid var(--grid);
 }
 
 .service-card h3 {
@@ -2034,6 +1960,7 @@ button.project-link {
 .about::after {
   content: "";
   position: absolute;
+  z-index: 2;
   background: var(--grid);
   opacity: 0;
   transition:
@@ -2086,7 +2013,8 @@ button.project-link {
   height: 360px;
   padding: 28px 32px 26px;
   background: #fff;
-  box-shadow: 0 0 10px rgba(105, 106, 109, 0.05);
+  /* No soft shadow — it stacks with the 1px design lines and makes them look thick */
+  box-shadow: none;
   transition:
     box-shadow 280ms ease,
     transform 280ms ease;
@@ -2095,6 +2023,7 @@ button.project-link {
 .about-card::after {
   content: "";
   position: absolute;
+  z-index: 3;
   top: 0;
   right: 0;
   width: 11px;
@@ -2221,7 +2150,8 @@ button.project-link {
   position: absolute;
   z-index: 1;
   left: calc(var(--content-left) + var(--content-width) * 677 / 953);
-  top: -10px;
+  /* Keep flush with about::before — the old -10px overhang let the top line cut through the image */
+  top: 0;
   width: 286px;
   height: 286px;
   overflow: hidden;
@@ -2238,6 +2168,7 @@ button.project-link {
 }
 
 .about-photo img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2631,7 +2562,7 @@ button.project-link {
   }
 
   .about-card:hover {
-    box-shadow: 0 18px 34px rgba(105, 106, 109, 0.14);
+    box-shadow: none;
   }
 }
 
@@ -5543,8 +5474,8 @@ button.project-link {
    1080px content grid (edges at 50vw -/+ 539.5px).
    ============================================================ */
 .flow-subpage {
-  /* Hero overlay bottom (header-offset + 448 + 223 + 120) — nothing else lives in the artboard */
-  --artboard-height: calc(var(--header-offset) + 448px + 223px + 120px);
+  /* Hero overlay bottom — nothing else lives in the artboard */
+  --artboard-height: calc(var(--header-offset) + 448px + var(--hero-panel-height) + 120px);
   --sp-dark: #2b2a29;
   /* No responsibility block in this artboard: run the left line to the panel bottom */
   --hero-left-line-height: calc(var(--hero-panel-bottom) - var(--hero-left-line-top));
@@ -7248,9 +7179,12 @@ body.lightbox-open {
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* Service detail CTA */
-.sp-detail-cta {
-  display: inline-flex;
+/* Service detail CTA — same button system, wider for longer label */
+.sp-detail-cta.btn {
+  display: grid;
+  width: auto;
+  min-width: 224px;
+  padding: 0 28px;
   margin-top: 28px;
 }
 

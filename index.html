@@ -6,7 +6,7 @@
     <link rel="canonical" href="https://aps.austis.cz/" />
     <link rel="icon" href="logo.svg" type="image/svg+xml" />
     <meta property="og:title" content="AUSTIS Pozemní stavby | Generální dodavatel staveb" />
-    <meta property="og:description" content="AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
+    <meta property="og:description" content="AUSTIS Pozemní stavby: generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://aps.austis.cz/" />
     <meta property="og:locale" content="cs_CZ" />
@@ -32,7 +32,7 @@
       }
     }
     </script>
-    <meta name="description" content="AUSTIS Pozemní stavby — generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
+    <meta name="description" content="AUSTIS Pozemní stavby: generální dodavatel pozemních staveb pro investory a developery. Jedna smlouva, jedna odpovědnost: termíny, náklady i kvalita pod kontrolou." />
     <title>AUSTIS Pozemní stavby | Generální dodavatel staveb</title>
     <script>
       (function () {
@@ -53,6 +53,7 @@
           var maxDesktopWidth = 2200;
           var widthCropAllowance = 260;
           var maxScale = 1.32;
+          var comfortScale = 0.9;
           var headerOffset = 15;
           var width = window.innerWidth;
           var height = window.innerHeight;
@@ -61,8 +62,8 @@
           if (width >= desktopMin) {
             var layoutWidth = Math.min(width, maxDesktopWidth);
             var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
-            var scaleByHeight = (height - 24) / (headerOffset + 448 + 223);
-            scale = Math.min(scaleByWidth, scaleByHeight, maxScale);
+            var scaleByHeight = (height - 24) / (headerOffset + 448 + 224);
+            scale = Math.min(scaleByWidth, scaleByHeight, maxScale) * comfortScale;
             scale = Math.min(Math.max(scale, 0.5), maxScale);
           }
 
@@ -74,7 +75,7 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/hero-section-bg.jpg" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260723c" />
+    <link rel="stylesheet" href="styles.css?v=20260723n" />
   </head>
   <body>
     <main class="site">
@@ -151,7 +152,7 @@
                   <span class="hero-title-line">POZEMNÍ STAVBY</span>
                 </h1>
                 <div class="hero-copy-aside">
-                  <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu — od přípravy až po předání klíčů.</p>
+                  <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu od přípravy až po předání klíčů.</p>
                   <div class="hero-signals" aria-label="Hlavní výhody">
                     <span>jedna smlouva</span>
                     <span>termíny · rozpočet · kvalita</span>
@@ -171,23 +172,16 @@
 
           <section class="responsibility" aria-labelledby="responsibility-title">
             <div class="panel"></div>
-            <div class="grid-line grid-left"></div>
-            <div class="grid-line grid-top"></div>
-            <div class="grid-line grid-right"></div>
-            <div class="grid-line grid-mid-h"></div>
-            <div class="grid-line grid-mid-v"></div>
-            <div class="grid-line grid-lower-top"></div>
-            <div class="grid-line grid-lower-bottom"></div>
             <div class="responsibility-header">
               <h2 id="responsibility-title">Jedna odpovědnost za celou realizaci</h2>
-              <p class="responsibility-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem — a o každé fázi stavby máte jasný přehled.</p>
+              <p class="responsibility-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem a o každé fázi stavby máte jasný přehled.</p>
             </div>
             <article class="feature-card one">
               <i></i>
               <span class="feature-index" aria-hidden="true">01</span>
               <div class="feature-copy">
                 <h3>Jeden smluvní partner</h3>
-                <p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my — od přípravy po předání.</p>
+                <p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my od přípravy po předání.</p>
               </div>
             </article>
             <article class="feature-card two">
@@ -219,11 +213,11 @@
               <span class="feature-index" aria-hidden="true">05</span>
               <div class="feature-copy">
                 <h3>Reporting pro investora</h3>
-                <p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je potřebujete.</p>
+                <p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika, kdykoli je potřebujete.</p>
               </div>
             </article>
             <aside class="responsibility-aside">
-              <p>Chcete jednoho partnera za celou realizaci — od smlouvy po předání?</p>
+              <p>Chcete jednoho partnera za celou realizaci, od smlouvy po předání?</p>
               <a class="responsibility-link" href="poptavka.html#poptavka-form">domluvit konzultaci</a>
             </aside>
           </section>
@@ -231,10 +225,6 @@
           <section class="services" id="sluzby" aria-label="Služby">
             <div class="section-line service-label-top"></div>
             <div class="section-line service-bottom"></div>
-            <div class="section-line service-rail-one-a"></div>
-            <div class="section-line service-rail-one-b"></div>
-            <div class="section-line service-rail-two-a"></div>
-            <div class="section-line service-rail-two-b"></div>
             <div class="service-square square-one"></div>
             <div class="service-square square-two"></div>
             <div class="service-square square-three"></div>
@@ -242,7 +232,7 @@
               <img src="assets/sluzby-generalni-dodavka.png" alt="Generální dodávka stavby" />
               <div class="service-card-body">
                 <h3>Generální dodávka</h3>
-                <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu — od výběru subdodavatelů po předání klíčů.</p>
+                <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu, od výběru subdodavatelů po předání klíčů.</p>
                 <div class="service-card-actions">
                   <a class="service-card-link" href="sluzby.html#generalni-dodavka">více o službě</a>
                   <a class="btn btn-dark service-card-cta" href="poptavka.html?service=generalni-dodavka#poptavka-form"><span class="btn-label">poptat</span></a>
@@ -264,7 +254,7 @@
               <img src="assets/sluzby-rekonstrukce.png" alt="Rekonstrukce a revitalizace" />
               <div class="service-card-body">
                 <h3>Rekonstrukce a revitalizace</h3>
-                <p>Modernizace a přestavby stávajících objektů — s respektem k technickému stavu, provozu i rozpočtu.</p>
+                <p>Modernizace a přestavby stávajících objektů s respektem k technickému stavu, provozu i rozpočtu.</p>
                 <div class="service-card-actions">
                   <a class="service-card-link" href="sluzby.html#rekonstrukce">více o službě</a>
                   <a class="btn btn-dark service-card-cta" href="poptavka.html?service=rekonstrukce#poptavka-form"><span class="btn-label">poptat</span></a>
@@ -279,7 +269,7 @@
           <section class="project" id="projekty" aria-labelledby="project-title">
             <img class="project-left-img" src="pexels-ivan-s-4458205 (1).jpg" alt="" aria-hidden="true" />
             <div class="project-overlay"></div>
-            <img class="project-right-img" src="assets/hero 2.png" alt="Chata Seibert — pohled na realizaci" />
+            <img class="project-right-img" src="assets/hero 2.png" alt="Chata Seibert: pohled na realizaci" />
             <div class="project-copy" aria-live="polite">
               <span class="project-eyebrow">Projekty</span>
               <h2 id="project-title">Chata Seibert</h2>
@@ -303,7 +293,7 @@
             <div class="about-card">
               <span class="about-eyebrow">O společnosti</span>
               <h2 id="about-title">Jeden partner za celou stavbu</h2>
-              <p class="lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty — s jasnou odpovědností za výsledek.</p>
+              <p class="lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty s jasnou odpovědností za výsledek.</p>
               <div class="about-career">
                 <strong>Kariéra</strong>
                 <p>Rozšiřujeme tým. Aktuálně hledáme stavbyvedoucí a výrobní přípravu staveb.</p>
@@ -328,7 +318,7 @@
             <section>
               <h2>Kontakt</h2>
               <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-              <p>Připravujete stavební záměr? Domluvte si konzultaci — projdeme váš projekt a navrhneme další postup.</p>
+              <p>Připravujete stavební záměr? Domluvte si konzultaci. Projdeme váš projekt a navrhneme další postup.</p>
               <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
               <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
               <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
@@ -389,7 +379,7 @@
               <span class="hero-title-brand">AUSTIS</span>
               <span class="hero-title-line">POZEMNÍ STAVBY</span>
             </p>
-            <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu — od přípravy až po předání klíčů.</p>
+            <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu od přípravy až po předání klíčů.</p>
             <div class="mobile-hero-signals" aria-label="Hlavní výhody">
               <span>jedna smlouva</span>
               <span>termíny · rozpočet · kvalita</span>
@@ -402,15 +392,15 @@
         <section class="mobile-section mobile-responsibility">
           <span class="mobile-eyebrow">Generální dodavatel</span>
           <h2>Jedna odpovědnost za celou realizaci</h2>
-          <p class="mobile-section-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem — a o každé fázi stavby máte jasný přehled.</p>
+          <p class="mobile-section-lead">Koordinujeme profese, hlídáme termíny i kvalitu. Vy jednáte s jedním partnerem a o každé fázi stavby máte jasný přehled.</p>
           <div class="mobile-grid">
-            <article><h3>Jeden smluvní partner</h3><p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my — od přípravy po předání.</p></article>
+            <article><h3>Jeden smluvní partner</h3><p>Celou stavbu zastřešuje jedna smlouva a jeden tým. Odpovědnost za výsledek neseme my od přípravy po předání.</p></article>
             <article><h3>Řízení harmonogramu</h3><p>Plánujeme návaznosti profesí a hlídáme klíčové milníky, aby stavba postupovala bez zbytečných prostojů.</p></article>
             <article><h3>Kontrola nákladů</h3><p>Rozpočet sledujeme průběžně a na odchylky upozorníme včas. Žádná překvapení na konci projektu.</p></article>
             <article><h3>Koordinace subdodavatelů</h3><p>Pracujeme se stabilní sítí prověřených firem. Subdodavatele vybíráme, řídíme i kontrolujeme my.</p></article>
-            <article><h3>Reporting pro investora</h3><p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika — kdykoli je potřebujete.</p></article>
+            <article><h3>Reporting pro investora</h3><p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika, kdykoli je potřebujete.</p></article>
             <aside class="mobile-cta-card">
-              <p>Chcete jednoho partnera za celou realizaci — od smlouvy po předání?</p>
+              <p>Chcete jednoho partnera za celou realizaci, od smlouvy po předání?</p>
               <a class="mobile-cta-link" href="poptavka.html#poptavka-form">domluvit konzultaci</a>
             </aside>
           </div>
@@ -423,7 +413,7 @@
               <img src="assets/sluzby-generalni-dodavka.png" alt="Generální dodávka stavby" />
               <div>
                 <h3>Generální dodávka</h3>
-                <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu — od výběru subdodavatelů po předání klíčů.</p>
+                <p>Jedna smlouva a jeden odpovědný partner pro celou stavbu, od výběru subdodavatelů po předání klíčů.</p>
                 <div class="service-card-actions">
                   <a class="service-card-link" href="sluzby.html#generalni-dodavka">více o službě</a>
                   <a class="btn btn-dark service-card-cta" href="poptavka.html?service=generalni-dodavka#poptavka-form"><span class="btn-label">poptat</span></a>
@@ -445,7 +435,7 @@
               <img src="assets/sluzby-rekonstrukce.png" alt="Rekonstrukce a revitalizace" />
               <div>
                 <h3>Rekonstrukce a revitalizace</h3>
-                <p>Modernizace a přestavby stávajících objektů — s respektem k technickému stavu, provozu i rozpočtu.</p>
+                <p>Modernizace a přestavby stávajících objektů s respektem k technickému stavu, provozu i rozpočtu.</p>
                 <div class="service-card-actions">
                   <a class="service-card-link" href="sluzby.html#rekonstrukce">více o službě</a>
                   <a class="btn btn-dark service-card-cta" href="poptavka.html?service=rekonstrukce#poptavka-form"><span class="btn-label">poptat</span></a>
@@ -478,7 +468,7 @@
         <section class="mobile-section mobile-about" id="spolecnost-mobile">
           <span class="mobile-eyebrow">O společnosti</span>
           <h2>Jeden partner za celou stavbu</h2>
-          <p class="mobile-section-lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty — s jasnou odpovědností za výsledek.</p>
+          <p class="mobile-section-lead">Stavíme a rekonstruujeme rezidenční, komerční i provozní objekty s jasnou odpovědností za výsledek.</p>
           <div class="mobile-about-photo">
             <img src="assets/austis-hq.png" alt="Sídlo AUSTIS Pozemní stavby" />
           </div>
@@ -500,7 +490,7 @@
           <section>
             <h2>Kontakt</h2>
             <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-            <p>Připravujete stavební záměr? Domluvte si konzultaci — projdeme váš projekt a navrhneme další postup.</p>
+            <p>Připravujete stavební záměr? Domluvte si konzultaci. Projdeme váš projekt a navrhneme další postup.</p>
             <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
             <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
             <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
@@ -518,6 +508,6 @@
         </footer>
       </div>
     </main>
-    <script src="script.js?v=20260723c"></script>
+    <script src="script.js?v=20260723o"></script>
   </body>
 </html>
