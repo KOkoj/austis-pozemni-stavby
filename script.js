@@ -237,8 +237,10 @@
   const bodyDataset = document.body?.dataset ?? {};
   const hasHeroVideoOverride = Object.prototype.hasOwnProperty.call(bodyDataset, "heroVideo");
   const heroSlide = {
-    src: bodyDataset.heroImage || "assets/hero-section-bg.png",
-    video: hasHeroVideoOverride ? bodyDataset.heroVideo : "assets/hf_20260610_082828_ad428852-aa92-4020-a9a1-d9139a428e20.mp4",
+    src: bodyDataset.heroImage || "assets/hero-section-bg.jpg",
+    video: hasHeroVideoOverride
+      ? bodyDataset.heroVideo
+      : "assets/hero-seibert.mp4",
     name: bodyDataset.heroName || "Chata Seibert",
   };
 
@@ -384,31 +386,38 @@
     });
   }
 
-  function whenVideoBuffered(video, timeoutMs = 10000) {
+  function whenVideoCanPlay(video, timeoutMs = 5000) {
     return new Promise((resolve) => {
-      const finish = () => resolve();
-
-      if (video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        finish();
+      if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+        resolve(true);
         return;
       }
 
-      const timer = window.setTimeout(finish, timeoutMs);
-
-      const onReady = () => {
-        if (video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
+      let done = false;
+      const finish = (ok) => {
+        if (done) {
           return;
         }
-
+        done = true;
         window.clearTimeout(timer);
-        video.removeEventListener("canplaythrough", onReady);
         video.removeEventListener("canplay", onReady);
-        finish();
+        video.removeEventListener("loadeddata", onReady);
+        video.removeEventListener("error", onError);
+        resolve(ok);
       };
 
-      video.addEventListener("canplaythrough", onReady);
+      const onReady = () => finish(true);
+      const onError = () => finish(false);
+      const timer = window.setTimeout(() => finish(video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA), timeoutMs);
+
       video.addEventListener("canplay", onReady);
+      video.addEventListener("loadeddata", onReady);
+      video.addEventListener("error", onError);
     });
+  }
+
+  function whenVideoBuffered(video, timeoutMs = 10000) {
+    return whenVideoCanPlay(video, timeoutMs);
   }
 
   function initHeroVideo(onHeroLinesReady) {
@@ -496,46 +505,50 @@
     }
 
     async function waitForHeroAssets() {
-      const logoImages = Array.from(document.querySelectorAll(".logo-img"));
-
       // Hard reloads render the settled hero from CSS via html.hero-precommit
       // (set synchronously before first paint). Page-to-page navigations play.
       if (skipHeroChoreo) {
         return;
       }
 
-      await whenWindowLoaded();
-      await whenFontsReady();
-
+      // Paint the still as soon as possible — do not wait for window load or video.
       await Promise.all([
-        ...heroPairs.flatMap(({ video, still }) => [
-          video.getAttribute("src") ? whenVideoBuffered(video) : Promise.resolve(),
-          whenImageReady(still),
-        ]),
-        ...logoImages.map(whenImageReady),
+        whenFontsReady(),
+        ...heroPairs.map(({ still }) => whenImageReady(still)),
       ]);
 
       await nextPaint();
     }
 
-    function setupHeroPlayback({ section, video, still }) {
-      const hasVideoSource = Boolean(video.getAttribute("src"));
+    function attachHeroVideoSource(video) {
+      if (video.getAttribute("src")) {
+        return true;
+      }
 
-      if (!hasVideoSource) {
+      const src = video.dataset.src || "";
+      if (!src) {
+        return false;
+      }
+
+      video.src = src;
+      video.load();
+      return true;
+    }
+
+    function setupHeroPlayback({ section, video, still }) {
+      const isDesktopHero = section.classList.contains("hero");
+      const wantsVideo =
+        isDesktopHero &&
+        !prefersReducedMotion &&
+        Boolean(video.dataset.src || video.getAttribute("src"));
+
+      if (!wantsVideo) {
         return function startStaticHero() {
           still.classList.add("is-active", "is-settled");
           section.classList.add("hero-is-settled");
           heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
           startHeroLines();
         };
-      }
-
-      if (prefersReducedMotion) {
-        markHeroReady(section, video);
-        still.classList.add("is-active", "is-settled");
-        section.classList.add("hero-is-settled");
-        heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
-        return;
       }
 
       let settled = false;
@@ -642,6 +655,7 @@
       video.addEventListener(
         "playing",
         () => {
+          still.classList.remove("is-active");
           void beginChoreo().then(startChoreoLoop);
         },
         { once: true },
@@ -650,15 +664,35 @@
       video.addEventListener("ended", trySettle);
 
       return async function startPlayback() {
+        // Keep the compressed still visible until the video actually plays.
+        still.classList.add("is-active");
+        attachHeroVideoSource(video);
+
+        const ready = await whenVideoCanPlay(video, 4500);
+        if (!ready) {
+          still.classList.add("is-settled");
+          section.classList.add("hero-is-settled");
+          heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
+          startHeroLines();
+          return;
+        }
+
         video.pause();
-        video.currentTime = 0;
+        try {
+          video.currentTime = 0;
+        } catch (e) {
+          /* ignore seek errors on early media */
+        }
 
         await nextPaint();
+
+        markHeroReady(section, video);
 
         const playPromise = video.play();
 
         if (playPromise?.catch) {
           await playPromise.catch(() => {
+            still.classList.add("is-active");
             runTimedChoreoFallback();
           });
         }
@@ -669,15 +703,18 @@
 
     void waitForHeroAssets().then(async () => {
       heroPairs.forEach(({ section, video, still }, index) => {
-        markHeroReady(section, video);
-
         if (skipHeroChoreo) {
+          markHeroReady(section, video);
           still.classList.add("is-active", "is-settled");
           section.classList.add("hero-is-settled");
           heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
-        } else {
-          void starters[index]?.();
+          return;
         }
+
+        // Reveal UI immediately on the still; video starts when buffered enough.
+        section.classList.add("hero-is-ready");
+        still.classList.add("is-active");
+        void starters[index]?.();
       });
 
       if (skipHeroChoreo) {
@@ -694,11 +731,10 @@
     const mobileStill = document.querySelector(".mobile-hero-still");
     let pendingReferenceIndex = null;
 
-    if (mobileVideo && heroSlide.video) {
-      mobileVideo.src = heroSlide.video;
-      mobileVideo.poster = heroSlide.src;
-    } else if (mobileVideo) {
+    // Mobile stays still-only for load speed. Desktop video is attached lazily.
+    if (mobileVideo) {
       mobileVideo.removeAttribute("src");
+      delete mobileVideo.dataset.src;
       mobileVideo.poster = heroSlide.src;
       mobileVideo.load();
     }
@@ -707,15 +743,16 @@
       mobileStill.src = heroSlide.src;
     }
 
-    if (heroVideo && heroSlide.video) {
-      heroVideo.src = heroSlide.video;
-      heroVideo.poster = heroSlide.src;
-      heroVideo.setAttribute("aria-label", heroSlide.name);
-    } else if (heroVideo) {
+    if (heroVideo) {
       heroVideo.removeAttribute("src");
+      if (heroSlide.video) {
+        heroVideo.dataset.src = heroSlide.video;
+      } else {
+        delete heroVideo.dataset.src;
+      }
       heroVideo.poster = heroSlide.src;
+      heroVideo.preload = "none";
       heroVideo.setAttribute("aria-label", heroSlide.name);
-      heroVideo.load();
     }
 
     if (heroStill) {

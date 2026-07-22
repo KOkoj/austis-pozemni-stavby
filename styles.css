@@ -74,8 +74,16 @@
   --scroll-nav-top-gap: 0px;
   /* Match the static hero/subpage nav bar after artboard --scale is applied */
   --scroll-nav-bar-height: calc(47px * var(--scale));
-  --scroll-nav-content-width: min(calc(100vw - 48px), calc(var(--content-width) * var(--scale)));
-  --scroll-nav-logo-left: max(24px, calc((100vw - var(--scroll-nav-content-width)) / 2));
+  /* Align floating nav to the artboard content box (not an independent centered rail) */
+  --scroll-nav-content-left: calc(50vw + (var(--content-left) - 720px) * var(--scale));
+  --scroll-nav-content-right: calc(
+    50vw + (var(--content-left) + var(--content-width) - 720px) * var(--scale)
+  );
+  --scroll-nav-logo-left: max(24px, var(--scroll-nav-content-left));
+  --scroll-nav-content-width: min(
+    calc(100vw - 24px - var(--scroll-nav-logo-left)),
+    calc(var(--scroll-nav-content-right) - var(--scroll-nav-logo-left))
+  );
   --scroll-nav-logo-gap: calc(36px * var(--scale));
   --scroll-nav-logo-slot: calc(150px * var(--scale));
   --scroll-nav-bar-left: calc(var(--scroll-nav-logo-left) + var(--scroll-nav-logo-slot));
@@ -490,7 +498,7 @@ html:not(.is-layout-ready) .desktop-shell {
   visibility: hidden;
 }
 
-.hero-is-choreo.hero-is-ready:not(.hero-is-settled) .hero-bg-still {
+.hero-is-choreo.hero-is-ready:not(.hero-is-settled) .hero-bg-still:not(.is-active) {
   opacity: 0;
   transform: scale(1.035);
 }
@@ -4210,7 +4218,7 @@ button.project-link {
     visibility: hidden;
   }
 
-  .mobile-hero.hero-is-choreo.hero-is-ready:not(.hero-is-settled) .mobile-hero-still {
+  .mobile-hero.hero-is-choreo.hero-is-ready:not(.hero-is-settled) .mobile-hero-still:not(.is-active) {
     opacity: 0;
     transform: scale(1.035);
   }
