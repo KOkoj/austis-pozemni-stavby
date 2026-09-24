@@ -18,24 +18,15 @@
   // Global ease-back so 100% browser zoom matches the preferred ~90% look.
   const comfortScale = 0.9;
 
-  function getDesignHeroHeight() {
-    const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue("--header-offset")) || 15;
-    // Keep in sync with --hero-panel-bottom in styles.css.
-    return headerOffset + 448 + 224;
-  }
-
   function updateScale() {
     const width = window.innerWidth;
-    const height = window.innerHeight;
     const isDesktop = width >= desktopMin;
     const layoutWidth = Math.min(width, maxDesktopWidth);
     let scale = 1;
 
     if (isDesktop) {
       const scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
-      const viewportMargin = 24;
-      const scaleByHeight = (height - viewportMargin) / getDesignHeroHeight();
-      scale = Math.min(scaleByWidth, scaleByHeight, maxScale) * comfortScale;
+      scale = Math.min(scaleByWidth, maxScale) * comfortScale;
       scale = Math.min(Math.max(scale, 0.5), maxScale);
     }
 
@@ -46,6 +37,8 @@
     root.classList.add("is-layout-ready");
     desktopShell?.setAttribute("aria-hidden", String(!isDesktop));
     mobilePage?.setAttribute("aria-hidden", String(isDesktop));
+    desktopShell?.toggleAttribute("inert", !isDesktop);
+    mobilePage?.toggleAttribute("inert", isDesktop);
   }
 
   function setLineDirection(line) {
@@ -446,6 +439,7 @@
     })();
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const staticChoreoDuration = 2.35;
     const blendCrossfadeMs = 720;
     const blendLeadSeconds = blendCrossfadeMs / 1000;
     let heroLinesStarted = false;
@@ -546,10 +540,45 @@
 
       if (!wantsVideo) {
         return function startStaticHero() {
-          still.classList.add("is-active", "is-settled");
-          section.classList.add("hero-is-settled");
-          heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
-          startHeroLines();
+          const settleStatic = () => {
+            still.classList.add("is-active", "is-settled");
+            section.classList.add("hero-is-settled");
+            heroChoreoStages.forEach(({ name }) => applyHeroChoreoStage(section, name));
+            startHeroLines();
+          };
+
+          if (prefersReducedMotion || skipHeroChoreo) {
+            settleStatic();
+            return;
+          }
+
+          const duration = staticChoreoDuration;
+          still.classList.add("is-active");
+          primeHeroChoreo(section, duration);
+
+          let startedAt = null;
+          const tick = (timestamp) => {
+            if (startedAt === null) {
+              startedAt = timestamp;
+            }
+
+            const elapsed = (timestamp - startedAt) / 1000;
+            syncHeroChoreo(section, elapsed, duration);
+
+            if (elapsed >= duration * 0.12) {
+              startHeroLines();
+            }
+
+            if (elapsed >= duration) {
+              still.classList.add("is-settled");
+              finishHeroChoreo(section, duration);
+              return;
+            }
+
+            requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
         };
       }
 
@@ -728,7 +757,6 @@
   function prepareHeroDots() {
     const heroVideo = document.querySelector(".hero-bg-video");
     const heroStill = document.querySelector(".hero-bg-still");
-    const slideLabel = document.querySelector(".slide-label");
     const mobileVideo = document.querySelector(".mobile-hero-video");
     const mobileStill = document.querySelector(".mobile-hero-still");
     let pendingReferenceIndex = null;
@@ -760,10 +788,6 @@
     if (heroStill) {
       heroStill.src = heroSlide.src;
       heroStill.alt = heroSlide.name;
-    }
-
-    if (slideLabel) {
-      slideLabel.textContent = heroSlide.name;
     }
 
     return {
@@ -1040,7 +1064,7 @@
           scrollNav.classList.toggle("is-visible", show);
           scrollNav.setAttribute("aria-hidden", String(!show));
         },
-        { threshold: 0.05 },
+        { threshold: 0 },
       );
 
       observer.observe(triggerEl);
@@ -1159,47 +1183,303 @@
       currentIndex = index;
       lastFocused = document.activeElement;
       render();
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
+      document.body.appendChild(lightbox);
       document.body.classList.add("lightbox-open");
-      nextBtn.focus({ preventScroll: true });
+      document.documentElement.classList.add("lightbox-open");
+      syncPageScrollLock();
+
+      if (typeof lightbox.showModal === "function") {
+        if (!lightbox.open) lightbox.showModal();
+      } else {
+        lightbox.classList.add("is-open");
+      }
+
+      const focusTarget = currentShots.length > 1 ? nextBtn : lightbox.querySelector(".lightbox-close");
+      focusTarget.focus({ preventScroll: true });
     }
 
-    function close() {
+    function finishClose() {
       lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
       document.body.classList.remove("lightbox-open");
-      imgEl.setAttribute("src", "");
+      document.documentElement.classList.remove("lightbox-open");
+      syncPageScrollLock();
+      imgEl.removeAttribute("src");
 
       if (lastFocused && typeof lastFocused.focus === "function") {
         lastFocused.focus({ preventScroll: true });
       }
+
+      lastFocused = null;
+    }
+
+    function requestClose() {
+      if (lightbox.open) {
+        lightbox.close();
+        return;
+      }
+
+      finishClose();
+    }
+
+    function visibleShots(shots) {
+      return shots.filter((shot) => getComputedStyle(shot).display !== "none");
     }
 
     galleries.forEach((gallery) => {
       const shots = Array.from(gallery.querySelectorAll(".ref-shot"));
+      const shown = visibleShots(shots);
 
-      shots.forEach((shot, index) => {
-        shot.addEventListener("click", () => open(shots, index));
+      shown.forEach((shot, index) => {
+        shot.setAttribute("aria-label", `Otevřít galerii, foto ${index + 1} z ${shown.length}`);
+      });
+
+      shots.forEach((shot) => {
+        shot.addEventListener("click", () => {
+          const current = visibleShots(shots);
+          const index = current.indexOf(shot);
+
+          if (index < 0) {
+            return;
+          }
+
+          open(current, index);
+        });
       });
     });
 
     prevBtn.addEventListener("click", () => step(-1));
     nextBtn.addEventListener("click", () => step(1));
-    closeEls.forEach((el) => el.addEventListener("click", close));
+    closeEls.forEach((el) => el.addEventListener("click", requestClose));
+    lightbox.addEventListener("close", finishClose);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox || event.target === lightbox.querySelector(".lightbox-backdrop")) {
+        requestClose();
+      }
+    });
 
     document.addEventListener("keydown", (event) => {
-      if (!lightbox.classList.contains("is-open")) {
+      const isShown = lightbox.open || lightbox.classList.contains("is-open");
+
+      if (!isShown) {
         return;
       }
 
       if (event.key === "Escape") {
-        close();
-      } else if (event.key === "ArrowLeft") {
+        requestClose();
+        return;
+      }
+
+      if (event.key === "ArrowLeft") {
         step(-1);
       } else if (event.key === "ArrowRight") {
         step(1);
       }
+    });
+  }
+
+
+  function foldSearchText(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  }
+
+  const siteSearchIndex = [
+    { title: "Domů", hint: "AUSTIS Pozemní stavby", href: "index.html", keywords: "domu homepage domov uvod generální dodavatel" },
+    { title: "Služby", hint: "Generální dodávka, pozemní stavby, rekonstrukce", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
+    { title: "Generální dodávka", hint: "Jedna smlouva za celou stavbu", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
+    { title: "Pozemní stavby", hint: "Novostavby rezidenční, komerční i provozní", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni" },
+    { title: "Rekonstrukce", hint: "Modernizace a revitalizace", href: "sluzby.html#rekonstrukce", keywords: "rekonstrukce revitalizace" },
+    { title: "Projekty", hint: "Realizované stavby", href: "projekty.html", keywords: "reference seibert vranany" },
+    { title: "O společnosti", hint: "Tým a kariéra", href: "o-spolecnosti.html", keywords: "spolecnost tym kariera" },
+    { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci" },
+    { title: "Kontakt", hint: "Telefon, e-mail a adresa", href: "kontakt.html", keywords: "adresa telefon email slivenec" },
+    { title: "Poptat spolupráci", hint: "Nezávazná konzultace", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
+  ].map((item) => ({ ...item, haystack: foldSearchText(`${item.title} ${item.hint} ${item.keywords}`) }));
+
+  function initSiteSearch() {
+    document.querySelectorAll(".hero-search").forEach((form) => {
+      const input = form.querySelector("input[type='search']");
+      const panel = form.querySelector(".hero-search-results");
+      if (!input || !panel) return;
+      let activeIndex = -1;
+
+      const close = () => {
+        panel.hidden = true;
+        panel.innerHTML = "";
+        activeIndex = -1;
+      };
+
+      const render = (query) => {
+        const needle = foldSearchText(query);
+        if (!needle) {
+          close();
+          return;
+        }
+        const matches = siteSearchIndex.filter((item) => item.haystack.includes(needle)).slice(0, 8);
+        activeIndex = matches.length ? 0 : -1;
+        if (!matches.length) {
+          panel.innerHTML = '<p class="hero-search-empty">Nic nenalezeno</p>';
+          panel.hidden = false;
+          return;
+        }
+        panel.innerHTML = matches
+          .map((item, index) => `<a class="hero-search-result${index === 0 ? " is-active" : ""}" href="${item.href}"><strong>${item.title}</strong><span>${item.hint}</span></a>`)
+          .join("");
+        panel.hidden = false;
+      };
+
+      input.addEventListener("input", () => render(input.value));
+      input.addEventListener("keydown", (event) => {
+        const links = [...panel.querySelectorAll(".hero-search-result")];
+        if (event.key === "Escape") {
+          close();
+          return;
+        }
+        if (!links.length) return;
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          event.preventDefault();
+          activeIndex = event.key === "ArrowDown"
+            ? (activeIndex + 1) % links.length
+            : (activeIndex - 1 + links.length) % links.length;
+          links.forEach((link, index) => link.classList.toggle("is-active", index === activeIndex));
+        }
+        if (event.key === "Enter" && links[activeIndex]) {
+          event.preventDefault();
+          window.location.href = links[activeIndex].href;
+        }
+      });
+      document.addEventListener("click", (event) => {
+        if (!form.contains(event.target)) close();
+      });
+    });
+  }
+
+  let lenis = null;
+
+  function initSmoothScroll() {
+    if (typeof Lenis !== "function") return;
+    lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.1,
+      smoothWheel: true,
+      syncTouch: false,
+      allowNestedScroll: true,
+      stopInertiaOnNavigate: true,
+    });
+    window.austisLenis = lenis;
+    document.addEventListener("click", onSmoothAnchorClick, true);
+  }
+
+  function syncPageScrollLock() {
+    if (!lenis) return;
+    const locked = document.body.classList.contains("lightbox-open") || document.body.classList.contains("mobile-menu-open");
+    if (locked) lenis.stop();
+    else lenis.start();
+  }
+
+  function onSmoothAnchorClick(event) {
+    if (!lenis || event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+    if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+    let url;
+    try { url = new URL(link.href, window.location.href); } catch { return; }
+    if (url.origin !== window.location.origin || url.pathname !== window.location.pathname || !url.hash) return;
+    const id = decodeURIComponent(url.hash.slice(1));
+    const target = id ? document.getElementById(id) : null;
+    if (id && !target) return;
+    event.preventDefault();
+    if (window.location.hash !== url.hash) history.pushState(null, "", url.hash);
+    if (document.body.classList.contains("mobile-menu-open")) lenis.start();
+    lenis.scrollTo(target || 0);
+  }
+
+  function initMobileMenu() {
+    const header = document.querySelector(".mobile-header");
+    const panel = document.querySelector("#mobile-nav-panel");
+    const toggles = [...document.querySelectorAll(".mobile-menu-toggle")];
+    if (!panel || !toggles.length) return;
+    const setOpen = (open) => {
+      header?.classList.toggle("is-menu-open", open);
+      document.querySelectorAll(".scroll-nav-shell").forEach((shell) => {
+        shell.classList.toggle("is-menu-open", open && shell.classList.contains("is-visible"));
+      });
+      panel.classList.toggle("is-open", open);
+      document.body.classList.toggle("mobile-menu-open", open);
+      syncPageScrollLock();
+      toggles.forEach((toggle) => {
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "Zavřít menu" : "Otevřít menu");
+      });
+    };
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        setOpen(!panel.classList.contains("is-open"));
+      });
+    });
+    panel.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setOpen(false);
+    });
+  }
+
+  function initInquiryForm() {
+    const form = document.querySelector(".inquiry-form");
+    if (!form) return;
+    const status = form.querySelector(".inquiry-status");
+    const showStatus = (kind, message) => {
+      if (!status) return;
+      status.hidden = false;
+      status.classList.toggle("is-success", kind === "success");
+      status.classList.toggle("is-error", kind === "error");
+      status.textContent = message;
+    };
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const phone = String(data.get("phone") || "").trim();
+      const company = String(data.get("company") || "").trim();
+      const service = String(data.get("service") || "").trim();
+      const projectType = String(data.get("project-type") || "").trim();
+      const location = String(data.get("location") || "").trim();
+      const message = String(data.get("message") || "").trim();
+      const consent = Boolean(form.querySelector("[name='consent']")?.checked);
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const checks = [
+        [name, form.querySelector("#name")],
+        [emailOk, form.querySelector("#email")],
+        [message, form.querySelector("#message")],
+        [consent, form.querySelector("[name='consent']")],
+      ];
+      const invalid = checks.filter(([ok]) => !ok).map(([, field]) => field);
+      if (invalid.length) {
+        invalid.forEach((field) => field?.closest(".inquiry-field, .inquiry-consent")?.classList.add("is-invalid"));
+        invalid[0]?.focus();
+        showStatus("error", email && !emailOk ? "Zadejte platný e-mail." : "Vyplňte prosím všechna povinná pole.");
+        return;
+      }
+      const serviceLabel = form.querySelector("#service")?.selectedOptions?.[0]?.textContent?.trim() || service;
+      const typeLabel = form.querySelector("#project-type")?.selectedOptions?.[0]?.textContent?.trim() || projectType;
+      const body = [
+        `Jméno: ${name}`,
+        company ? `Společnost: ${company}` : "",
+        `E-mail: ${email}`,
+        phone ? `Telefon: ${phone}` : "",
+        serviceLabel && serviceLabel !== "Vyberte službu" ? `Služba: ${serviceLabel}` : "",
+        typeLabel && typeLabel !== "Vyberte typ" ? `Typ stavby: ${typeLabel}` : "",
+        location ? `Lokalita: ${location}` : "",
+        "",
+        message,
+      ].filter(Boolean).join("\n");
+      const href = `mailto:info@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
+      showStatus("success", "Děkujeme. Otevíráme e-mailový klient, abyste poptávku odeslali na info@austis.cz.");
+      window.location.href = href;
     });
   }
 
@@ -1216,6 +1496,10 @@
   initLightbox();
   initInquiryHashScroll();
   initServicePrefill();
+  initSmoothScroll();
+  initMobileMenu();
+  initSiteSearch();
+  initInquiryForm();
 
   window.addEventListener("resize", updateScale, { passive: true });
   window.addEventListener("resize", () => designLines.forEach(setLineDirection), { passive: true });

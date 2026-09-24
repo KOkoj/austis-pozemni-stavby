@@ -40,7 +40,7 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Úvod",
+          "name": "Domů",
           "item": "https://aps.austis.cz/"
         },
         {
@@ -67,7 +67,32 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/hero 2.png" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260723n" />
+        <script>
+      (function () {
+        try {
+          var desktopMin = 1025;
+          var designWidth = 1440;
+          var maxDesktopWidth = 2200;
+          var widthCropAllowance = 260;
+          var maxScale = 1.32;
+          var comfortScale = 0.9;
+          var width = window.innerWidth;
+          var scale = 1;
+          if (width >= desktopMin) {
+            var layoutWidth = Math.min(width, maxDesktopWidth);
+            var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
+            scale = Math.min(scaleByWidth, maxScale) * comfortScale;
+            scale = Math.min(Math.max(scale, 0.5), maxScale);
+          }
+          document.documentElement.style.setProperty("--scale", scale.toFixed(5));
+          document.documentElement.classList.add("is-layout-ready");
+        } catch (e) {
+          document.documentElement.classList.add("is-layout-ready");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=20260923s" />
+    <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
   <body
     class="subpage-body flow-subpage projekty-page"
@@ -75,16 +100,20 @@
     data-hero-video=""
     data-hero-name="Projekty"
   >
-    <main class="subpage-site">
+        <div class="page-rails" aria-hidden="true">
+      <span class="page-rail page-rail-left"></span>
+      <span class="page-rail page-rail-right"></span>
+    </div>
+<main class="subpage-site">
       <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
         <div class="scroll-nav-bar">
           <div class="scroll-nav-inner">
                                     <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a class="active" href="projekty.html" aria-current="page">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
@@ -92,6 +121,10 @@
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
             </header>
+            <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
           </div>
         </div>
       </div>
@@ -117,26 +150,40 @@
               />
             </div>
             <div class="hero-side"></div>
-            <div class="line line-nav"></div>
+            <div class="line line-nav"></div>
+
             <div class="line line-hero-image-top"></div>
             <div class="line line-hero-top"></div>
             <div class="line line-hero-mid"></div>
             <div class="line line-hero-right"></div>
             <div class="line line-hero-bottom"></div>
-            <div class="line line-hero-left" aria-hidden="true"></div>
+                        <div class="hero-tail-blur" aria-hidden="true"></div>
+<div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a class="active" href="projekty.html" aria-current="page">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
+              <form class="hero-search" role="search">
+                <label class="hero-search-field">
+                  <span class="hero-search-ico" aria-hidden="true"></span>
+                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
+                </label>
+                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
+              </form>
+
             </header>
+            <div class="slide-dots" aria-label="Sídlo">
+              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
+            </div>
             <div class="hero-copy">
               <div class="hero-copy-main">
                 <h1>Projekty, za které ručíme</h1>
@@ -147,27 +194,40 @@
                   </p>
                 </div>
               </div>
-              <a class="project-link" href="#projekty-list" aria-label="přehled projektů">
-                <span class="project-link-text" aria-hidden="true">
-                  <span class="project-link-ghost">přehled<br />projektů</span>
-                  <span class="project-link-visible">přehled<br />projektů</span>
-                </span>
+              <a class="hero-jump" href="#portfolio" aria-label="přehled projektů">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">přehled<br />projektů</span>
               </a>
             </div>
           </section>
         </div>
       </div>
 
+            <div class="mobile-nav-panel" id="mobile-nav-panel">
+        <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domů</a>
+                <a href="sluzby.html">služby</a>
+                <a class="active" href="projekty.html" aria-current="page">projekty</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+        <a class="btn btn-red mobile-nav-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+      </div>
       <div class="mobile-page" aria-label="AUSTIS projekty mobile layout">
         <header class="mobile-header">
           <div class="mobile-header-row">
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
             </a>
             <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
-            <a href="index.html">Úvod</a>
+            <a href="index.html">Domů</a>
             <a href="sluzby.html">služby</a>
             <a class="active" href="projekty.html" aria-current="page">projekty</a>
             <a href="o-spolecnosti.html">o společnosti</a>
@@ -193,65 +253,55 @@
               decoding="async"
             />
           </div>
+          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
           <div class="mobile-hero-panel">
-            <p class="mobile-hero-title">Projekty, za které ručíme</p>
+            <h1 class="mobile-hero-title">Projekty, za které ručíme</h1>
             <p>
               Od rekreačních staveb po komerční developmenty. Každý projekt vedeme jako generální dodavatel:
               s důrazem na termíny, rozpočet a kvalitu provedení.
             </p>
             <div class="mobile-hero-actions">
-              <a class="mobile-text-link" href="#projekty-list">přehled projektů</a>
+              <a class="mobile-text-link" href="#portfolio">přehled projektů</a>
             </div>
           </div>
         </section>
       </div>
 
-      <section id="projekty-list" class="sp-responsibility" aria-labelledby="projekty-overview-title">
-        <div class="responsibility is-section-visible">
-          <div class="panel"></div>
-          <div class="grid-line grid-left"></div>
-          <div class="grid-line grid-top"></div>
-          <div class="grid-line grid-right"></div>
-          <div class="responsibility-header">
-            <h2 id="projekty-overview-title">Realizované i probíhající projekty</h2>
-            <p class="responsibility-lead">
-              Každý projekt vedeme jako generální dodavatel: jedna smlouva, jeden odpovědný tým a průběžný
-              reporting pro investora.
-            </p>
-          </div>
-          <article class="feature-card one">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></svg></i>
-            <span class="feature-index" aria-hidden="true">01</span>
-            <h3>Rekreační stavby</h3>
-            <p>Rekonstrukce a novostavby v náročných lokalitách, od logistiky montáží po předání v provozu.</p>
-          </article>
-          <article class="feature-card two">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V12l5 3v-3l5 3v-3l5 3v6"/><path d="M3 21h15"/><path d="M17 7V4h2v3"/></svg></i>
-            <span class="feature-index" aria-hidden="true">02</span>
-            <h3>Provozní areály</h3>
-            <p>Výstavba provozních objektů včetně inženýrských sítí a zpevněných ploch pod jednou smlouvou.</p>
-          </article>
-          <article class="feature-card three">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h2M8 10.5h2M8 14h2M14 7h2M14 10.5h2M14 14h2"/><path d="M10 21v-4h4v4"/></svg></i>
-            <span class="feature-index" aria-hidden="true">03</span>
-            <h3>Komerční developmenty</h3>
-            <p>Realizace developerských projektů s důrazem na termíny, náklady i návaznost na další fáze záměru.</p>
-          </article>
+      <section class="austis-intro flow-first" aria-labelledby="projekty-overview-title">
+        <div class="austis-intro-lead">
+          <h2 id="projekty-overview-title">Realizované i probíhající projekty</h2>
+          <p>Každý projekt vedeme jako generální dodavatel: jedna smlouva, jeden odpovědný tým a průběžný reporting pro investora.</p>
+          <a class="austis-intro-more" href="#portfolio">prohlédnout portfolio</a>
         </div>
+        <dl class="austis-intro-facts">
+          <div>
+            <dt>Smlouva</dt>
+            <dd>jedna smlouva a jeden tým za celou stavbu</dd>
+          </div>
+          <div>
+            <dt>Termíny</dt>
+            <dd>hlídáme harmonogram a návaznosti profesí</dd>
+          </div>
+          <div>
+            <dt>Rozpočet</dt>
+            <dd>náklady sledujeme průběžně, bez překvapení na konci</dd>
+          </div>
+          <div>
+            <dt>Reporting</dt>
+            <dd>pravidelný přehled stavu, čerpání i rizik</dd>
+          </div>
+        </dl>
       </section>
 
-      <div class="ref-projects">
+      <div class="ref-projects" id="portfolio">
         <article class="ref-project" id="ref-1" aria-labelledby="ref-1-title">
-          <div class="ref-project-head">
-            <span class="ref-project-index" aria-hidden="true">01</span>
-            <div class="ref-project-heading">
-              <span class="ref-project-tag">Rekreační stavba</span>
-              <h2 id="ref-1-title">Chata Seibert</h2>
-              <p>
-                Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších, od logistiky
-                montáží v náročném terénu po předání v sezónním provozu.
-              </p>
-            </div>
+          <div class="ref-project-body">
+            <span class="ref-project-kicker"><span class="ref-project-index" aria-hidden="true">01</span> Rekreační stavba</span>
+            <h2 id="ref-1-title">Chata Seibert</h2>
+            <p>
+              Generální dodávka kompletní rekonstrukce horské chaty v Krkonoších, od logistiky
+              montáží v náročném terénu po předání v sezónním provozu.
+            </p>
             <dl class="ref-project-meta">
               <div><dt>Místo</dt><dd>Krkonoše</dd></div>
               <div><dt>Termín</dt><dd>2024 – 2025</dd></div>
@@ -280,23 +330,16 @@
               <span class="ref-shot-zoom" aria-hidden="true"></span>
             </button>
           </div>
-          <div class="ref-project-cta">
-            <p>Plánujete podobný projekt?</p>
-            <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Nezávazně poptat</span></a>
-          </div>
         </article>
 
         <article class="ref-project" id="ref-2" aria-labelledby="ref-2-title">
-          <div class="ref-project-head">
-            <span class="ref-project-index" aria-hidden="true">02</span>
-            <div class="ref-project-heading">
-              <span class="ref-project-tag">Zemědělský areál</span>
-              <h2 id="ref-2-title">Vraňany Farma Hanč</h2>
-              <p>
-                Výstavba provozních objektů a technického zázemí farmy. Jeden smluvní partner pro celý
-                areál včetně inženýrských sítí a zpevněných ploch.
-              </p>
-            </div>
+          <div class="ref-project-body">
+            <span class="ref-project-kicker"><span class="ref-project-index" aria-hidden="true">02</span> Zemědělský areál</span>
+            <h2 id="ref-2-title">Vraňany Farma Hanč</h2>
+            <p>
+              Výstavba provozních objektů a technického zázemí farmy. Jeden smluvní partner pro celý
+              areál včetně inženýrských sítí a zpevněných ploch.
+            </p>
             <dl class="ref-project-meta">
               <div><dt>Místo</dt><dd>Vraňany</dd></div>
               <div><dt>Termín</dt><dd>2023 – 2024</dd></div>
@@ -321,23 +364,16 @@
               <span class="ref-shot-zoom" aria-hidden="true"></span>
             </button>
           </div>
-          <div class="ref-project-cta">
-            <p>Plánujete podobný projekt?</p>
-            <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Nezávazně poptat</span></a>
-          </div>
         </article>
 
         <article class="ref-project" id="ref-3" aria-labelledby="ref-3-title">
-          <div class="ref-project-head">
-            <span class="ref-project-index" aria-hidden="true">03</span>
-            <div class="ref-project-heading">
-              <span class="ref-project-tag">Novostavba RD · Probíhá</span>
-              <h2 id="ref-3-title">Rodinný dům Roztoky</h2>
-              <p>
-                Novostavba rodinného domu na klíč v rámci generální dodávky. Investor jedná s jedním
-                partnerem a má průběžný reporting i pevný harmonogram.
-              </p>
-            </div>
+          <div class="ref-project-body">
+            <span class="ref-project-kicker"><span class="ref-project-index" aria-hidden="true">03</span> Novostavba RD · Probíhá</span>
+            <h2 id="ref-3-title">Rodinný dům Roztoky</h2>
+            <p>
+              Novostavba rodinného domu na klíč v rámci generální dodávky. Investor jedná s jedním
+              partnerem a má průběžný reporting i pevný harmonogram.
+            </p>
             <dl class="ref-project-meta">
               <div><dt>Místo</dt><dd>Roztoky</dd></div>
               <div><dt>Termín</dt><dd>říjen 2025 – prosinec 2026</dd></div>
@@ -362,23 +398,16 @@
               <span class="ref-shot-zoom" aria-hidden="true"></span>
             </button>
           </div>
-          <div class="ref-project-cta">
-            <p>Plánujete podobný projekt?</p>
-            <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Nezávazně poptat</span></a>
-          </div>
         </article>
 
         <article class="ref-project" id="ref-4" aria-labelledby="ref-4-title">
-          <div class="ref-project-head">
-            <span class="ref-project-index" aria-hidden="true">04</span>
-            <div class="ref-project-heading">
-              <span class="ref-project-tag">Komerční development · Probíhá</span>
-              <h2 id="ref-4-title">Novo Plaza</h2>
-              <p>
-                Realizace komerčního objektu v rámci developerského projektu. Řídíme termíny, náklady i
-                návaznost na další fáze celého záměru.
-              </p>
-            </div>
+          <div class="ref-project-body">
+            <span class="ref-project-kicker"><span class="ref-project-index" aria-hidden="true">04</span> Komerční development · Probíhá</span>
+            <h2 id="ref-4-title">Novo Plaza</h2>
+            <p>
+              Realizace komerčního objektu v rámci developerského projektu. Řídíme termíny, náklady i
+              návaznost na další fáze celého záměru.
+            </p>
             <dl class="ref-project-meta">
               <div><dt>Místo</dt><dd>Praha</dd></div>
               <div><dt>Termín</dt><dd>2025 – 2026</dd></div>
@@ -403,12 +432,19 @@
               <span class="ref-shot-zoom" aria-hidden="true"></span>
             </button>
           </div>
-          <div class="ref-project-cta">
-            <p>Plánujete podobný projekt?</p>
-            <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Nezávazně poptat</span></a>
-          </div>
         </article>
       </div>
+
+      <section class="austis-cta" aria-labelledby="projekty-cta-title">
+        <div class="austis-cta-copy">
+          <h2 id="projekty-cta-title">Plánujete podobný projekt?</h2>
+          <p>Domluvte si nezávaznou konzultaci. Probereme záměr a navrhneme, jak realizaci uchopit.</p>
+        </div>
+        <a class="contact-mail" href="poptavka.html#poptavka-form">
+          <span class="contact-mail-label">Napište nám</span>
+          <span class="contact-mail-value">info@austis.cz</span>
+        </a>
+      </section>
 
       <footer class="footer" id="kontakt">
         <div class="footer-line footer-left"></div>
@@ -420,7 +456,7 @@
           <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci. Probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
           <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
           <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
-          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a> · <a href="mailto:info@austis.cz">info@austis.cz</a></p>
           <p class="footer-nap">K Austisu 680<br />154 00 Praha 5 - Slivenec</p>
         </section>
         <section>
@@ -435,7 +471,7 @@
       </footer>
     </main>
 
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galerie projektu">
+    <dialog class="lightbox" id="lightbox" aria-label="Galerie projektu">
       <div class="lightbox-backdrop" data-lightbox-close></div>
       <button class="lightbox-close" type="button" aria-label="Zavřít galerii" data-lightbox-close>&times;</button>
       <button class="lightbox-nav lightbox-prev" type="button" aria-label="Předchozí fotografie" data-lightbox-prev>&#8249;</button>
@@ -445,8 +481,9 @@
       </figure>
       <button class="lightbox-nav lightbox-next" type="button" aria-label="Další fotografie" data-lightbox-next>&#8250;</button>
       <div class="lightbox-counter" aria-hidden="true"></div>
-    </div>
+    </dialog>
 
-    <script src="script.js?v=20260723o"></script>
+    <script src="lenis.min.js?v=1.3.26"></script>
+    <script src="script.js?v=20260923p"></script>
   </body>
 </html>

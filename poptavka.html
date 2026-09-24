@@ -40,7 +40,7 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Úvod",
+          "name": "Domů",
           "item": "https://aps.austis.cz/"
         },
         {
@@ -67,7 +67,32 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/image 4.png" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260723n" />
+        <script>
+      (function () {
+        try {
+          var desktopMin = 1025;
+          var designWidth = 1440;
+          var maxDesktopWidth = 2200;
+          var widthCropAllowance = 260;
+          var maxScale = 1.32;
+          var comfortScale = 0.9;
+          var width = window.innerWidth;
+          var scale = 1;
+          if (width >= desktopMin) {
+            var layoutWidth = Math.min(width, maxDesktopWidth);
+            var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
+            scale = Math.min(scaleByWidth, maxScale) * comfortScale;
+            scale = Math.min(Math.max(scale, 0.5), maxScale);
+          }
+          document.documentElement.style.setProperty("--scale", scale.toFixed(5));
+          document.documentElement.classList.add("is-layout-ready");
+        } catch (e) {
+          document.documentElement.classList.add("is-layout-ready");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=20260923s" />
+    <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
   <body
     class="subpage-body flow-subpage poptavka-page"
@@ -75,16 +100,20 @@
     data-hero-video=""
     data-hero-name="Poptávka"
   >
-    <main class="subpage-site">
+        <div class="page-rails" aria-hidden="true">
+      <span class="page-rail page-rail-left"></span>
+      <span class="page-rail page-rail-right"></span>
+    </div>
+<main class="subpage-site">
       <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
         <div class="scroll-nav-bar">
           <div class="scroll-nav-inner">
                                     <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
@@ -92,6 +121,10 @@
               </nav>
               <a class="btn btn-red active" href="#poptavka-form" aria-current="page"><span class="btn-label">poptat spolupráci</span></a>
             </header>
+            <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
           </div>
         </div>
       </div>
@@ -117,26 +150,40 @@
               />
             </div>
             <div class="hero-side"></div>
-            <div class="line line-nav"></div>
+            <div class="line line-nav"></div>
+
             <div class="line line-hero-image-top"></div>
             <div class="line line-hero-top"></div>
             <div class="line line-hero-mid"></div>
             <div class="line line-hero-right"></div>
             <div class="line line-hero-bottom"></div>
-            <div class="line line-hero-left" aria-hidden="true"></div>
+                        <div class="hero-tail-blur" aria-hidden="true"></div>
+<div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
               <a class="btn btn-red active" href="#poptavka-form" aria-current="page"><span class="btn-label">poptat spolupráci</span></a>
+              <form class="hero-search" role="search">
+                <label class="hero-search-field">
+                  <span class="hero-search-ico" aria-hidden="true"></span>
+                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
+                </label>
+                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
+              </form>
+
             </header>
+            <div class="slide-dots" aria-label="Sídlo">
+              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
+            </div>
             <div class="hero-copy">
               <div class="hero-copy-main">
                 <h1>Poptat spolupráci</h1>
@@ -147,27 +194,40 @@
                   </p>
                 </div>
               </div>
-              <a class="project-link" href="#poptavka-form" aria-label="přejít na formulář">
-                <span class="project-link-text" aria-hidden="true">
-                  <span class="project-link-ghost">vyplnit<br />formulář</span>
-                  <span class="project-link-visible">vyplnit<br />formulář</span>
-                </span>
+              <a class="hero-jump" href="#poptavka-form" aria-label="přejít na formulář">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">vyplnit<br />formulář</span>
               </a>
             </div>
           </section>
         </div>
       </div>
 
+            <div class="mobile-nav-panel" id="mobile-nav-panel">
+        <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domů</a>
+                <a href="sluzby.html">služby</a>
+                <a href="projekty.html">projekty</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+        <a class="btn btn-red mobile-nav-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+      </div>
       <div class="mobile-page" aria-label="AUSTIS poptávka mobile layout">
         <header class="mobile-header">
           <div class="mobile-header-row">
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
             </a>
             <a class="btn btn-red active" href="#poptavka-form" aria-current="page"><span class="btn-label">poptat spolupráci</span></a>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
-            <a href="index.html">Úvod</a>
+            <a href="index.html">Domů</a>
             <a href="sluzby.html">služby</a>
             <a href="projekty.html">projekty</a>
             <a href="o-spolecnosti.html">o společnosti</a>
@@ -193,8 +253,9 @@
               decoding="async"
             />
           </div>
+          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
           <div class="mobile-hero-panel">
-            <p class="mobile-hero-title">Poptat spolupráci</p>
+            <h1 class="mobile-hero-title">Poptat spolupráci</h1>
             <p>
               Vyplňte formulář a ozveme se vám s návrhem dalšího postupu. Stačí stručný popis záměru.
             </p>
@@ -205,17 +266,15 @@
         </section>
       </div>
 
-      <section id="poptavka-form" class="inquiry-section" aria-labelledby="inquiry-title">
+      <section id="poptavka-form" class="inquiry-section flow-first" aria-labelledby="inquiry-title">
         <div class="inquiry-lead">
           <span class="contact-eyebrow">Poptávka</span>
           <h2 id="inquiry-title">Nezávazná konzultace</h2>
-          <p>
-            Připravujete stavební záměr? Popište nám projekt a my navrhneme, jak realizaci efektivně uchopit
-            v roli generálního dodavatele.
-          </p>
+          <p>Napište stručně typ stavby, lokalitu a termín. Ozveme se s návrhem dalšího postupu.</p>
         </div>
 
-        <form class="inquiry-form" action="#" method="post">
+        <form class="inquiry-form" id="poptavka-form-el">
+          <p class="inquiry-status" role="status" hidden></p>
           <div class="inquiry-form-row">
             <div class="inquiry-field">
               <label for="name">Jméno a příjmení</label>
@@ -270,7 +329,7 @@
             <input type="checkbox" name="consent" required />
             <span>Souhlasím se <a href="o-spolecnosti.html">zpracováním osobních údajů</a> za účelem vyřízení poptávky.</span>
           </label>
-          <button type="submit" class="inquiry-submit">Odeslat poptávku</button>
+          <button type="submit" class="btn btn-red"><span class="btn-label">Odeslat poptávku</span></button>
         </form>
 
         <aside class="inquiry-aside">
@@ -281,7 +340,7 @@
             <li><span>03</span> Navrhneme, jak realizaci uchopit včetně harmonogramu.</li>
             <li><span>04</span> Po upřesnění rozsahu předložíme nabídku s rozpočtem.</li>
           </ol>
-          <p>Preferujete telefon? Volejte <strong>+420 251 099 111</strong> (po–pá 8:00–16:00).</p>
+          <p>Preferujete telefon? Volejte <a href="tel:+420251099111"><strong>+420 251 099 111</strong></a> nebo pište na <a href="mailto:info@austis.cz">info@austis.cz</a> (po–pá 8:00–16:00).</p>
         </aside>
       </section>
 
@@ -295,7 +354,7 @@
           <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci.</p>
           <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
           <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
-          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a> · <a href="mailto:info@austis.cz">info@austis.cz</a></p>
           <p class="footer-nap">K Austisu 680<br />154 00 Praha 5 - Slivenec</p>
         </section>
         <section>
@@ -309,6 +368,7 @@
         <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
-    <script src="script.js?v=20260723o"></script>
+    <script src="lenis.min.js?v=1.3.26"></script>
+    <script src="script.js?v=20260923p"></script>
   </body>
 </html>

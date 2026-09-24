@@ -13,6 +13,8 @@ const requiredFiles = [
   "sitemap.xml",
   "styles.css",
   "script.js",
+  "lenis.css",
+  "lenis.min.js",
 ];
 const staticExtensions = new Set([".svg", ".ico", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"]);
 

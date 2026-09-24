@@ -40,7 +40,7 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Úvod",
+          "name": "Domů",
           "item": "https://aps.austis.cz/"
         },
         {
@@ -67,7 +67,32 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/image 7.png" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260723n" />
+        <script>
+      (function () {
+        try {
+          var desktopMin = 1025;
+          var designWidth = 1440;
+          var maxDesktopWidth = 2200;
+          var widthCropAllowance = 260;
+          var maxScale = 1.32;
+          var comfortScale = 0.9;
+          var width = window.innerWidth;
+          var scale = 1;
+          if (width >= desktopMin) {
+            var layoutWidth = Math.min(width, maxDesktopWidth);
+            var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
+            scale = Math.min(scaleByWidth, maxScale) * comfortScale;
+            scale = Math.min(Math.max(scale, 0.5), maxScale);
+          }
+          document.documentElement.style.setProperty("--scale", scale.toFixed(5));
+          document.documentElement.classList.add("is-layout-ready");
+        } catch (e) {
+          document.documentElement.classList.add("is-layout-ready");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=20260923s" />
+    <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
   <body
     class="subpage-body flow-subpage o-spolecnosti-page"
@@ -75,16 +100,20 @@
     data-hero-video=""
     data-hero-name="O společnosti"
   >
-    <main class="subpage-site">
+        <div class="page-rails" aria-hidden="true">
+      <span class="page-rail page-rail-left"></span>
+      <span class="page-rail page-rail-right"></span>
+    </div>
+<main class="subpage-site">
       <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
         <div class="scroll-nav-bar">
           <div class="scroll-nav-inner">
                                     <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
@@ -92,6 +121,10 @@
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
             </header>
+            <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
           </div>
         </div>
       </div>
@@ -117,26 +150,40 @@
               />
             </div>
             <div class="hero-side"></div>
-            <div class="line line-nav"></div>
+            <div class="line line-nav"></div>
+
             <div class="line line-hero-image-top"></div>
             <div class="line line-hero-top"></div>
             <div class="line line-hero-mid"></div>
             <div class="line line-hero-right"></div>
             <div class="line line-hero-bottom"></div>
-            <div class="line line-hero-left" aria-hidden="true"></div>
+                        <div class="hero-tail-blur" aria-hidden="true"></div>
+<div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+                <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
-                <a href="index.html">Úvod</a>
+                <a href="index.html">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
+              <form class="hero-search" role="search">
+                <label class="hero-search-field">
+                  <span class="hero-search-ico" aria-hidden="true"></span>
+                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
+                </label>
+                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
+              </form>
+
             </header>
+            <div class="slide-dots" aria-label="Sídlo">
+              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
+            </div>
             <div class="hero-copy">
               <div class="hero-copy-main">
                 <h1>Generální dodavatel, se kterým jednáte napřímo</h1>
@@ -147,27 +194,40 @@
                   </p>
                 </div>
               </div>
-              <a class="project-link" href="#o-spolecnosti" aria-label="více o společnosti">
-                <span class="project-link-text" aria-hidden="true">
-                  <span class="project-link-ghost">více o<br />společnosti</span>
-                  <span class="project-link-visible">více o<br />společnosti</span>
-                </span>
+              <a class="hero-jump" href="#o-spolecnosti" aria-label="více o společnosti">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">více o<br />společnosti</span>
               </a>
             </div>
           </section>
         </div>
       </div>
 
+            <div class="mobile-nav-panel" id="mobile-nav-panel">
+        <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domů</a>
+                <a href="sluzby.html">služby</a>
+                <a href="projekty.html">projekty</a>
+                <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+        <a class="btn btn-red mobile-nav-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+      </div>
       <div class="mobile-page" aria-label="AUSTIS o společnosti mobile layout">
         <header class="mobile-header">
           <div class="mobile-header-row">
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
+
             </a>
             <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
-            <a href="index.html">Úvod</a>
+            <a href="index.html">Domů</a>
             <a href="sluzby.html">služby</a>
             <a href="projekty.html">projekty</a>
             <a class="active" href="o-spolecnosti.html" aria-current="page">o společnosti</a>
@@ -193,8 +253,9 @@
               decoding="async"
             />
           </div>
+          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
           <div class="mobile-hero-panel">
-            <p class="mobile-hero-title">Generální dodavatel, se kterým jednáte napřímo</p>
+            <h1 class="mobile-hero-title">Generální dodavatel, se kterým jednáte napřímo</h1>
             <p>
               Realizujeme novostavby i rekonstrukce rezidenčních, komerčních a provozních objektů. Každou
               stavbu řídíme s důrazem na náklady, termíny a kvalitu provedení.
@@ -206,45 +267,21 @@
         </section>
       </div>
 
-      <section id="o-spolecnosti" class="sp-responsibility" aria-labelledby="about-overview-title">
-        <div class="responsibility is-section-visible">
-          <div class="panel"></div>
-          <div class="grid-line grid-left"></div>
-          <div class="grid-line grid-top"></div>
-          <div class="grid-line grid-right"></div>
-          <div class="responsibility-header">
-            <h2 id="about-overview-title">Jak pracujeme</h2>
-            <p class="responsibility-lead">
-              Stavbu vedeme tak, aby realizace běžela plynule, rizika zůstala pod kontrolou a investor měl
-              vždy aktuální přehled o stavu prací i čerpání rozpočtu.
-            </p>
-          </div>
-          <article class="feature-card one">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m14.5 9.5-2 5-5 2 2-5 5-2Z"/></svg></i>
-            <span class="feature-index" aria-hidden="true">01</span>
+      <section id="o-spolecnosti" class="trio flow-first" aria-labelledby="about-overview-title">
+        <h2 id="about-overview-title">Jak pracujeme</h2>
+        <p>Stavbu vedeme tak, aby realizace běžela plynule, rizika zůstala pod kontrolou a investor měl vždy aktuální přehled o stavu prací i čerpání rozpočtu.</p>
+        <div class="trio-grid">
+          <article>
             <h3>Náš přístup</h3>
-            <p>
-              Plánujeme návaznosti profesí, hlídáme klíčové milníky a informujeme investora průběžně,
-              ne až na konci projektu.
-            </p>
+            <p>Plánujeme návaznosti profesí, hlídáme klíčové milníky a informujeme investora průběžně, ne až na konci projektu.</p>
           </article>
-          <article class="feature-card two">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v6c0 4.5 3 7.7 7 9 4-1.3 7-4.5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></i>
-            <span class="feature-index" aria-hidden="true">02</span>
+          <article>
             <h3>Odpovědnost</h3>
-            <p>
-              Subdodavatele vybíráme, řídíme i kontrolujeme my. Odpovědnost za výsledek neseme od
-              přípravy po předání.
-            </p>
+            <p>Subdodavatele vybíráme, řídíme i kontrolujeme my. Odpovědnost za výsledek neseme od přípravy po předání.</p>
           </article>
-          <article class="feature-card three">
-            <i class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/></svg></i>
-            <span class="feature-index" aria-hidden="true">03</span>
+          <article>
             <h3>Reporting</h3>
-            <p>
-              V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika, kdykoli je
-              potřebujete.
-            </p>
+            <p>V pravidelných reportech vidíte stav prací, čerpání rozpočtu i rizika, kdykoli je potřebujete.</p>
           </article>
         </div>
       </section>
@@ -261,7 +298,7 @@
               odpovědného partnera. Celou realizaci zastřešujeme jednou smlouvou od přípravy a koordinace
               profesí až po předání klíčů.
             </p>
-            <ul class="about-list">
+            <ul class="line-list">
               <li>realizace rezidenčních i komerčních projektů</li>
               <li>stabilní síť prověřených subdodavatelů</li>
               <li>řízení zakázek v roli generálního dodavatele</li>
@@ -276,7 +313,7 @@
           </div>
           <div class="about-block-body">
             <p>Stavíme pro investory, developery i provozovatele vždy jako generální dodavatel s jednou smlouvou a plnou odpovědností za výsledek.</p>
-            <ul class="about-list">
+            <ul class="line-list">
               <li>investoři: jednotlivé stavební záměry od přípravy po předání</li>
               <li>developeři: rezidenční i komerční projekty s důrazem na termíny</li>
               <li>firmy a provozovatelé: areály a rekonstrukce za provozu</li>
@@ -294,7 +331,7 @@
               Rozšiřujeme tým o lidi, kteří chtějí vést stavby samostatně a mít výsledky své práce vidět.
               Napište nám, rádi se s vámi potkáme.
             </p>
-            <ul class="about-list">
+            <ul class="line-list">
               <li>stavbyvedoucí: samostatné vedení staveb v roli generálního dodavatele</li>
               <li>výrobní příprava staveb: příprava zakázek, rozpočty a harmonogramy</li>
             </ul>
@@ -312,7 +349,7 @@
           <p>Připravujete stavební záměr? Domluvte si nezávaznou konzultaci. Probereme váš projekt a navrhneme, jak realizaci efektivně uchopit.</p>
           <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
           <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
-          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+          <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a> · <a href="mailto:info@austis.cz">info@austis.cz</a></p>
           <p class="footer-nap">K Austisu 680<br />154 00 Praha 5 - Slivenec</p>
         </section>
         <section>
@@ -326,6 +363,7 @@
         <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
-    <script src="script.js?v=20260723o"></script>
+    <script src="lenis.min.js?v=1.3.26"></script>
+    <script src="script.js?v=20260923p"></script>
   </body>
 </html>

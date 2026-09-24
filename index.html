@@ -54,16 +54,13 @@
           var widthCropAllowance = 260;
           var maxScale = 1.32;
           var comfortScale = 0.9;
-          var headerOffset = 15;
           var width = window.innerWidth;
-          var height = window.innerHeight;
           var scale = 1;
 
           if (width >= desktopMin) {
             var layoutWidth = Math.min(width, maxDesktopWidth);
             var scaleByWidth = (layoutWidth + widthCropAllowance) / designWidth;
-            var scaleByHeight = (height - 24) / (headerOffset + 448 + 224);
-            scale = Math.min(scaleByWidth, scaleByHeight, maxScale) * comfortScale;
+            scale = Math.min(scaleByWidth, maxScale) * comfortScale;
             scale = Math.min(Math.max(scale, 0.5), maxScale);
           }
 
@@ -75,20 +72,25 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/hero-section-bg.jpg" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20260723n" />
+    <link rel="stylesheet" href="styles.css?v=20260923s" />
+    <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
-  <body>
-    <main class="site">
+  <body class="home-page">
+        <div class="page-rails" aria-hidden="true">
+      <span class="page-rail page-rail-left"></span>
+      <span class="page-rail page-rail-right"></span>
+    </div>
+<main class="site">
       <!-- Fixed nav: hidden until artboard header scrolls out of view (desktop only) -->
       <div class="scroll-nav-shell home-scroll-nav" aria-hidden="true">
         <div class="scroll-nav-bar">
                     <div class="scroll-nav-inner">
             <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
-              <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="" /></span>
+              <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
-                <a class="active" href="index.html" aria-current="page">Úvod</a>
+                <a class="active" href="index.html" aria-current="page">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
@@ -96,6 +98,10 @@
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
             </header>
+            <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
           </div>
         </div>
         </div>
@@ -134,16 +140,24 @@
 
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
-                <a class="active" href="index.html" aria-current="page">Úvod</a>
+                <a class="active" href="index.html" aria-current="page">Domů</a>
                 <a href="sluzby.html">služby</a>
                 <a href="projekty.html">projekty</a>
                 <a href="o-spolecnosti.html">o společnosti</a>
                 <a href="kontakt.html">kontakt</a>
               </nav>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
+              <form class="hero-search" role="search">
+                <label class="hero-search-field">
+                  <span class="hero-search-ico" aria-hidden="true"></span>
+                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
+                </label>
+                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
+              </form>
+
             </header>
-            <div class="slide-dots" aria-label="Úvodní projekt">
-              <strong class="slide-label">Chata Seibert</strong>
+            <div class="slide-dots" aria-label="Sídlo">
+              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
             </div>
             <div class="hero-copy">
               <div class="hero-copy-main">
@@ -153,22 +167,17 @@
                 </h1>
                 <div class="hero-copy-aside">
                   <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu od přípravy až po předání klíčů.</p>
-                  <div class="hero-signals" aria-label="Hlavní výhody">
-                    <span>jedna smlouva</span>
-                    <span>termíny · rozpočet · kvalita</span>
-                  </div>
                 </div>
               </div>
-              <a class="project-link" href="#projekty" aria-label="prohlédnout projekty">
-                <span class="project-link-text" aria-hidden="true">
-                  <span class="project-link-ghost">prohlédnout<br />projekty</span>
-                  <span class="project-link-visible">prohlédnout<br />projekty</span>
-                </span>
+              <a class="hero-jump" href="#projekty" aria-label="prohlédnout projekty">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">prohlédnout<br />projekty</span>
               </a>
             </div>
           </section>
 
-          <div class="line line-hero-left" aria-hidden="true"></div>
+                      <div class="hero-tail-blur" aria-hidden="true"></div>
+<div class="line line-hero-left" aria-hidden="true"></div>
 
           <section class="responsibility" aria-labelledby="responsibility-title">
             <div class="panel"></div>
@@ -321,7 +330,7 @@
               <p>Připravujete stavební záměr? Domluvte si konzultaci. Projdeme váš projekt a navrhneme další postup.</p>
               <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
               <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
-              <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+              <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a> · <a href="mailto:info@austis.cz">info@austis.cz</a></p>
               <p class="footer-nap">K Austisu 680<br />154 00 Praha 5 - Slivenec</p>
             </section>
             <section>
@@ -337,9 +346,23 @@
         </div>
       </div>
 
+            <div class="mobile-nav-panel" id="mobile-nav-panel">
+        <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a class="active" href="index.html" aria-current="page">Domů</a>
+                <a href="sluzby.html">služby</a>
+                <a href="projekty.html">projekty</a>
+                <a href="o-spolecnosti.html">o společnosti</a>
+                <a href="kontakt.html">kontakt</a>
+              </nav>
+        <a class="btn btn-red mobile-nav-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+      </div>
       <div class="mobile-page" aria-label="AUSTIS homepage mobile layout">
         <header class="mobile-header">
           <div class="mobile-header-row">
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
+
             <a class="logo" href="#uvod-mobile" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
 
@@ -347,7 +370,7 @@
             <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">poptat spolupráci</span></a>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
-            <a class="active" href="index.html" aria-current="page">Úvod</a>
+            <a class="active" href="index.html" aria-current="page">Domů</a>
             <a href="sluzby.html">služby</a>
             <a href="projekty.html">projekty</a>
             <a href="o-spolecnosti.html">o společnosti</a>
@@ -373,17 +396,13 @@
               decoding="async"
             />
           </div>
-          <span class="mobile-hero-label">Chata Seibert</span>
+          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
           <div class="mobile-hero-panel">
-            <p class="mobile-hero-title">
+            <h1 class="mobile-hero-title">
               <span class="hero-title-brand">AUSTIS</span>
               <span class="hero-title-line">POZEMNÍ STAVBY</span>
-            </p>
+            </h1>
             <p>Generální dodavatel pro investory a developery. Celá stavba pod jednou smlouvou. Řídíme harmonogram, hlídáme rozpočet a ručíme za kvalitu od přípravy až po předání klíčů.</p>
-            <div class="mobile-hero-signals" aria-label="Hlavní výhody">
-              <span>jedna smlouva</span>
-              <span>termíny · rozpočet · kvalita</span>
-            </div>
             <div class="mobile-hero-actions">
               <a class="mobile-text-link" href="#projekty-mobile">prohlédnout projekty</a>
             </div>
@@ -493,7 +512,7 @@
             <p>Připravujete stavební záměr? Domluvte si konzultaci. Projdeme váš projekt a navrhneme další postup.</p>
             <p><a class="footer-heading-link" href="kontakt.html#faq">Časté otázky</a></p>
             <p class="highlight">IČ: 07093322&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: CZ07093322</p>
-            <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a></p>
+            <p class="footer-nap"><a href="tel:+420251099111">+420 251 099 111</a> · <a href="mailto:info@austis.cz">info@austis.cz</a></p>
             <p class="footer-nap">K Austisu 680<br />154 00 Praha 5 - Slivenec</p>
           </section>
           <section>
@@ -508,6 +527,7 @@
         </footer>
       </div>
     </main>
-    <script src="script.js?v=20260723o"></script>
+    <script src="lenis.min.js?v=1.3.26"></script>
+    <script src="script.js?v=20260923p"></script>
   </body>
 </html>
