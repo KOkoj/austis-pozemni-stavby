@@ -9068,3 +9068,11 @@ body.lightbox-open .mobile-nav-panel {
     aspect-ratio: 16 / 10;
   }
 }
+
+/* GDPR page */
+.gdpr-page { background: #fff; padding: 56px var(--content-pad-x, 24px); }
+.gdpr-inner { max-width: 760px; margin: 0 auto; color: #3c3d40; line-height: 1.6; }
+.gdpr-inner h2 { font-size: 28px; margin: 0 0 16px; }
+.gdpr-inner h3 { font-size: 18px; margin: 28px 0 8px; }
+.gdpr-inner ul { padding-left: 1.2em; }
+.gdpr-inner a { text-decoration: underline; }
