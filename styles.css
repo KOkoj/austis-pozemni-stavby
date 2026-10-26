@@ -8850,7 +8850,8 @@ body.lightbox-open .mobile-nav-panel {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.35;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .projekty-page .ref-gallery {
@@ -9055,4 +9056,15 @@ body.lightbox-open .mobile-nav-panel {
   font-size: 32px;
   font-weight: 500;
   line-height: 1.2;
+}
+
+/* feedback-2410 mobile: single placeholder photo should not leave empty grid rows */
+@media (max-width: 760px) {
+  .projekty-page .ref-gallery:has(> :only-child) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
 }
