@@ -9076,3 +9076,121 @@ body.lightbox-open .mobile-nav-panel {
 .gdpr-inner h3 { font-size: 18px; margin: 28px 0 8px; }
 .gdpr-inner ul { padding-left: 1.2em; }
 .gdpr-inner a { text-decoration: underline; }
+
+/* ===== QA 26.10.2026 – vizuální opravy po zapracování připomínek ===== */
+/* Domů: 4 kroky + CTA panel přes 2 sloupce (žádná díra v mřížce) */
+.home-page .responsibility-aside {
+  left: calc(var(--responsibility-inset) + var(--responsibility-card-width) + var(--responsibility-card-gap));
+  width: calc(var(--responsibility-card-width) * 2 + var(--responsibility-card-gap));
+  padding: 40px 40px 36px;
+  justify-content: space-between;
+}
+.home-page .responsibility-aside p {
+  max-width: 30em;
+  font-size: 22px;
+  line-height: 1.4;
+  color: #fff;
+}
+.home-page .responsibility-link { font-size: 15px; }
+
+/* Domů: služby – 2 karty + titulek ve 3. sloupci zarovnaný s kartami */
+.services .services-title {
+  left: calc(var(--content-left) + (var(--services-card-width) + var(--services-card-gap)) * 2 + 28px);
+  top: 84px;
+  width: calc(var(--services-card-width) - 28px);
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.services .services-title::before {
+  content: "Služby";
+  display: block;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-page .services .all-services {
+  left: calc(var(--content-left) + (var(--services-card-width) + var(--services-card-gap)) * 2 + 28px);
+  top: 270px;
+}
+.service-card-link { font-size: 13px; }
+
+/* Neutrální placeholder fotek: nikdy jako rozmazané pozadí s textem */
+.project-left-img[src*="foto-doplnime"] { opacity: 0 !important; }
+img[src*="foto-doplnime"] { filter: none !important; background: #ecebe8; }
+
+@media (max-width: 1024px) {
+  .mobile-grid .mobile-cta-card { grid-column: 1 / -1; }
+  .mobile-cta-card p { font-size: 18px; color: #fff; }
+}
+@media (min-width: 900px) and (max-width: 1024px) {
+  .mobile-grid .mobile-cta-card { grid-column: span 2; }
+  .mobile-services .mobile-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mobile-services .mobile-cards img { aspect-ratio: 1.6; }
+}
+
+/* Služby: 7 bloků + CTA buňka přes 2 sloupce, oddělené řádky */
+.trio-grid article { border-top: 1px solid #ebebeb; }
+.trio-grid article:nth-child(3n + 1) { border-left: 0; }
+.trio-grid .trio-cta {
+  grid-column: span 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+  padding: var(--flow-pad-y, 48px) var(--flow-pad-x, 36px);
+  background: var(--ink);
+}
+.trio-grid .trio-cta::after {
+  content: ""; position: absolute; top: 0; right: 0; width: 14px; height: 14px; background: var(--red);
+}
+.trio .trio-cta p { margin: 0; max-width: 30em; color: #fff; font-size: 22px; line-height: 1.45; }
+@media (max-width: 1024px) {
+  .trio-grid .trio-cta { grid-column: 1 / -1; }
+  .trio .trio-cta p { font-size: 19px; }
+}
+
+/* Tlačítka s delším popiskem: šířka podle textu, nikdy zalomení */
+.btn { min-width: 224px; }
+.trio .btn, .figure-split .btn, .austis-cta .btn, .trio-cta .btn,
+.flow-subpage .btn:not(.header .btn):not(.mobile-nav-cta) {
+  width: auto;
+  padding: 0 32px;
+  white-space: nowrap;
+}
+
+/* CTA pás na všech podstránkách stejně jako na Realizacích */
+.austis-cta {
+  position: relative;
+  width: var(--flow-content-width, min(calc(100% - 2 * var(--page-gutter)), var(--content-width)));
+  margin: 40px auto 0;
+  padding: 48px clamp(28px, 4vw, 56px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  background: var(--ink);
+  color: #fff;
+}
+.austis-cta::after { content: ""; position: absolute; right: 0; top: 0; width: 14px; height: 14px; background: var(--red); }
+.austis-cta h2 { margin: 0 0 12px; color: #fff; font-size: clamp(26px, 2.1vw, 34px); font-weight: 500; line-height: 1.16; }
+.austis-cta p { margin: 0; max-width: 36em; color: rgba(255, 255, 255, 0.78); font-size: 18px; font-weight: 300; line-height: 1.5; }
+.austis-cta .btn { flex-shrink: 0; }
+@media (max-width: 760px) {
+  .austis-cta { flex-direction: column; align-items: flex-start; width: calc(100% - 32px); padding: 36px 24px; }
+}
+
+/* QA 26.10.2026 – GDPR jako karta jako ostatní podstránky, kontakt tlačítka */
+.gdpr-page{background:transparent;padding:0 0 80px}
+.gdpr-inner{max-width:none;margin:0 var(--content-left,24px);width:auto;background:#fff;box-shadow:0 1px 0 var(--grid,#b4b5b6);padding:56px max(40px,calc((100% - 820px)/2));font-size:17px;color:var(--ink,#1e1e1e)}
+.gdpr-inner h2{font-size:34px;font-weight:500}
+.gdpr-inner h3{font-size:20px;font-weight:600;color:var(--red,#932c38)}
+@media (max-width:1024px){.gdpr-inner{margin:0 16px;padding:32px 20px;font-size:16px}.gdpr-inner h2{font-size:26px}}
+.contact-facts dd{display:flex;flex-wrap:wrap;gap:12px}
+.contact-facts dd .btn:not(.btn-red){background:var(--ink,#1e1e1e);color:#fff}
+.contact-facts dd .btn:not(.btn-red) .btn-label{color:#fff}

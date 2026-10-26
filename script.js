@@ -241,6 +241,17 @@
 
   const referenceProjects = [
     {
+      title: "Agrotechnology park Liberec hala B",
+      type: "Dokončeno",
+      description: "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
+      location: "Liberec – Doubí",
+      status: null,
+      detailHref: "projekty.html#agrotechnology-park-liberec-hala-b",
+      leftImg: "assets/agrotechnology-park-liberec.jpg",
+      rightImg: "assets/agrotechnology-park-liberec.jpg",
+      rightAlt: "Agrotechnology park Liberec hala B",
+    },
+    {
       title: "Chata Seibert",
       type: "V realizaci",
       description: "Nástavba, přístavba a celkové stavební úpravy původního rekreačního objektu.",
@@ -272,17 +283,6 @@
       leftImg: "assets/foto-doplnime.jpg",
       rightImg: "assets/foto-doplnime.jpg",
       rightAlt: "Vraňany Farma Hanč",
-    },
-    {
-      title: "Agrotechnology park Liberec hala B",
-      type: "Dokončeno",
-      description: "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
-      location: "Liberec – Doubí",
-      status: null,
-      detailHref: "projekty.html#agrotechnology-park-liberec-hala-b",
-      leftImg: "assets/agrotechnology-park-liberec.jpg",
-      rightImg: "assets/agrotechnology-park-liberec.jpg",
-      rightAlt: "Agrotechnology park Liberec hala B",
     },
   ];
 
