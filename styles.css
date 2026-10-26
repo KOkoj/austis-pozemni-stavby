@@ -9033,3 +9033,26 @@ body.lightbox-open .mobile-nav-panel {
   }
 }
 
+
+/* feedback 24.10.2026: longer hero intro from client docx */
+.home-page .hero-copy-aside > p {
+  max-width: 46em;
+  font-size: calc(15px / var(--scale));
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.home-page .hero-copy-aside > p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.services .services-title {
+  position: absolute;
+  left: 1020px;
+  top: 60px;
+  width: 300px;
+  margin: 0;
+  color: var(--ink);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.2;
+}

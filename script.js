@@ -232,61 +232,57 @@
   const bodyDataset = document.body?.dataset ?? {};
   const hasHeroVideoOverride = Object.prototype.hasOwnProperty.call(bodyDataset, "heroVideo");
   const heroSlide = {
-    src: bodyDataset.heroImage || "assets/hero-section-bg.jpg",
+    src: bodyDataset.heroImage || "assets/agrotechnology-park-liberec.jpg",
     video: hasHeroVideoOverride
       ? bodyDataset.heroVideo
-      : "assets/hero-seibert.mp4",
-    name: bodyDataset.heroName || "Chata Seibert",
+      : "",
+    name: bodyDataset.heroName || "Agrotechnology park Liberec",
   };
 
   const referenceProjects = [
     {
       title: "Chata Seibert",
-      type: "Rekreační stavba",
-      description: "Kompletní rekonstrukce horské chaty v Krkonoších.",
-      location: "Krkonoše",
-      timeline: "2024 – 2025",
+      type: "V realizaci",
+      description: "Nástavba, přístavba a celkové stavební úpravy původního rekreačního objektu.",
+      location: "Pec pod Sněžkou",
       status: null,
-      detailHref: "projekty.html#ref-1",
-      leftImg: "pexels-ivan-s-4458205 (1).jpg",
-      rightImg: "assets/hero 2.png",
-      rightAlt: "Chata Seibert: pohled na realizaci",
+      detailHref: "projekty.html#chata-seibert",
+      leftImg: "assets/foto-doplnime.jpg",
+      rightImg: "assets/foto-doplnime.jpg",
+      rightAlt: "Chata Seibert",
+    },
+    {
+      title: "Bytový dům Prodloužená",
+      type: "V realizaci",
+      description: "Výstavba čtyřpatrového bytového domu.",
+      location: "Praha – Velká Chuchle",
+      status: null,
+      detailHref: "projekty.html#bd-prodlouzena",
+      leftImg: "assets/foto-doplnime.jpg",
+      rightImg: "assets/foto-doplnime.jpg",
+      rightAlt: "Bytový dům Prodloužená",
     },
     {
       title: "Vraňany Farma Hanč",
-      type: "Zemědělský areál",
-      description: "Výstavba provozních objektů a zázemí farmy.",
+      type: "Dokončeno",
+      description: "Novostavba polyfunkčního objektu s prodejnou, kavárnou, bistrem a bytem pro soukromého investora.",
       location: "Vraňany",
-      timeline: "2023 – 2024",
       status: null,
-      detailHref: "projekty.html#ref-2",
-      leftImg: "assets/sluzby-generalni-dodavka.png",
-      rightImg: "assets/hero 1.png",
-      rightAlt: "Vraňany Farma Hanč: pohled na areál",
+      detailHref: "projekty.html#vranany-farma-hanc",
+      leftImg: "assets/foto-doplnime.jpg",
+      rightImg: "assets/foto-doplnime.jpg",
+      rightAlt: "Vraňany Farma Hanč",
     },
     {
-      title: "Rodinný dům Roztoky",
-      type: "Novostavba RD",
-      description: "Novostavba rodinného domu na klíč.",
-      location: "Roztoky",
-      timeline: "2025 – 2026",
-      status: "Probíhá",
-      detailHref: "projekty.html#ref-3",
-      leftImg: "pexels-thirdman-8482551 1.png",
-      rightImg: "assets/hero 3.png",
-      rightAlt: "Rodinný dům Roztoky: vizualizace novostavby",
-    },
-    {
-      title: "Novo Plaza",
-      type: "Komerční development",
-      description: "Komerční objekt v rámci developerského projektu.",
-      location: "Praha",
-      timeline: "2025 – 2026",
-      status: "Probíhá",
-      detailHref: "projekty.html#ref-4",
-      leftImg: "assets/sluzby-pozemni-stavby.png",
-      rightImg: "assets/image 7.png",
-      rightAlt: "Novo Plaza: komerční objekt",
+      title: "Agrotechnology park Liberec hala B",
+      type: "Dokončeno",
+      description: "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
+      location: "Liberec – Doubí",
+      status: null,
+      detailHref: "projekty.html#agrotechnology-park-liberec-hala-b",
+      leftImg: "assets/agrotechnology-park-liberec.jpg",
+      rightImg: "assets/agrotechnology-park-liberec.jpg",
+      rightAlt: "Agrotechnology park Liberec hala B",
     },
   ];
 
@@ -1287,14 +1283,14 @@
 
   const siteSearchIndex = [
     { title: "Domů", hint: "AUSTIS Pozemní stavby", href: "index.html", keywords: "domu homepage domov uvod generální dodavatel" },
-    { title: "Služby", hint: "Generální dodávka, pozemní stavby, rekonstrukce", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
+    { title: "Služby", hint: "Generální dodávka a pozemní stavby", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
     { title: "Generální dodávka", hint: "Jedna smlouva za celou stavbu", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
     { title: "Pozemní stavby", hint: "Novostavby rezidenční, komerční i provozní", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni" },
-    { title: "Rekonstrukce", hint: "Modernizace a revitalizace", href: "sluzby.html#rekonstrukce", keywords: "rekonstrukce revitalizace" },
-    { title: "Projekty", hint: "Realizované stavby", href: "projekty.html", keywords: "reference seibert vranany" },
+    { title: "Rekonstrukce", hint: "Modernizace a revitalizace", href: "sluzby.html#pozemni-stavby", keywords: "rekonstrukce revitalizace" },
+    { title: "Realizace", hint: "Dokončené a probíhající stavby", href: "projekty.html", keywords: "realizace reference seibert vranany prodlouzena liberec" },
     { title: "O společnosti", hint: "Tým a kariéra", href: "o-spolecnosti.html", keywords: "spolecnost tym kariera" },
     { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci" },
-    { title: "Kontakt", hint: "Telefon, e-mail a adresa", href: "kontakt.html", keywords: "adresa telefon email slivenec" },
+    { title: "Kontakt", hint: "E-mail a adresa", href: "kontakt.html", keywords: "adresa telefon email slivenec" },
     { title: "Poptat spolupráci", hint: "Nezávazná konzultace", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
   ].map((item) => ({ ...item, haystack: foldSearchText(`${item.title} ${item.hint} ${item.keywords}`) }));
 
@@ -1448,6 +1444,7 @@
       const service = String(data.get("service") || "").trim();
       const projectType = String(data.get("project-type") || "").trim();
       const location = String(data.get("location") || "").trim();
+      const term = String(data.get("term") || "").trim();
       const message = String(data.get("message") || "").trim();
       const consent = Boolean(form.querySelector("[name='consent']")?.checked);
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -1471,14 +1468,15 @@
         company ? `Společnost: ${company}` : "",
         `E-mail: ${email}`,
         phone ? `Telefon: ${phone}` : "",
-        serviceLabel && serviceLabel !== "Vyberte službu" ? `Služba: ${serviceLabel}` : "",
-        typeLabel && typeLabel !== "Vyberte typ" ? `Typ stavby: ${typeLabel}` : "",
+        service ? `Typ realizace: ${serviceLabel}` : "",
+        projectType ? `Typ stavby: ${typeLabel}` : "",
         location ? `Lokalita: ${location}` : "",
+        term ? `Předpokládaný termín: ${term}` : "",
         "",
         message,
       ].filter(Boolean).join("\n");
-      const href = `mailto:info@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
-      showStatus("success", "Děkujeme. Otevíráme e-mailový klient, abyste poptávku odeslali na info@austis.cz.");
+      const href = `mailto:zakazky@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
+      showStatus("success", "Otevíráme váš e-mailový klient s předvyplněnou poptávkou. Odešlete ji prosím na zakazky@austis.cz. Pokud se klient neotevře, napište nám na zakazky@austis.cz nebo zavolejte na +420 721 071 189.");
       window.location.href = href;
     });
   }
