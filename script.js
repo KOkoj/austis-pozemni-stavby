@@ -159,34 +159,10 @@
       return;
     }
 
-    if (!("IntersectionObserver" in window)) {
-      sections.forEach(({ reveal }) => reveal());
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          const match = sections.find(({ el }) => el === entry.target);
-          match?.reveal();
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        rootMargin: "0px 0px -12% 0px",
-        threshold: 0.05,
-      },
-    );
-
-    sections.forEach(({ el }) => observer.observe(el));
+    sections.forEach(({ reveal }) => reveal());
   }
 
   function initMidpageScrollReveal() {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = [
       document.querySelector(".artboard .services"),
       document.querySelector(".artboard .project"),
@@ -204,53 +180,28 @@
       el.classList.add("is-section-visible");
     }
 
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      targets.forEach(reveal);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          reveal(entry.target);
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        rootMargin: "0px 0px -10% 0px",
-        threshold: 0.08,
-      },
-    );
-
-    targets.forEach((el) => observer.observe(el));
+    targets.forEach(reveal);
   }
 
   const bodyDataset = document.body?.dataset ?? {};
-  const hasHeroVideoOverride = Object.prototype.hasOwnProperty.call(bodyDataset, "heroVideo");
   const heroSlide = {
-    src: bodyDataset.heroImage || "assets/hero-section-bg.jpg",
-    video: hasHeroVideoOverride
-      ? bodyDataset.heroVideo
-      : "assets/hero-seibert.mp4",
-    name: bodyDataset.heroName || "Chata Seibert",
+    src: bodyDataset.heroImage || "assets/placeholder-blueprint.svg",
+    video: "",
+    name: bodyDataset.heroName || "AUSTIS Pozemní stavby",
   };
 
   const referenceProjects = [
     {
       title: "Chata Seibert",
       type: "Rekreační stavba",
-      description: "Kompletní rekonstrukce horské chaty v Krkonoších.",
+      description: "Rekonstrukce horské chaty v Krkonoších.",
       location: "Krkonoše",
       timeline: "2024 – 2025",
       status: null,
       detailHref: "projekty.html#ref-1",
-      leftImg: "pexels-ivan-s-4458205 (1).jpg",
-      rightImg: "assets/hero 2.png",
-      rightAlt: "Chata Seibert: pohled na realizaci",
+      leftImg: "assets/placeholder-blueprint.svg",
+      rightImg: "assets/placeholder-blueprint.svg",
+      rightAlt: "Chata Seibert — fotografii doplníme",
     },
     {
       title: "Vraňany Farma Hanč",
@@ -260,9 +211,9 @@
       timeline: "2023 – 2024",
       status: null,
       detailHref: "projekty.html#ref-2",
-      leftImg: "assets/sluzby-generalni-dodavka.png",
-      rightImg: "assets/hero 1.png",
-      rightAlt: "Vraňany Farma Hanč: pohled na areál",
+      leftImg: "assets/placeholder-blueprint.svg",
+      rightImg: "assets/placeholder-blueprint.svg",
+      rightAlt: "Vraňany Farma Hanč — fotografii doplníme",
     },
     {
       title: "Rodinný dům Roztoky",
@@ -272,9 +223,9 @@
       timeline: "2025 – 2026",
       status: "Probíhá",
       detailHref: "projekty.html#ref-3",
-      leftImg: "pexels-thirdman-8482551 1.png",
-      rightImg: "assets/hero 3.png",
-      rightAlt: "Rodinný dům Roztoky: vizualizace novostavby",
+      leftImg: "assets/placeholder-blueprint.svg",
+      rightImg: "assets/placeholder-blueprint.svg",
+      rightAlt: "Rodinný dům Roztoky — fotografii doplníme",
     },
     {
       title: "Novo Plaza",
@@ -284,9 +235,9 @@
       timeline: "2025 – 2026",
       status: "Probíhá",
       detailHref: "projekty.html#ref-4",
-      leftImg: "assets/sluzby-pozemni-stavby.png",
-      rightImg: "assets/image 7.png",
-      rightAlt: "Novo Plaza: komerční objekt",
+      leftImg: "assets/placeholder-blueprint.svg",
+      rightImg: "assets/placeholder-blueprint.svg",
+      rightAlt: "Novo Plaza — fotografii doplníme",
     },
   ];
 
@@ -429,14 +380,7 @@
       },
     ].filter(({ section, video, still }) => section && video && still);
 
-    const skipHeroChoreo = (() => {
-      try {
-        const nav = performance.getEntriesByType("navigation")[0];
-        return Boolean(nav && nav.type === "reload");
-      } catch (e) {
-        return false;
-      }
-    })();
+    const skipHeroChoreo = true;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const staticChoreoDuration = 2.35;
