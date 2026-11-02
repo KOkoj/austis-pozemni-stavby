@@ -9,6 +9,7 @@ const requiredFiles = [
   "o-spolecnosti.html",
   "kontakt.html",
   "poptavka.html",
+  "osobni-udaje.html",
   "robots.txt",
   "sitemap.xml",
   "styles.css",

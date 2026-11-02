@@ -749,6 +749,9 @@
 
   function prepareReferenceCarousel(heroApi) {
     const projectSection = document.querySelector(".project");
+    if (!projectSection && !document.querySelector(".mobile-project")) {
+      return;
+    }
     const mobileProjectSection = document.querySelector(".mobile-project");
     const leftImg = document.querySelector(".project-left-img");
     const rightImg = document.querySelector(".project-right-img");
@@ -1057,20 +1060,31 @@
   }
 
   function initServicePrefill() {
-    const select = document.getElementById("service");
+    const select = document.getElementById("typ-realizace") || document.getElementById("service");
     if (!select) {
       return;
     }
 
     const params = new URLSearchParams(window.location.search);
-    const service = params.get("service");
-    if (!service) {
+    const requested = params.get("typ") || params.get("service");
+    if (!requested) {
       return;
     }
 
-    const option = Array.from(select.options).find((item) => item.value === service);
+    const mapped = {
+      "generalni-dodavka": "",
+      "pozemni-stavby": "novostavba",
+      rekonstrukce: "rekonstrukce",
+      novostavba: "novostavba",
+    };
+    const value = Object.prototype.hasOwnProperty.call(mapped, requested) ? mapped[requested] : requested;
+    if (!value) {
+      return;
+    }
+
+    const option = Array.from(select.options).find((item) => item.value === value);
     if (option) {
-      select.value = service;
+      select.value = value;
     }
   }
 
@@ -1230,16 +1244,17 @@
   }
 
   const siteSearchIndex = [
-    { title: "Domů", hint: "AUSTIS Pozemní stavby", href: "index.html", keywords: "domu homepage domov uvod generální dodavatel" },
-    { title: "Služby", hint: "Generální dodávka, pozemní stavby, rekonstrukce", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
-    { title: "Generální dodávka", hint: "Jedna smlouva za celou stavbu", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
-    { title: "Pozemní stavby", hint: "Novostavby rezidenční, komerční i provozní", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni" },
-    { title: "Rekonstrukce", hint: "Modernizace a revitalizace", href: "sluzby.html#rekonstrukce", keywords: "rekonstrukce revitalizace" },
-    { title: "Projekty", hint: "Realizované stavby", href: "projekty.html", keywords: "reference seibert vranany" },
-    { title: "O společnosti", hint: "Tým a kariéra", href: "o-spolecnosti.html", keywords: "spolecnost tym kariera" },
-    { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci" },
-    { title: "Kontakt", hint: "Telefon, e-mail a adresa", href: "kontakt.html", keywords: "adresa telefon email slivenec" },
-    { title: "Poptat spolupráci", hint: "Nezávazná konzultace", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
+    { title: "Domů", hint: "Generální dodávky novostaveb a rekonstrukcí", href: "index.html", keywords: "domu homepage uvod novostavby rekonstrukce" },
+    { title: "Služby", hint: "Generální dodávka a pozemní stavby", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
+    { title: "Generální dodávka", hint: "Novostavby a rekonstrukce", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
+    { title: "Pozemní stavby", hint: "Novostavby a rekonstrukce", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni rekonstrukce" },
+    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html", keywords: "reference seibert vranany prodlouzena liberec" },
+    { title: "Vybrané realizace", hint: "Chata Seibert, Prodloužená, Vraňany, Liberec", href: "index.html#vybrane-realizace", keywords: "vybrane realizace" },
+    { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html", keywords: "spolecnost skupina austis" },
+    { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci info@austis.cz" },
+    { title: "Kontakt", hint: "zakazky@austis.cz", href: "kontakt.html", keywords: "adresa telefon email slivenec zakazky" },
+    { title: "Časté otázky", hint: "Konzultace, nabídka, regiony", href: "kontakt.html#faq", keywords: "faq otazky" },
+    { title: "Poptat spolupráci", hint: "Formulář poptávky", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
   ].map((item) => ({ ...item, haystack: foldSearchText(`${item.title} ${item.hint} ${item.keywords}`) }));
 
   function initSiteSearch() {
@@ -1389,12 +1404,14 @@
       const email = String(data.get("email") || "").trim();
       const phone = String(data.get("phone") || "").trim();
       const company = String(data.get("company") || "").trim();
-      const service = String(data.get("service") || "").trim();
-      const projectType = String(data.get("project-type") || "").trim();
+      const typRealizace = String(data.get("typ-realizace") || data.get("service") || "").trim();
+      const typStavby = String(data.get("typ-stavby") || data.get("project-type") || "").trim();
       const location = String(data.get("location") || "").trim();
+      const termin = String(data.get("termin") || "").trim();
       const message = String(data.get("message") || "").trim();
       const consent = Boolean(form.querySelector("[name='consent']")?.checked);
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const failMessage = "Poptávku se nepodařilo odeslat. Zkuste to prosím znovu, případně nám napište na zakazky@austis.cz nebo zavolejte na +420 721 071 189.";
       const checks = [
         [name, form.querySelector("#name")],
         [emailOk, form.querySelector("#email")],
@@ -1408,22 +1425,26 @@
         showStatus("error", email && !emailOk ? "Zadejte platný e-mail." : "Vyplňte prosím všechna povinná pole.");
         return;
       }
-      const serviceLabel = form.querySelector("#service")?.selectedOptions?.[0]?.textContent?.trim() || service;
-      const typeLabel = form.querySelector("#project-type")?.selectedOptions?.[0]?.textContent?.trim() || projectType;
+      const realizaceLabel = form.querySelector("#typ-realizace")?.selectedOptions?.[0]?.textContent?.trim() || typRealizace;
+      const typeLabel = form.querySelector("#typ-stavby")?.selectedOptions?.[0]?.textContent?.trim() || typStavby;
       const body = [
         `Jméno: ${name}`,
         company ? `Společnost: ${company}` : "",
         `E-mail: ${email}`,
         phone ? `Telefon: ${phone}` : "",
-        serviceLabel && serviceLabel !== "Vyberte službu" ? `Služba: ${serviceLabel}` : "",
+        realizaceLabel && realizaceLabel !== "Vyberte typ realizace" ? `Typ realizace: ${realizaceLabel}` : "",
         typeLabel && typeLabel !== "Vyberte typ" ? `Typ stavby: ${typeLabel}` : "",
         location ? `Lokalita: ${location}` : "",
+        termin ? `Předpokládaný termín: ${termin}` : "",
         "",
         message,
       ].filter(Boolean).join("\n");
-      const href = `mailto:info@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
-      showStatus("success", "Děkujeme. Otevíráme e-mailový klient, abyste poptávku odeslali na info@austis.cz.");
-      window.location.href = href;
+      const href = `mailto:zakazky@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
+      try {
+        window.location.href = href;
+      } catch (error) {
+        showStatus("error", failMessage);
+      }
     });
   }
 
