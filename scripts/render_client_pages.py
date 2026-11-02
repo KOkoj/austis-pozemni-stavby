@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261102t"
+ASSET_V = "20261102u"
 HERO_IMG = "assets/agrotechnology-park-liberec.jpg"
 PHONE = "+420 721 071 189"
 PHONE_TEL = "+420721071189"
@@ -15,6 +15,114 @@ DIC = "CZ07093322"
 ICO_HREF = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=07093322"
 DIC_HREF = "https://adisspr.mfcr.cz/dpr/adis/idpr_pub/dph_reg/dph_reg.faces"
 CANON = "https://aps.austis.cz"
+
+ENTER_BOOT = """    <script>
+      (function () {
+        try {
+          var fromAS = false;
+          try {
+            fromAS = new URLSearchParams(window.location.search).get("from") === "austis-as";
+          } catch (e) {}
+          if (!fromAS) return;
+
+          var reduce = false;
+          try {
+            reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          } catch (e) {}
+
+          var stripped = false;
+          function stripFromParam() {
+            if (stripped) return;
+            try {
+              var url = new URL(window.location.href);
+              if (url.searchParams.get("from") !== "austis-as") return;
+              url.searchParams.delete("from");
+              var query = url.searchParams.toString();
+              var next = url.pathname + (query ? "?" + query : "") + url.hash;
+              history.replaceState(history.state, document.title, next);
+              stripped = true;
+            } catch (e) {}
+          }
+
+          window.addEventListener("pageshow", function (event) {
+            if (event.persisted) {
+              document.documentElement.classList.remove("as-enter", "as-enter-out");
+              stripFromParam();
+            }
+          });
+
+          if (reduce) {
+            stripFromParam();
+            return;
+          }
+
+          document.documentElement.classList.add("as-enter");
+
+          var played = false;
+          function playEnter() {
+            if (played) return;
+            played = true;
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(function () {
+                document.documentElement.classList.add("as-enter-out");
+                window.setTimeout(function () {
+                  document.documentElement.classList.remove("as-enter", "as-enter-out");
+                  stripFromParam();
+                }, 650);
+              });
+            });
+          }
+
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", playEnter);
+          } else {
+            playEnter();
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      html.as-enter {
+        background: #ffffff !important;
+      }
+      html.as-enter body {
+        background: #ffffff;
+      }
+      html.as-enter::before {
+        content: "AUSTIS\\A pozemní stavby";
+        white-space: pre;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        color: #1e1e1e;
+        font-family: "Neue Haas Grotesk Text Pro", "Helvetica Neue", Arial, sans-serif;
+        font-size: clamp(36px, 4.2vw, 52px);
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 1.15;
+        text-align: center;
+        pointer-events: auto;
+        opacity: 1;
+        transition: opacity 600ms ease;
+      }
+      html.as-enter-out::before {
+        opacity: 0;
+      }
+      html.as-enter .desktop-shell,
+      html.as-enter .mobile-hero {
+        transform: translateY(12px);
+        transition: transform 600ms ease;
+      }
+      html.as-enter-out .desktop-shell,
+      html.as-enter-out .mobile-hero {
+        transform: translateY(0);
+      }
+    </style>
+"""
 
 SCALE_SCRIPT = """    <script>
       (function () {
@@ -130,6 +238,7 @@ def head(title, description, path, extra="", og_image=HERO_IMG):
 {extra}
     <meta name="description" content="{description}" />
     <title>{title}</title>
+{ENTER_BOOT}
 {SCALE_SCRIPT}
     <link rel="preload" as="image" href="{HERO_IMG}" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css?v={ASSET_V}" />

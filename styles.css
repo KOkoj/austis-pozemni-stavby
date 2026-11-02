@@ -9623,3 +9623,50 @@ body.mobile-menu-open .mobile-header .btn {
 .mobile-nav-panel {
   background: #0c0c0c;
 }
+
+/* Entrance overlay from austis-as hero tiles (`?from=austis-as`). Critical
+   first-paint rules also live inline in <head> so this cannot flash. */
+html.as-enter {
+  background: #ffffff !important;
+}
+
+html.as-enter body {
+  background: #ffffff;
+}
+
+html.as-enter::before {
+  content: "AUSTIS\A pozemní stavby";
+  white-space: pre;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #1e1e1e;
+  font-family: "Neue Haas Grotesk Text Pro", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(36px, 4.2vw, 52px);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-align: center;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 600ms ease;
+}
+
+html.as-enter-out::before {
+  opacity: 0;
+}
+
+html.as-enter .desktop-shell,
+html.as-enter .mobile-hero {
+  transform: translateY(12px);
+  transition: transform 600ms ease;
+}
+
+html.as-enter-out .desktop-shell,
+html.as-enter-out .mobile-hero {
+  transform: translateY(0);
+}
