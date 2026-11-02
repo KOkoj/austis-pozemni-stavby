@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261102u"
+ASSET_V = "20261102w"
 HERO_IMG = "assets/agrotechnology-park-liberec.jpg"
 PHONE = "+420 721 071 189"
 PHONE_TEL = "+420721071189"
@@ -316,9 +316,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
                 <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
               </form>
             </header>
-            <div class="slide-dots" aria-label="Sídlo">
-              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
-            </div>
+            <p class="hero-place">K Austisu 680, Praha 5 – Slivenec</p>
             <div class="hero-copy">
               <div class="hero-copy-main">
                 <h1>{h1}</h1>
@@ -727,7 +725,7 @@ def render_index():
         "AUSTIS Pozemní stavby",
         "Agrotechnology park Liberec",
         "Generální dodávky novostaveb a rekonstrukcí",
-        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov. Zaměřujeme se na generální dodávky novostaveb a rekonstrukcí většího rozsahu. Naše zkušenosti představují dokončené i právě probíhající realizace.",
+        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov.",
         "#vybrane-realizace",
         "Prohlédnout realizace",
         "Prohlédnout<br />realizace",
@@ -748,7 +746,11 @@ def render_index():
           </article>
           <article>
             <h3>Rekonstrukce a revitalizace</h3>
-            <p>Modernizujeme a přestavujeme stávající budovy a areály. Postup navrhujeme podle technického stavu objektu, vašich priorit a rozpočtu. U využívaných budov posoudíme možnosti etapizace a prací za provozu.</p>
+            <p>Modernizujeme a přestavujeme stávající budovy a areály.</p>
+            <ul class="line-list">
+              <li>Postup navrhujeme podle technického stavu objektu, vašich priorit a rozpočtu.</li>
+              <li>U využívaných budov posoudíme možnosti etapizace a prací za provozu.</li>
+            </ul>
             <p><a class="text-link" href="sluzby.html#pozemni-stavby">Více o rekonstrukcích</a></p>
           </article>
         </div>
@@ -771,49 +773,26 @@ def render_index():
       <section id="spoluprace" class="contact-steps-section" aria-labelledby="spoluprace-title">
         <div class="contact-steps-head">
           <h2 id="spoluprace-title">Jak probíhá spolupráce</h2>
+          <p>Probereme váš stavební záměr, lokalitu, dostupné podklady a požadovaný termín.</p>
         </div>
-        <ol class="contact-steps">
-          <li>
-            <span class="contact-step-num" aria-hidden="true">01</span>
-            <div>
-              <h3>První jednání</h3>
-              <p>Probereme váš stavební záměr, lokalitu, dostupné podklady a požadovaný termín. Upřesníme rozsah spolupráce a další kroky přípravy nabídky.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">02</span>
-            <div>
-              <h3>Příprava realizace</h3>
-              <p>Podle zadání připravíme postup prací, harmonogram a rozpočet. Vyjasníme také činnosti, které zajistíme my, a součinnost potřebnou od investora.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">03</span>
-            <div>
-              <h3>Průběh stavby</h3>
-              <p>Zajistíme kompletní realizaci stavby. O postupu, nákladech a otázkách, které vyžadují vaše rozhodnutí, vás pravidelně informujeme dohodnutou formou.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">04</span>
-            <div>
-              <h3>Dokončení a předání</h3>
-              <p>Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</p>
-            </div>
-          </li>
-        </ol>
+        <ul class="line-list">
+          <li>První jednání</li>
+          <li>Příprava realizace</li>
+          <li>Průběh stavby</li>
+          <li>Dokončení a předání</li>
+        </ul>
         <p class="section-follow"><a class="text-link" href="sluzby.html#generalni-dodavka">Podrobnosti o generální dodávce</a></p>
       </section>
 
       <section id="spolecnost" class="about-teaser" aria-labelledby="about-home-title">
         <div class="about-teaser-copy">
           <h2 id="about-home-title">O společnosti</h2>
-          <p>Jsme součástí skupiny AUSTIS a.s. Zaměřujeme se na generální dodávky průmyslové, občanské a bytové výstavby pro soukromé investory i veřejný sektor. Naše zaměření a zkušenosti představujeme prostřednictvím konkrétních služeb a realizací.</p>
+          <p>Jsme součástí skupiny AUSTIS a.s.</p>
           <p><a class="text-link" href="o-spolecnosti.html">O společnosti</a></p>
         </div>
         <div class="about-teaser-career" id="kariera-teaser">
           <h2>Kariéra</h2>
-          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu. Zajímá vás práce na stavebních projektech? Podívejte se na aktuální pozice a napište nám.</p>
+          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu.</p>
           <p><a class="text-link" href="o-spolecnosti.html#kariera">Volné pozice</a></p>
         </div>
       </section>
@@ -884,15 +863,12 @@ def render_sluzby():
       <section id="generalni-dodavka" class="figure-split is-text-only" aria-labelledby="sp-detail-1-title">
         <div class="figure-split-copy">
           <h2 id="sp-detail-1-title">Generální dodávka</h2>
-          <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory. Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
+          <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.</p>
           <ul class="line-list">
-            <li><strong>Příprava a plánování.</strong> Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací. Připravíme postup realizace, harmonogram a rozpočet.</li>
-            <li><strong>Výběr a koordinace subdodavatelů.</strong> Pracujeme se stabilní sítí prověřených firem. Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</li>
-            <li><strong>Řízení harmonogramu.</strong> Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací. Sledujeme klíčové milníky a průběžně vyhodnocujeme postup. Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</li>
-            <li><strong>Kontrola nákladů a změn.</strong> Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas. Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením. Investor tak dostává podklady pro rozhodování během stavby.</li>
-            <li><strong>Kontrola kvality.</strong> Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním. Odpovídáme za kvalitu sjednané dodávky.</li>
-            <li><strong>Informování investora.</strong> V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích. Upozorňujeme na otázky, které vyžadují rozhodnutí investora. Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</li>
-            <li><strong>Dokončení a předání.</strong> Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</li>
+            <li>Příprava a plánování</li>
+            <li>Výběr a koordinace subdodavatelů</li>
+            <li>Řízení harmonogramu</li>
+            <li>Dokončení a předání</li>
           </ul>
           <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
         </div>
@@ -901,15 +877,12 @@ def render_sluzby():
       <section id="pozemni-stavby" class="figure-split is-text-only" aria-labelledby="sp-detail-2-title">
         <div class="figure-split-copy">
           <h2 id="sp-detail-2-title">Pozemní stavby</h2>
-          <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
-          <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
-          <h3>Typy staveb a souvisejících prací</h3>
+          <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů.</p>
           <ul class="line-list">
-            <li>Rezidenční objekty a bytové domy.</li>
-            <li>Komerční a administrativní budovy.</li>
-            <li>Provozní a zemědělské areály.</li>
-            <li>Technická zařízení budov.</li>
-            <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
+            <li>Rezidenční objekty a bytové domy</li>
+            <li>Komerční a administrativní budovy</li>
+            <li>Provozní a zemědělské areály</li>
+            <li>Technická zařízení budov, inženýrské sítě a venkovní zpevněné plochy</li>
           </ul>
           <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
         </div>
@@ -983,7 +956,7 @@ def render_about():
         "AUSTIS o společnosti",
         "Agrotechnology park Liberec",
         "AUSTIS Pozemní stavby",
-        "AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS. Zaměřujeme se především na generální dodávky průmyslové, občanské a bytové výstavby na klíč. Našimi zákazníky jsou developeři, soukromí investoři, firmy i veřejní zadavatelé; spolupracujeme také s jejich pověřenými zástupci.",
+        "AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS.",
         "#o-spolecnosti",
         "více o společnosti",
         "více o<br />společnosti",
@@ -991,14 +964,24 @@ def render_about():
     body = """
       <section id="o-spolecnosti" class="about-prose flow-first" aria-labelledby="about-intro-title">
         <h2 id="about-intro-title">AUSTIS Pozemní stavby</h2>
-        <p>AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS. Zaměřujeme se především na generální dodávky průmyslové, občanské a bytové výstavby na klíč. Našimi zákazníky jsou developeři, soukromí investoři, firmy i veřejní zadavatelé; spolupracujeme také s jejich pověřenými zástupci.</p>
-        <p>Naše zaměření zahrnuje novostavby a rekonstrukce. Konkrétní zkušenosti představujeme v přehledu vybraných realizací, kde uvádíme jednotlivé objekty a naši roli při jejich výstavbě nebo modernizaci.</p>
+        <p>AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS.</p>
+        <ul class="line-list">
+          <li>Zaměřujeme se především na generální dodávky průmyslové, občanské a bytové výstavby na klíč.</li>
+          <li>Našimi zákazníky jsou developeři, soukromí investoři, firmy i veřejní zadavatelé.</li>
+          <li>Spolupracujeme také s jejich pověřenými zástupci.</li>
+          <li>Naše zaměření zahrnuje novostavby a rekonstrukce.</li>
+        </ul>
       </section>
 
       <section class="about-prose" aria-labelledby="group-title">
         <h2 id="group-title">Zázemí skupiny AUSTIS</h2>
-        <p>Společnost AUSTIS a.s. byla založena v roce 1990. Její činnost zahrnuje stavební chemii, stavební činnost a správu nemovitostí. Stavebním zakázkám se věnuje od roku 1996.</p>
-        <p>S rozšířením těchto aktivit byly stavební a stavebně technické služby rozděleny mezi dceřiné společnosti AUSTIS Pozemní stavby s.r.o. a AUSTIS stavební s.r.o. AUSTIS Pozemní stavby se soustředí na generální dodávky stavebních projektů. AUSTIS stavební se specializuje na technický dozor stavebníka a koordinaci BOZP na staveništi.</p>
+        <p>Společnost AUSTIS a.s. byla založena v roce 1990.</p>
+        <ul class="line-list">
+          <li>Její činnost zahrnuje stavební chemii, stavební činnost a správu nemovitostí.</li>
+          <li>Stavebním zakázkám se věnuje od roku 1996.</li>
+          <li>AUSTIS Pozemní stavby se soustředí na generální dodávky stavebních projektů.</li>
+          <li>AUSTIS stavební se specializuje na technický dozor stavebníka a koordinaci BOZP na staveništi.</li>
+        </ul>
       </section>
 
       <section class="trio" aria-labelledby="who-title">
@@ -1006,15 +989,15 @@ def render_about():
         <div class="trio-grid cols-2">
           <article>
             <h3>Investoři</h3>
-            <p>Spolupracujeme s investory připravujícími stavební projekty většího rozsahu. Při přípravě zakázky vycházíme z jejich investičního záměru, projektových podkladů a požadovaného termínu.</p>
+            <p>Spolupracujeme s investory připravujícími stavební projekty většího rozsahu.</p>
           </article>
           <article>
             <h3>Developeři</h3>
-            <p>Realizujeme rezidenční i komerční projekty. Při plánování zohledňujeme návaznost stavební dodávky na další části developerského záměru.</p>
+            <p>Realizujeme rezidenční i komerční projekty.</p>
           </article>
           <article>
             <h3>Firmy a provozovatelé</h3>
-            <p>Stavíme provozní objekty a modernizujeme budovy a areály. U využívaných objektů je součástí přípravy také projednání provozních podmínek a případné etapizace.</p>
+            <p>Stavíme provozní objekty a modernizujeme budovy a areály.</p>
           </article>
           <article>
             <h3>Veřejný sektor</h3>
@@ -1025,7 +1008,11 @@ def render_about():
 
       <section class="about-prose" aria-labelledby="people-title">
         <h2 id="people-title">Lidé a dodavatelé</h2>
-        <p>Přípravu a vedení zakázek zajišťuje náš tým. Pro jednotlivé profese spolupracujeme se stabilní sítí prověřených subdodavatelů. Jejich výběr a koordinace patří do řízení realizace, které podrobně představujeme na stránce služeb.</p>
+        <p>Přípravu a vedení zakázek zajišťuje náš tým.</p>
+        <ul class="line-list">
+          <li>Pro jednotlivé profese spolupracujeme se stabilní sítí prověřených subdodavatelů.</li>
+          <li>Jejich výběr a koordinace patří do řízení realizace.</li>
+        </ul>
         <p>
           <a class="text-link" href="sluzby.html">Naše služby</a>
           ·
@@ -1035,18 +1022,13 @@ def render_about():
 
       <section id="kariera" class="about-prose career-block" aria-labelledby="about-career-title">
         <h2 id="about-career-title">Přidejte se k našemu týmu</h2>
-        <p>Rozšiřujeme tým o kolegy pro vedení staveb a výrobní přípravu. Hledáme lidi, kteří chtějí pracovat na konkrétních stavebních projektech a uplatnit své zkušenosti při jejich přípravě nebo realizaci.</p>
-        <div class="trio-grid cols-2 career-grid">
-          <article>
-            <h3>Stavbyvedoucí</h3>
-            <p>Samostatné vedení staveb v roli generálního dodavatele a koordinace prací jednotlivých profesí.</p>
-          </article>
-          <article>
-            <h3>Výrobní příprava staveb</h3>
-            <p>Příprava zakázek, rozpočtů, harmonogramů a podkladů pro navazující realizaci.</p>
-          </article>
-        </div>
-        <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:info@austis.cz">info@austis.cz</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
+        <p>Rozšiřujeme tým o kolegy pro vedení staveb a výrobní přípravu.</p>
+        <ul class="line-list">
+          <li>Hledáme lidi, kteří chtějí pracovat na konkrétních stavebních projektech a uplatnit své zkušenosti při jejich přípravě nebo realizaci.</li>
+          <li>Stavbyvedoucí — samostatné vedení staveb v roli generálního dodavatele a koordinace prací jednotlivých profesí.</li>
+          <li>Výrobní příprava staveb — příprava zakázek, rozpočtů, harmonogramů a podkladů pro navazující realizaci.</li>
+          <li>Pošlete nám na <a href="mailto:info@austis.cz">info@austis.cz</a> životopis nebo stručné představení a uveďte oblast svého zájmu.</li>
+        </ul>
         <a class="btn btn-red" href="mailto:info@austis.cz"><span class="btn-label">Mám zájem o práci</span></a>
       </section>
 """
@@ -1065,7 +1047,7 @@ def render_kontakt():
         "AUSTIS kontakt",
         "Agrotechnology park Liberec",
         "Probereme váš stavební záměr",
-        "Plánujete novostavbu nebo rekonstrukci? Spojte se s námi a domluvte si nezávaznou konzultaci. Pro první kontakt nám stačí základní představa o projektu, lokalitě a předpokládaném termínu.",
+        "Plánujete novostavbu nebo rekonstrukci? Spojte se s námi a domluvte si nezávaznou konzultaci.",
         "#kontakt-udaje",
         "kontaktní údaje",
         "kontaktní<br />údaje",
@@ -1102,37 +1084,14 @@ def render_kontakt():
       <section id="spoluprace-kroky" class="contact-steps-section" aria-labelledby="contact-process-title">
         <div class="contact-steps-head">
           <h2 id="contact-process-title">Jak zahájíme spolupráci</h2>
+          <p>Po přijetí zprávy vás kontaktujeme a domluvíme první jednání.</p>
         </div>
-        <ol class="contact-steps">
-          <li>
-            <span class="contact-step-num" aria-hidden="true">01</span>
-            <div>
-              <h3>Domluvíme konzultaci</h3>
-              <p>Po přijetí zprávy vás kontaktujeme a domluvíme první jednání. Konzultace může proběhnout osobně nebo online podle potřeb projektu a vzájemné dohody.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">02</span>
-            <div>
-              <h3>Projdeme zadání a podklady</h3>
-              <p>Probereme předložené podklady dané stavby, lokalitu, vaše priority a požadovaný termín. Podle dostupné dokumentace posoudíme, co bude potřeba doplnit a zda je vhodná prohlídka místa.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">03</span>
-            <div>
-              <h3>Navrhneme další postup</h3>
-              <p>Upřesníme rozsah spolupráce, navrhneme postup realizace a rámcový harmonogram podle dostupných podkladů. Domluvíme také termín přípravy nabídky.</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-step-num" aria-hidden="true">04</span>
-            <div>
-              <h3>Připravíme nabídku</h3>
-              <p>Po vyjasnění zadání předložíme cenovou nabídku s rozpočtem a smluvními podmínkami dle rozsahu dohodnuté dodávky a požadavků projektu.</p>
-            </div>
-          </li>
-        </ol>
+        <ul class="line-list">
+          <li>Domluvíme konzultaci</li>
+          <li>Projdeme zadání a podklady</li>
+          <li>Navrhneme další postup</li>
+          <li>Připravíme nabídku</li>
+        </ul>
       </section>
 
       <section class="faq-section" id="faq" aria-labelledby="faq-title">
@@ -1171,8 +1130,13 @@ def render_poptavka():
       <section id="poptavka-form" class="inquiry-section flow-first" aria-labelledby="inquiry-title">
         <div class="inquiry-lead">
           <h2 id="inquiry-title">Poptat spolupráci</h2>
-          <p>Představte nám svůj stavební záměr. Uveďte typ objektu, lokalitu, požadovaný rozsah prací a předpokládaný termín. Ozveme se vám a domluvíme další postup.</p>
-          <p>Pokud si nejste jistí výběrem služby nebo zatím nemáte všechny podklady, popište projekt vlastními slovy. Potřebné doplnění vyjasníme při prvním jednání.</p>
+          <p>Představte nám svůj stavební záměr.</p>
+          <ul class="line-list">
+            <li>Uveďte typ objektu, lokalitu, požadovaný rozsah prací a předpokládaný termín.</li>
+            <li>Ozveme se vám a domluvíme další postup.</li>
+            <li>Pokud si nejste jistí výběrem služby nebo zatím nemáte všechny podklady, popište projekt vlastními slovy.</li>
+            <li>Potřebné doplnění vyjasníme při prvním jednání.</li>
+          </ul>
         </div>
 
         <form class="inquiry-form" id="poptavka-form-el">
@@ -1245,11 +1209,18 @@ def render_poptavka():
 
         <aside class="inquiry-aside">
           <h3>Co se stane po odeslání</h3>
-          <p>Kontaktujeme vás a domluvíme první konzultaci. Projdeme základní zadání a dostupné podklady, upřesníme rozsah spolupráce a termín přípravy nabídky. Podrobný postup a odpovědi na časté otázky najdete na kontaktní stránce.</p>
+          <p>Kontaktujeme vás a domluvíme první konzultaci.</p>
+          <ul class="line-list">
+            <li>Projdeme základní zadání a dostupné podklady.</li>
+            <li>Upřesníme rozsah spolupráce a termín přípravy nabídky.</li>
+            <li>Podrobný postup a odpovědi na časté otázky najdete na kontaktní stránce.</li>
+          </ul>
           <p><a class="text-link" href="kontakt.html#spoluprace-kroky">Jak zahájíme spolupráci</a></p>
           <h3>Preferujete přímý kontakt</h3>
           <p>Zavolejte na <a href="tel:{PHONE_TEL}"><strong>{PHONE}</strong></a> nebo napište na <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
-          <p>Jsme vám k dispozici každý pracovní den od 7:00 do 18:00.</p>
+          <ul class="line-list">
+            <li>Jsme vám k dispozici každý pracovní den od 7:00 do 18:00.</li>
+          </ul>
         </aside>
       </section>
 """
