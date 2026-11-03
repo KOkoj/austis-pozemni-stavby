@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103h"
+ASSET_V = "20261103j"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -713,6 +713,25 @@ def gallery_attr(item):
     return f"data-gallery='{payload}'"
 
 
+def gd_split(title, paragraphs, image, alt, flip=False, section_id=None, extra=""):
+    cls = "figure-split gd-split" + (" is-copy-right" if flip else "")
+    sid = f' id="{section_id}"' if section_id else ""
+    labelled = f' aria-labelledby="{section_id}-title"' if section_id else ""
+    title_id = f' id="{section_id}-title"' if section_id else ""
+    heading = f"<h2{title_id}>{title}</h2>" if title else ""
+    paras = "\n          ".join(f"<p>{p}</p>" for p in paragraphs)
+    return f"""      <section class="{cls}"{sid}{labelled}>
+        <div class="figure-split-copy">
+          {heading}
+          {paras}
+          {extra}
+        </div>
+        <figure>
+          <img src="{image}" alt="{alt}" loading="lazy" decoding="async" />
+        </figure>
+      </section>"""
+
+
 def photo_count_label(count):
     if count <= 1:
         return ""
@@ -731,13 +750,12 @@ def project_card(item, period_label=None):
         if photo
         else '<div class="realizace-media is-empty" aria-hidden="true"></div>'
     )
-    role = f'<div><dt>Role</dt><dd>{item["role"]}</dd></div>' if item.get("role") else ""
-    label = period_label or item.get("period_label") or "Období realizace"
-    period = (
-        f'<div><dt>{label}</dt><dd>{item["period"]}</dd></div>'
-        if item.get("period")
-        else ""
-    )
+    meta_parts = [item.get("place") or ""]
+    if item.get("period"):
+        meta_parts.append(item["period"])
+    if item.get("role"):
+        meta_parts.append(item["role"])
+    meta = " · ".join(part for part in meta_parts if part)
     extra = ""
     if photo:
         title_attr = html.escape(item["title"], quote=True)
@@ -749,12 +767,7 @@ def project_card(item, period_label=None):
           {media}
           <div class="realizace-body">
             <h3 class="realizace-title">{item["title"]}</h3>
-            <p class="realizace-desc">{item["desc"]}</p>
-            <dl class="realizace-meta">
-              <div><dt>Oblast</dt><dd>{item["place"]}</dd></div>
-              {period}
-              {role}
-            </dl>
+            <p class="realizace-meta">{meta}</p>
           </div>
         </article>"""
 
@@ -989,7 +1002,96 @@ def render_sluzby():
         "přehled služeb",
         "přehled<br />služeb",
     )
-    body = """
+    gd_cta = (
+        '<a class="btn btn-red" href="poptavka.html#poptavka-form">'
+        '<span class="btn-label">Poptat generální dodávku</span></a>'
+    )
+    gd_rows = "\n".join(
+        [
+            gd_split(
+                "Generální dodávka",
+                [
+                    "Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.",
+                    "Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.",
+                ],
+                PHOTO["botanicka"],
+                "Jižní vstup do Botanické zahrady",
+                section_id="generalni-dodavka",
+            ),
+            gd_split(
+                "Příprava a plánování.",
+                [
+                    "Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.",
+                    "Připravíme postup realizace, harmonogram a rozpočet.",
+                ],
+                PHOTO["seibert"],
+                "Chata Seibert",
+                flip=True,
+            ),
+            gd_split(
+                "Výběr a koordinace subdodavatelů.",
+                [
+                    "Pracujeme se stabilní sítí prověřených firem.",
+                    "Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.",
+                ],
+                PHOTO["liberec_1"],
+                "Agrotechnology park Liberec hala B",
+            ),
+            gd_split(
+                "Řízení harmonogramu.",
+                [
+                    "Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.",
+                    "Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.",
+                    "Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.",
+                ],
+                PHOTO["pribram"],
+                "Retail Park Příbram",
+                flip=True,
+            ),
+            gd_split(
+                "Kontrola nákladů a změn.",
+                [
+                    "Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.",
+                    "Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.",
+                    "Investor tak dostává podklady pro rozhodování během stavby.",
+                ],
+                PHOTO["liberec_2"],
+                "Agrotechnology park Liberec hala C",
+            ),
+            gd_split(
+                "Kontrola kvality.",
+                [
+                    "Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.",
+                    "Odpovídáme za kvalitu sjednané dodávky.",
+                ],
+                PHOTO["roztoky"],
+                "Rodinný dům Roztoky",
+                flip=True,
+            ),
+            gd_split(
+                "Informování investora.",
+                [
+                    "V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.",
+                    "Upozorňujeme na otázky, které vyžadují rozhodnutí investora.",
+                    "Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.",
+                ],
+                PHOTO["vinice"],
+                "Bytový dům U Vinice",
+            ),
+            gd_split(
+                "Dokončení a předání.",
+                [
+                    "Předáme dokončené dílo.",
+                    "Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.",
+                ],
+                PHOTO["vranany"],
+                "Vraňany Farma Hanč",
+                flip=True,
+                extra=gd_cta,
+            ),
+        ]
+    )
+    body = f"""
       <section id="prehled-sluzeb" class="about-prose services-intro flow-first" aria-labelledby="sp-overview-title">
         <h2 id="sp-overview-title">Služby pro novostavby a rekonstrukce</h2>
         <p>
@@ -999,45 +1101,7 @@ def render_sluzby():
         </p>
       </section>
 
-      <section id="generalni-dodavka" class="about-prose services-panel gd-panel" aria-labelledby="sp-detail-1-title">
-        <h2 id="sp-detail-1-title">Generální dodávka</h2>
-        <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.</p>
-        <p>Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
-        <ul class="gd-blocks">
-          <li>
-            <p><strong>Příprava a plánování.</strong> Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.</p>
-            <p>Připravíme postup realizace, harmonogram a rozpočet.</p>
-          </li>
-          <li>
-            <p><strong>Výběr a koordinace subdodavatelů.</strong> Pracujeme se stabilní sítí prověřených firem.</p>
-            <p>Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</p>
-          </li>
-          <li>
-            <p><strong>Řízení harmonogramu.</strong> Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.</p>
-            <p>Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.</p>
-            <p>Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</p>
-          </li>
-          <li>
-            <p><strong>Kontrola nákladů a změn.</strong> Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.</p>
-            <p>Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.</p>
-            <p>Investor tak dostává podklady pro rozhodování během stavby.</p>
-          </li>
-          <li>
-            <p><strong>Kontrola kvality.</strong> Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.</p>
-            <p>Odpovídáme za kvalitu sjednané dodávky.</p>
-          </li>
-          <li>
-            <p><strong>Informování investora.</strong> V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.</p>
-            <p>Upozorňujeme na otázky, které vyžadují rozhodnutí investora.</p>
-            <p>Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</p>
-          </li>
-          <li>
-            <p><strong>Dokončení a předání.</strong> Předáme dokončené dílo.</p>
-            <p>Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</p>
-          </li>
-        </ul>
-        <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
-      </section>
+{gd_rows}
 
       <section id="pozemni-stavby" class="about-prose services-panel" aria-labelledby="sp-detail-2-title">
         <h2 id="sp-detail-2-title">Pozemní stavby</h2>
