@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103n"
+ASSET_V = "20261103p"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -294,8 +294,10 @@ HOME_ACTIONS = f"""            <div class="hero-copy">
             </div>"""
 
 HOME_MOBILE = f"""          <div class="mobile-hero-panel">
+            <div class="hero-copy-main">
             <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
             <h1 class="mobile-hero-title">Generální dodávky novostaveb a&nbsp;rekonstrukcí</h1>
+            </div>
             <div class="mobile-hero-actions">
               <a class="mobile-text-link" href="{HERO_CTA_HREF}">{HERO_CTA_ARIA}</a>
             </div>
