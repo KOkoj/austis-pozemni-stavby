@@ -189,7 +189,7 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/photos/agrotechnology-park-liberec-4.webp" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20261103f" />
+    <link rel="stylesheet" href="styles.css?v=20261103h" />
     <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
   <body
@@ -208,6 +208,7 @@
           <div class="scroll-nav-inner">
             <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
+              <span class="logo-sub">Pozemní stavby</span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
@@ -332,30 +333,28 @@
       <section id="v-realizaci" class="realizace-group flow-first" aria-labelledby="inprogress-title">
         <h2 id="inprogress-title">V realizaci</h2>
         <div class="realizace-list">
-        <article class="realizace-card" id="seibert" data-lightbox data-gallery='[{"src": "assets/photos/seibertovy-vyhledy-2.webp", "alt": "Chata Seibert", "w": 1000, "h": 750}]' tabindex="0">
+        <article class="realizace-card" id="seibert" data-lightbox data-gallery='[{"src": "assets/photos/seibertovy-vyhledy-2.webp", "alt": "Chata Seibert", "w": 1000, "h": 750}]' tabindex="0" role="button" aria-label="Chata Seibert – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/seibertovy-vyhledy-2.webp" alt="Chata Seibert" width="1000" height="750" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Chata Seibert</h3>
-            <p>Nástavba, přístavba a celkové stavební úpravy původního rekreačního objektu.</p>
-            <dl>
+            <h3 class="realizace-title">Chata Seibert</h3>
+            <p class="realizace-desc">Nástavba, přístavba a celkové stavební úpravy původního rekreačního objektu.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Pec pod Sněžkou</dd></div>
               <div><dt>Plánované období realizace</dt><dd>květen 2025 – listopad 2027</dd></div>
               <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="roztoky" data-lightbox data-gallery='[{"src": "assets/photos/rd-roztoky-1.webp", "alt": "Rodinný dům Roztoky", "w": 544, "h": 302}]' tabindex="0">
+        <article class="realizace-card" id="roztoky" data-lightbox data-gallery='[{"src": "assets/photos/rd-roztoky-1.webp", "alt": "Rodinný dům Roztoky", "w": 544, "h": 302}]' tabindex="0" role="button" aria-label="Rodinný dům Roztoky – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/rd-roztoky-1.webp" alt="Rodinný dům Roztoky" width="544" height="302" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Rodinný dům Roztoky</h3>
-            <p>Novostavba rodinného domu.</p>
-            <dl>
+            <h3 class="realizace-title">Rodinný dům Roztoky</h3>
+            <p class="realizace-desc">Novostavba rodinného domu.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Roztoky</dd></div>
               <div><dt>Plánované období realizace</dt><dd>říjen 2025 – prosinec 2026</dd></div>
               <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
         </div>
@@ -364,121 +363,112 @@
       <section id="dokoncene" class="realizace-group" aria-labelledby="done-title">
         <h2 id="done-title">Dokončené projekty</h2>
         <div class="realizace-list">
-        <article class="realizace-card" id="pribram" data-lightbox data-gallery='[{"src": "assets/photos/retail-park-pribram-1.webp", "alt": "Retail Park Příbram", "w": 800, "h": 533}]' tabindex="0">
+        <article class="realizace-card" id="pribram" data-lightbox data-gallery='[{"src": "assets/photos/retail-park-pribram-1.webp", "alt": "Retail Park Příbram", "w": 800, "h": 533}]' tabindex="0" role="button" aria-label="Retail Park Příbram – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/retail-park-pribram-1.webp" alt="Retail Park Příbram" width="800" height="533" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Retail Park Příbram</h3>
-            <p>Úpravy dispozic, technologií, fasád, střech a zpevněných ploch.</p>
-            <dl>
+            <h3 class="realizace-title">Retail Park Příbram</h3>
+            <p class="realizace-desc">Úpravy dispozic, technologií, fasád, střech a zpevněných ploch.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Příbram</dd></div>
               <div><dt>Období realizace</dt><dd>březen 2024 – červenec 2025</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="liberec-c" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0">
-          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-2.webp" alt="Agrotechnology park Liberec hala C" width="1000" height="749" loading="lazy" decoding="async" /></div>
+        <article class="realizace-card" id="liberec-c" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0" role="button" aria-label="Agrotechnology park Liberec hala C – otevřít galerii">
+          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-2.webp" alt="Agrotechnology park Liberec hala C" width="1000" height="749" loading="lazy" decoding="async" /><span class="realizace-count">4 fotky</span></div>
           <div class="realizace-body">
-            <h3>Agrotechnology park Liberec hala C</h3>
-            <p>Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
-            <dl>
+            <h3 class="realizace-title">Agrotechnology park Liberec hala C</h3>
+            <p class="realizace-desc">Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Liberec – Doubí</dd></div>
               <div><dt>Období realizace</dt><dd>duben 2021 – květen 2023</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="liberec-b" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0">
-          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-1.webp" alt="Agrotechnology park Liberec hala B" width="1000" height="749" loading="lazy" decoding="async" /></div>
+        <article class="realizace-card" id="liberec-b" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0" role="button" aria-label="Agrotechnology park Liberec hala B – otevřít galerii">
+          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-1.webp" alt="Agrotechnology park Liberec hala B" width="1000" height="749" loading="lazy" decoding="async" /><span class="realizace-count">4 fotky</span></div>
           <div class="realizace-body">
-            <h3>Agrotechnology park Liberec hala B</h3>
-            <p>Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
-            <dl>
+            <h3 class="realizace-title">Agrotechnology park Liberec hala B</h3>
+            <p class="realizace-desc">Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Liberec – Doubí</dd></div>
               <div><dt>Období realizace</dt><dd>duben 2021 – prosinec 2023</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="liberec-a" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0">
-          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-3.webp" alt="Agrotechnology park Liberec hala A" width="1000" height="749" loading="lazy" decoding="async" /></div>
+        <article class="realizace-card" id="liberec-a" data-lightbox data-gallery='[{"src": "assets/photos/agrotechnology-park-liberec-3.webp", "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-1.webp", "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-2.webp", "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749}, {"src": "assets/photos/agrotechnology-park-liberec-4.webp", "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797}]' tabindex="0" role="button" aria-label="Agrotechnology park Liberec hala A – otevřít galerii">
+          <div class="realizace-media is-small-slot"><img src="assets/photos/agrotechnology-park-liberec-3.webp" alt="Agrotechnology park Liberec hala A" width="1000" height="749" loading="lazy" decoding="async" /><span class="realizace-count">4 fotky</span></div>
           <div class="realizace-body">
-            <h3>Agrotechnology park Liberec hala A</h3>
-            <p>Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
-            <dl>
+            <h3 class="realizace-title">Agrotechnology park Liberec hala A</h3>
+            <p class="realizace-desc">Výstavba výrobně administrativní a skladové haly s infrastrukturou.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Liberec – Doubí</dd></div>
               <div><dt>Období realizace</dt><dd>duben 2021 – listopad 2021</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="novodvorska" data-lightbox data-gallery='[{"src": "assets/photos/oc-novodvorska-1.webp", "alt": "OC Novodvorská Plaza", "w": 544, "h": 725}]' tabindex="0">
+        <article class="realizace-card" id="novodvorska" data-lightbox data-gallery='[{"src": "assets/photos/oc-novodvorska-1.webp", "alt": "OC Novodvorská Plaza", "w": 544, "h": 725}]' tabindex="0" role="button" aria-label="OC Novodvorská Plaza – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/oc-novodvorska-1.webp" alt="OC Novodvorská Plaza" width="544" height="725" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>OC Novodvorská Plaza</h3>
-            <p>Rekonstrukce obchodního centra včetně eskalátoru, sociálního zázemí a fasády.</p>
-            <dl>
+            <h3 class="realizace-title">OC Novodvorská Plaza</h3>
+            <p class="realizace-desc">Rekonstrukce obchodního centra včetně eskalátoru, sociálního zázemí a fasády.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Praha 4</dd></div>
               <div><dt>Období realizace</dt><dd>srpen 2020 – prosinec 2020</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="vranany" data-lightbox data-gallery='[{"src": "assets/photos/jahodarna-vranany-2.webp", "alt": "Vraňany Farma Hanč", "w": 1920, "h": 1080}]' tabindex="0">
+        <article class="realizace-card" id="vranany" data-lightbox data-gallery='[{"src": "assets/photos/jahodarna-vranany-2.webp", "alt": "Vraňany Farma Hanč", "w": 1920, "h": 1080}]' tabindex="0" role="button" aria-label="Vraňany Farma Hanč – otevřít galerii">
           <div class="realizace-media"><img src="assets/photos/jahodarna-vranany-2.webp" alt="Vraňany Farma Hanč" width="1920" height="1080" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Vraňany Farma Hanč</h3>
-            <p>Novostavba polyfunkčního objektu s prodejnou, kavárnou, bistrem a bytem pro soukromého investora.</p>
-            <dl>
+            <h3 class="realizace-title">Vraňany Farma Hanč</h3>
+            <p class="realizace-desc">Novostavba polyfunkčního objektu s prodejnou, kavárnou, bistrem a bytem pro soukromého investora.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Vraňany</dd></div>
               <div><dt>Období realizace</dt><dd>únor 2020 – duben 2021</dd></div>
               <div><dt>Role</dt><dd>Generální dodavatel</dd></div>
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="botanicka" data-lightbox data-gallery='[{"src": "assets/photos/botanicka-zahrada-3.webp", "alt": "Jižní vstup do Botanické zahrady", "w": 1919, "h": 1280}]' tabindex="0">
+        <article class="realizace-card" id="botanicka" data-lightbox data-gallery='[{"src": "assets/photos/botanicka-zahrada-3.webp", "alt": "Jižní vstup do Botanické zahrady", "w": 1919, "h": 1280}]' tabindex="0" role="button" aria-label="Jižní vstup do Botanické zahrady – otevřít galerii">
           <div class="realizace-media"><img src="assets/photos/botanicka-zahrada-3.webp" alt="Jižní vstup do Botanické zahrady" width="1919" height="1280" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Jižní vstup do Botanické zahrady</h3>
-            <p>Vybudování nového jižního vstupu do Botanické zahrady hl. m. Prahy.</p>
-            <dl>
+            <h3 class="realizace-title">Jižní vstup do Botanické zahrady</h3>
+            <p class="realizace-desc">Vybudování nového jižního vstupu do Botanické zahrady hl. m. Prahy.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Praha 7</dd></div>
               <div><dt>Období realizace</dt><dd>červenec 2019 – červen 2020</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="vinice" data-lightbox data-gallery='[{"src": "assets/photos/bd-u-vinice-1.webp", "alt": "Bytový dům U Vinice", "w": 544, "h": 264}]' tabindex="0">
+        <article class="realizace-card" id="vinice" data-lightbox data-gallery='[{"src": "assets/photos/bd-u-vinice-1.webp", "alt": "Bytový dům U Vinice", "w": 544, "h": 264}]' tabindex="0" role="button" aria-label="Bytový dům U Vinice – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/bd-u-vinice-1.webp" alt="Bytový dům U Vinice" width="544" height="264" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Bytový dům U Vinice</h3>
-            <p>Novostavba bytového domu.</p>
-            <dl>
+            <h3 class="realizace-title">Bytový dům U Vinice</h3>
+            <p class="realizace-desc">Novostavba bytového domu.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Praha 7</dd></div>
               <div><dt>Období realizace</dt><dd>červenec 2019 – červen 2020</dd></div>
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
-        <article class="realizace-card" id="hluckova" data-lightbox data-gallery='[{"src": "assets/photos/bd-hluckova-1.webp", "alt": "Bytový dům Hlučkova", "w": 909, "h": 523}]' tabindex="0">
+        <article class="realizace-card" id="hluckova" data-lightbox data-gallery='[{"src": "assets/photos/bd-hluckova-1.webp", "alt": "Bytový dům Hlučkova", "w": 909, "h": 523}]' tabindex="0" role="button" aria-label="Bytový dům Hlučkova – otevřít galerii">
           <div class="realizace-media is-small-slot"><img src="assets/photos/bd-hluckova-1.webp" alt="Bytový dům Hlučkova" width="909" height="523" loading="lazy" decoding="async" /></div>
           <div class="realizace-body">
-            <h3>Bytový dům Hlučkova</h3>
-            <p>Novostavba bytového domu.</p>
-            <dl>
+            <h3 class="realizace-title">Bytový dům Hlučkova</h3>
+            <p class="realizace-desc">Novostavba bytového domu.</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>Praha</dd></div>
               
               
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>
         </div>
@@ -528,6 +518,6 @@
       </footer>
     </main>
     <script src="lenis.min.js?v=1.3.26"></script>
-    <script src="script.js?v=20261103f"></script>
+    <script src="script.js?v=20261103h"></script>
   </body>
 </html>

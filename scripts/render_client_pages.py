@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Render site pages from the 23 Oct 2026 accepted client texts."""
 
+import html
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103f"
+ASSET_V = "20261103h"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -347,6 +348,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
           <div class="scroll-nav-inner">
             <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
+              <span class="logo-sub">Pozemní stavby</span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
@@ -711,10 +713,21 @@ def gallery_attr(item):
     return f"data-gallery='{payload}'"
 
 
+def photo_count_label(count):
+    if count <= 1:
+        return ""
+    if count < 5:
+        return f"{count} fotky"
+    return f"{count} fotek"
+
+
 def project_card(item, period_label=None):
     photo = item.get("photo")
+    shots = gallery_shots(item) if photo else []
+    count_label = photo_count_label(len(shots))
+    count_html = f'<span class="realizace-count">{count_label}</span>' if count_label else ""
     media = (
-        f'<div class="{media_classes(item, "realizace-media")}">{media_img(item)}</div>'
+        f'<div class="{media_classes(item, "realizace-media")}">{media_img(item)}{count_html}</div>'
         if photo
         else '<div class="realizace-media is-empty" aria-hidden="true"></div>'
     )
@@ -725,18 +738,23 @@ def project_card(item, period_label=None):
         if item.get("period")
         else ""
     )
-    extra = f' data-lightbox {gallery_attr(item)} tabindex="0"' if photo else ""
+    extra = ""
+    if photo:
+        title_attr = html.escape(item["title"], quote=True)
+        extra = (
+            f' data-lightbox {gallery_attr(item)} tabindex="0" role="button" '
+            f'aria-label="{title_attr} – otevřít galerii"'
+        )
     return f"""        <article class="realizace-card" id="{item["id"]}"{extra}>
           {media}
           <div class="realizace-body">
-            <h3>{item["title"]}</h3>
-            <p>{item["desc"]}</p>
-            <dl>
+            <h3 class="realizace-title">{item["title"]}</h3>
+            <p class="realizace-desc">{item["desc"]}</p>
+            <dl class="realizace-meta">
               <div><dt>Oblast</dt><dd>{item["place"]}</dd></div>
               {period}
               {role}
             </dl>
-            <p class="realizace-open">Otevřít galerii</p>
           </div>
         </article>"""
 
@@ -981,23 +999,43 @@ def render_sluzby():
         </p>
       </section>
 
-      <section id="generalni-dodavka" class="about-prose services-panel" aria-labelledby="sp-detail-1-title">
+      <section id="generalni-dodavka" class="about-prose services-panel gd-panel" aria-labelledby="sp-detail-1-title">
         <h2 id="sp-detail-1-title">Generální dodávka</h2>
-        <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory. Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
-        <h3>Příprava a plánování</h3>
-        <p>Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací. Připravíme postup realizace, harmonogram a rozpočet.</p>
-        <h3>Výběr a koordinace subdodavatelů</h3>
-        <p>Pracujeme se stabilní sítí prověřených firem. Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</p>
-        <h3>Řízení harmonogramu</h3>
-        <p>Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací. Sledujeme klíčové milníky a průběžně vyhodnocujeme postup. Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</p>
-        <h3>Kontrola nákladů a změn</h3>
-        <p>Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas. Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením. Investor tak dostává podklady pro rozhodování během stavby.</p>
-        <h3>Kontrola kvality</h3>
-        <p>Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním. Odpovídáme za kvalitu sjednané dodávky.</p>
-        <h3>Informování investora</h3>
-        <p>V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích. Upozorňujeme na otázky, které vyžadují rozhodnutí investora. Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</p>
-        <h3>Dokončení a předání</h3>
-        <p>Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</p>
+        <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.</p>
+        <p>Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
+        <ul class="gd-blocks">
+          <li>
+            <p><strong>Příprava a plánování.</strong> Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.</p>
+            <p>Připravíme postup realizace, harmonogram a rozpočet.</p>
+          </li>
+          <li>
+            <p><strong>Výběr a koordinace subdodavatelů.</strong> Pracujeme se stabilní sítí prověřených firem.</p>
+            <p>Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</p>
+          </li>
+          <li>
+            <p><strong>Řízení harmonogramu.</strong> Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.</p>
+            <p>Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.</p>
+            <p>Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</p>
+          </li>
+          <li>
+            <p><strong>Kontrola nákladů a změn.</strong> Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.</p>
+            <p>Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.</p>
+            <p>Investor tak dostává podklady pro rozhodování během stavby.</p>
+          </li>
+          <li>
+            <p><strong>Kontrola kvality.</strong> Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.</p>
+            <p>Odpovídáme za kvalitu sjednané dodávky.</p>
+          </li>
+          <li>
+            <p><strong>Informování investora.</strong> V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.</p>
+            <p>Upozorňujeme na otázky, které vyžadují rozhodnutí investora.</p>
+            <p>Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</p>
+          </li>
+          <li>
+            <p><strong>Dokončení a předání.</strong> Předáme dokončené dílo.</p>
+            <p>Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</p>
+          </li>
+        </ul>
         <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
       </section>
 
