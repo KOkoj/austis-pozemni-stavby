@@ -185,7 +185,7 @@
 
   const bodyDataset = document.body?.dataset ?? {};
   const heroSlide = {
-    src: bodyDataset.heroImage || "assets/placeholder-blueprint.svg",
+    src: bodyDataset.heroImage || "assets/photos/agrotechnology-park-liberec-4.webp",
     video: "",
     name: bodyDataset.heroName || "AUSTIS Pozemní stavby",
   };
@@ -198,10 +198,10 @@
       location: "Krkonoše",
       timeline: "2024 – 2025",
       status: null,
-      detailHref: "projekty.html#ref-1",
-      leftImg: "assets/placeholder-blueprint.svg",
-      rightImg: "assets/placeholder-blueprint.svg",
-      rightAlt: "Chata Seibert — fotografii doplníme",
+      detailHref: "projekty.html#seibert",
+      leftImg: "assets/photos/seibertovy-vyhledy-2.webp",
+      rightImg: "assets/photos/seibertovy-vyhledy-2.webp",
+      rightAlt: "Vizualizace: Chata Seibert",
     },
     {
       title: "Vraňany Farma Hanč",
@@ -210,10 +210,10 @@
       location: "Vraňany",
       timeline: "2023 – 2024",
       status: null,
-      detailHref: "projekty.html#ref-2",
-      leftImg: "assets/placeholder-blueprint.svg",
-      rightImg: "assets/placeholder-blueprint.svg",
-      rightAlt: "Vraňany Farma Hanč — fotografii doplníme",
+      detailHref: "projekty.html#vranany",
+      leftImg: "assets/photos/jahodarna-vranany-2.webp",
+      rightImg: "assets/photos/jahodarna-vranany-2.webp",
+      rightAlt: "Vizualizace: Vraňany Farma Hanč",
     },
     {
       title: "Rodinný dům Roztoky",
@@ -222,10 +222,10 @@
       location: "Roztoky",
       timeline: "2025 – 2026",
       status: "Probíhá",
-      detailHref: "projekty.html#ref-3",
-      leftImg: "assets/placeholder-blueprint.svg",
-      rightImg: "assets/placeholder-blueprint.svg",
-      rightAlt: "Rodinný dům Roztoky — fotografii doplníme",
+      detailHref: "projekty.html#roztoky",
+      leftImg: "assets/photos/rd-roztoky-1.webp",
+      rightImg: "assets/photos/rd-roztoky-1.webp",
+      rightAlt: "Vizualizace: Rodinný dům Roztoky",
     },
     {
       title: "Novo Plaza",
@@ -234,10 +234,10 @@
       location: "Praha",
       timeline: "2025 – 2026",
       status: "Probíhá",
-      detailHref: "projekty.html#ref-4",
-      leftImg: "assets/placeholder-blueprint.svg",
-      rightImg: "assets/placeholder-blueprint.svg",
-      rightAlt: "Novo Plaza — fotografii doplníme",
+      detailHref: "projekty.html#novodvorska",
+      leftImg: "assets/photos/oc-novodvorska-1.webp",
+      rightImg: "assets/photos/oc-novodvorska-1.webp",
+      rightAlt: "OC Novodvorská Plaza",
     },
   ];
 

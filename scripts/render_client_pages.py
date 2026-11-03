@@ -5,8 +5,25 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261102u"
-HERO_IMG = "assets/agrotechnology-park-liberec.jpg"
+ASSET_V = "20261103a"
+# Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
+HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
+PHOTO = {
+    "liberec_hero": HERO_IMG,
+    "liberec_1": "assets/photos/agrotechnology-park-liberec-1.webp",
+    "liberec_2": "assets/photos/agrotechnology-park-liberec-2.webp",
+    "liberec_3": "assets/photos/agrotechnology-park-liberec-3.webp",
+    "seibert": "assets/photos/seibertovy-vyhledy-2.webp",
+    "vranany": "assets/photos/jahodarna-vranany-2.webp",
+    "botanicka": "assets/photos/botanicka-zahrada-3.webp",
+    "roztoky": "assets/photos/rd-roztoky-1.webp",
+    "novodvorska": "assets/photos/oc-novodvorska-1.webp",
+    "vinice": "assets/photos/bd-u-vinice-1.webp",
+    "hluckova": "assets/photos/bd-hluckova-1.webp",
+    "pribram": "assets/photos/retail-park-pribram-1.webp",
+    "slivenec": "assets/photos/sidlo-austis-slivenec-1.webp",
+}
+HQ_PHOTO = PHOTO["slivenec"]
 PHONE = "+420 721 071 189"
 PHONE_TEL = "+420721071189"
 EMAIL = "zakazky@austis.cz"
@@ -443,6 +460,11 @@ IN_PROGRESS = [
         "period": "květen 2025 – listopad 2027",
         "role": "Generální dodavatel",
         "status": "V realizaci",
+        "photo": PHOTO["seibert"],
+        "w": 1000,
+        "h": 750,
+        "small": True,
+        "vizualizace": True,
     },
     {
         "id": "roztoky",
@@ -453,6 +475,11 @@ IN_PROGRESS = [
         "period": "říjen 2025 – prosinec 2026",
         "role": "Generální dodavatel",
         "status": "V realizaci",
+        "photo": PHOTO["roztoky"],
+        "w": 544,
+        "h": 302,
+        "small": True,
+        "vizualizace": True,
     },
 ]
 
@@ -477,6 +504,10 @@ DONE = [
         "desc": "Úpravy dispozic, technologií, fasád, střech a zpevněných ploch.",
         "place": "Příbram",
         "period": "březen 2024 – červenec 2025",
+        "photo": PHOTO["pribram"],
+        "w": 800,
+        "h": 533,
+        "small": True,
     },
     {
         "id": "tmobile-strecha",
@@ -491,6 +522,11 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – květen 2023",
+        "photo": PHOTO["liberec_2"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
+        "vizualizace": True,
     },
     {
         "id": "liberec-b",
@@ -498,7 +534,11 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – prosinec 2023",
-        "photo": HERO_IMG,
+        "photo": PHOTO["liberec_1"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
+        "vizualizace": True,
         "status": "Dokončeno",
     },
     {
@@ -507,6 +547,11 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – listopad 2021",
+        "photo": PHOTO["liberec_3"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
+        "vizualizace": True,
     },
     {
         "id": "kostelec",
@@ -535,6 +580,10 @@ DONE = [
         "desc": "Rekonstrukce obchodního centra včetně eskalátoru, sociálního zázemí a fasády.",
         "place": "Praha 4",
         "period": "srpen 2020 – prosinec 2020",
+        "photo": PHOTO["novodvorska"],
+        "w": 544,
+        "h": 725,
+        "small": True,
     },
     {
         "id": "olympia-teplice",
@@ -551,6 +600,10 @@ DONE = [
         "period": "únor 2020 – duben 2021",
         "role": "Generální dodavatel",
         "status": "Dokončeno",
+        "photo": PHOTO["vranany"],
+        "w": 1920,
+        "h": 1080,
+        "vizualizace": True,
     },
     {
         "id": "botanicka",
@@ -558,6 +611,10 @@ DONE = [
         "desc": "Vybudování nového jižního vstupu do Botanické zahrady hl. m. Prahy.",
         "place": "Praha 7",
         "period": "červenec 2019 – červen 2020",
+        "photo": PHOTO["botanicka"],
+        "w": 1919,
+        "h": 1280,
+        "vizualizace": True,
     },
     {
         "id": "vinice",
@@ -565,6 +622,20 @@ DONE = [
         "desc": "Novostavba bytového domu.",
         "place": "Praha 7",
         "period": "červenec 2019 – červen 2020",
+        "photo": PHOTO["vinice"],
+        "w": 544,
+        "h": 264,
+        "small": True,
+    },
+    {
+        "id": "hluckova",
+        "title": "Bytový dům Hlučkova",
+        "desc": "Novostavba bytového domu.",
+        "place": "Praha",
+        "photo": PHOTO["hluckova"],
+        "w": 909,
+        "h": 523,
+        "small": True,
     },
     {
         "id": "tmobile-opravy",
@@ -611,15 +682,42 @@ DONE = [
 ]
 
 
+def photo_alt(item):
+    title = item["title"]
+    return f"Vizualizace: {title}" if item.get("vizualizace") else title
+
+
+def media_img(item):
+    dims = ""
+    if item.get("w") and item.get("h"):
+        dims = f' width="{item["w"]}" height="{item["h"]}"'
+    caption = '<span class="media-caption">Vizualizace</span>' if item.get("vizualizace") else ""
+    return f'<img src="{item["photo"]}" alt="{photo_alt(item)}"{dims} loading="lazy" decoding="async" />{caption}'
+
+
+def media_classes(item, base):
+    classes = [base]
+    if item.get("small"):
+        classes.append("is-small-slot")
+    if item.get("vizualizace"):
+        classes.append("is-viz")
+    return " ".join(classes)
+
+
 def project_card(item, period_label=None):
     photo = item.get("photo")
     media = (
-        f'<div class="realizace-media"><img src="{photo}" alt="{item["title"]}" loading="lazy" decoding="async" /></div>'
+        f'<div class="{media_classes(item, "realizace-media")}">{media_img(item)}</div>'
         if photo
         else '<div class="realizace-media is-empty" aria-hidden="true"></div>'
     )
     role = f'<div><dt>Role</dt><dd>{item["role"]}</dd></div>' if item.get("role") else ""
     label = period_label or item.get("period_label") or "Období realizace"
+    period = (
+        f'<div><dt>{label}</dt><dd>{item["period"]}</dd></div>'
+        if item.get("period")
+        else ""
+    )
     return f"""        <article class="realizace-card" id="{item["id"]}">
           {media}
           <div class="realizace-body">
@@ -627,7 +725,7 @@ def project_card(item, period_label=None):
             <p>{item["desc"]}</p>
             <dl>
               <div><dt>Místo</dt><dd>{item["place"]}</dd></div>
-              <div><dt>{label}</dt><dd>{item["period"]}</dd></div>
+              {period}
               {role}
             </dl>
           </div>
@@ -637,12 +735,12 @@ def project_card(item, period_label=None):
 def picked_card(item, href):
     photo = item.get("photo")
     media = (
-        f'<img src="{photo}" alt="{item["title"]}" loading="lazy" decoding="async" />'
+        f'<div class="{media_classes(item, "picked-media")}">{media_img(item)}</div>'
         if photo
-        else '<div class="picked-empty" aria-hidden="true"></div>'
+        else '<div class="picked-media"><div class="picked-empty" aria-hidden="true"></div></div>'
     )
     return f"""            <article class="picked-card">
-              <div class="picked-media">{media}</div>
+              {media}
               <div class="picked-body">
                 <h3>{item["title"]}</h3>
                 <p>{item["desc"]}</p>
@@ -999,6 +1097,9 @@ def render_about():
         <h2 id="group-title">Zázemí skupiny AUSTIS</h2>
         <p>Společnost AUSTIS a.s. byla založena v roce 1990. Její činnost zahrnuje stavební chemii, stavební činnost a správu nemovitostí. Stavebním zakázkám se věnuje od roku 1996.</p>
         <p>S rozšířením těchto aktivit byly stavební a stavebně technické služby rozděleny mezi dceřiné společnosti AUSTIS Pozemní stavby s.r.o. a AUSTIS stavební s.r.o. AUSTIS Pozemní stavby se soustředí na generální dodávky stavebních projektů. AUSTIS stavební se specializuje na technický dozor stavebníka a koordinaci BOZP na staveništi.</p>
+        <figure class="hq-photo is-small-slot">
+          <img src="assets/photos/sidlo-austis-slivenec-1.webp" alt="Sídlo skupiny AUSTIS, K Austisu 680, Praha 5 – Slivenec" width="693" height="517" loading="lazy" decoding="async" />
+        </figure>
       </section>
 
       <section class="trio" aria-labelledby="who-title">
@@ -1097,6 +1198,9 @@ def render_kontakt():
             <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
           </div>
         </div>
+        <figure class="contact-hq is-small-slot">
+          <img src="{HQ_PHOTO}" alt="Sídlo skupiny AUSTIS, K Austisu 680, Praha 5 – Slivenec" width="693" height="517" loading="lazy" decoding="async" />
+        </figure>
       </section>
 
       <section id="spoluprace-kroky" class="contact-steps-section" aria-labelledby="contact-process-title">
