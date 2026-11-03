@@ -118,7 +118,7 @@
       "name": "Zajímá vás práce u nás",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Aktuální pozice najdete v části Kariéra na stránce O společnosti. Životopis nebo stručné představení můžete poslat na rada@austis.cz."
+        "text": "Aktuální pozice skupiny AUSTIS najdete na stránce Kariéra. Životopis nebo stručné představení můžete poslat na austis@austis.cz."
       }
     }
   ]
@@ -261,7 +261,7 @@
       })();
     </script>
     <link rel="preload" as="image" href="assets/photos/agrotechnology-park-liberec-4.webp" fetchpriority="high" />
-    <link rel="stylesheet" href="styles.css?v=20261103d" />
+    <link rel="stylesheet" href="styles.css?v=20261103e" />
     <link rel="stylesheet" href="lenis.css?v=1.3.26" />
   </head>
   <body
@@ -283,13 +283,18 @@
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domov</a>
                 <a href="sluzby.html">Služby</a>
                 <a href="projekty.html">Realizace</a>
                 <a href="o-spolecnosti.html">O společnosti</a>
                 <a class="active" aria-current="page" href="kontakt.html">Kontakt</a>
               </nav>
-              <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+              <div class="header-cta-group">
+                <button type="button" class="hero-search-toggle" aria-label="Hledat" aria-haspopup="dialog" aria-controls="site-search-overlay" aria-expanded="false"><span class="hero-search-ico" aria-hidden="true"></span></button>
+                <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+              </div>
             </header>
+            <button type="button" class="hero-search-toggle mobile-search-toggle scroll-nav-search-toggle" aria-label="Hledat" aria-haspopup="dialog" aria-controls="site-search-overlay" aria-expanded="false"><span class="hero-search-ico" aria-hidden="true"></span></button>
             <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
               <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
             </button>
@@ -323,23 +328,15 @@
                 <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
               </a>
               <nav class="nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domov</a>
                 <a href="sluzby.html">Služby</a>
                 <a href="projekty.html">Realizace</a>
                 <a href="o-spolecnosti.html">O společnosti</a>
                 <a class="active" aria-current="page" href="kontakt.html">Kontakt</a>
               </nav>
+              <button type="button" class="hero-search-toggle" aria-label="Hledat" aria-haspopup="dialog" aria-controls="site-search-overlay" aria-expanded="false"><span class="hero-search-ico" aria-hidden="true"></span></button>
               <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
-              <form class="hero-search" role="search">
-                <label class="hero-search-field">
-                  <span class="hero-search-ico" aria-hidden="true"></span>
-                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
-                </label>
-                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
-              </form>
             </header>
-            <div class="slide-dots" aria-label="Sídlo">
-              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
-            </div>
             <div class="hero-copy">
               <div class="hero-copy-main">
                 <h1>Probereme váš stavební záměr</h1>
@@ -356,6 +353,7 @@
 
       <div class="mobile-nav-panel" id="mobile-nav-panel">
         <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domov</a>
                 <a href="sluzby.html">Služby</a>
                 <a href="projekty.html">Realizace</a>
                 <a href="o-spolecnosti.html">O společnosti</a>
@@ -366,15 +364,16 @@
       <div class="mobile-page" aria-label="AUSTIS kontakt mobile">
         <header class="mobile-header">
           <div class="mobile-header-row">
-            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
-              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
-            </button>
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
             </a>
-            <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
+            <button type="button" class="hero-search-toggle mobile-search-toggle" aria-label="Hledat" aria-haspopup="dialog" aria-controls="site-search-overlay" aria-expanded="false"><span class="hero-search-ico" aria-hidden="true"></span></button>
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
+                <a href="index.html">Domov</a>
                 <a href="sluzby.html">Služby</a>
                 <a href="projekty.html">Realizace</a>
                 <a href="o-spolecnosti.html">O společnosti</a>
@@ -392,7 +391,6 @@
               decoding="async"
             />
           </div>
-          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
           <div class="mobile-hero-panel">
             <h1 class="mobile-hero-title">Probereme váš stavební záměr</h1>
             <p>Plánujete novostavbu nebo rekonstrukci? Spojte se s námi a domluvte si nezávaznou konzultaci. Pro první kontakt nám stačí základní představa o projektu, lokalitě a předpokládaném termínu.</p>
@@ -468,72 +466,114 @@
           <h2 id="faq-title">Časté otázky</h2>
         </div>
         <div class="faq-list">
-          <details class="faq-item">
-            <summary>Jak probíhá první konzultace</summary>
-            <p>Před konzultací si prostudujeme váš projekt a dostupné informace. Při jednání probereme váš záměr, rozsah a termíny. Konzultace může proběhnout u vás, v našem sídle nebo online.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Jak rychle dostanu cenovou nabídku</summary>
-            <p>Termín přípravy nabídky domluvíme po upřesnění zadání a případné prohlídce. Závisí na rozsahu stavby a úplnosti podkladů. U složitějších projektů počítáme s časem potřebným pro sestavení rozpočtu a vyjasnění jednotlivých částí dodávky.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Jaké velikosti projektů realizujete</summary>
-            <p>Zaměřujeme se na stavební projekty s investičním objemem od 50 mil. Kč bez DPH. Realizujeme rezidenční, komerční a provozní objekty pro developery, soukromé investory a další zadavatele. Možnost spolupráce posoudíme podle konkrétního záměru, rozsahu a technických podmínek.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Ve kterých regionech působíte</summary>
-            <p>Působíme především v Praze a Středních Čechách. Vybrané projekty realizujeme také v dalších regionech České republiky. Možnost spolupráce projednáme podle konkrétního zadání.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Pracujete s vlastními kapacitami nebo se subdodavateli</summary>
-            <p>Stavbu řídí náš tým a pro jednotlivé profese pracujeme se stabilní sítí prověřených subdodavatelů. Jejich výběr, koordinaci a kontrolu kvality zajišťujeme v rámci generální dodávky.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Jaká je záruka na provedené práce</summary>
-            <p>Na provedené práce poskytujeme záruku v rozsahu sjednaném ve smlouvě o dílo. Délku záruky, podmínky jejího uplatnění a postup při reklamaci upřesníme v nabídce a smluvní dokumentaci podle konkrétní dodávky.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Jaký rozsah rekonstrukcí zvládnete</summary>
-            <p>Zajišťujeme dílčí modernizace i komplexní rekonstrukce a revitalizace objektů, včetně stavebních úprav technických zařízení budov. Možnost prací za provozu posoudíme podle technických a provozních podmínek.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Zajímá vás práce u nás</summary>
-            <p>Aktuální pozice najdete v části Kariéra na stránce O společnosti. Životopis nebo stručné představení můžete poslat na rada@austis.cz.</p>
-          </details>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
+                <span>Jak probíhá první konzultace</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-btn-1" hidden>
+              <p>Před konzultací si prostudujeme váš projekt a dostupné informace. Při jednání probereme váš záměr, rozsah a termíny. Konzultace může proběhnout u vás, v našem sídle nebo online.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
+                <span>Jak rychle dostanu cenovou nabídku</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-btn-2" hidden>
+              <p>Termín přípravy nabídky domluvíme po upřesnění zadání a případné prohlídce. Závisí na rozsahu stavby a úplnosti podkladů. U složitějších projektů počítáme s časem potřebným pro sestavení rozpočtu a vyjasnění jednotlivých částí dodávky.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
+                <span>Jaké velikosti projektů realizujete</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-btn-3" hidden>
+              <p>Zaměřujeme se na stavební projekty s investičním objemem od 50 mil. Kč bez DPH. Realizujeme rezidenční, komerční a provozní objekty pro developery, soukromé investory a další zadavatele. Možnost spolupráce posoudíme podle konkrétního záměru, rozsahu a technických podmínek.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4">
+                <span>Ve kterých regionech působíte</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-btn-4" hidden>
+              <p>Působíme především v Praze a Středních Čechách. Vybrané projekty realizujeme také v dalších regionech České republiky. Možnost spolupráce projednáme podle konkrétního zadání.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-5" id="faq-btn-5">
+                <span>Pracujete s vlastními kapacitami nebo se subdodavateli</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-btn-5" hidden>
+              <p>Stavbu řídí náš tým a pro jednotlivé profese pracujeme se stabilní sítí prověřených subdodavatelů. Jejich výběr, koordinaci a kontrolu kvality zajišťujeme v rámci generální dodávky.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-6" id="faq-btn-6">
+                <span>Jaká je záruka na provedené práce</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-6" role="region" aria-labelledby="faq-btn-6" hidden>
+              <p>Na provedené práce poskytujeme záruku v rozsahu sjednaném ve smlouvě o dílo. Délku záruky, podmínky jejího uplatnění a postup při reklamaci upřesníme v nabídce a smluvní dokumentaci podle konkrétní dodávky.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-7" id="faq-btn-7">
+                <span>Jaký rozsah rekonstrukcí zvládnete</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-7" role="region" aria-labelledby="faq-btn-7" hidden>
+              <p>Zajišťujeme dílčí modernizace i komplexní rekonstrukce a revitalizace objektů, včetně stavebních úprav technických zařízení budov. Možnost prací za provozu posoudíme podle technických a provozních podmínek.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-8" id="faq-btn-8">
+                <span>Zajímá vás práce u nás</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-8" role="region" aria-labelledby="faq-btn-8" hidden>
+              <p>Aktuální pozice skupiny AUSTIS najdete na stránce Kariéra. Životopis nebo stručné představení můžete poslat na austis@austis.cz.</p>
+            </div>
+          </div>
         </div>
-        <p class="section-follow"><a class="text-link" href="o-spolecnosti.html#kariera">Volné pozice</a></p>
+        <p class="section-follow"><a class="text-link" href="https://austis-as.vercel.app/austis-kariera">Kariéra v AUSTIS</a></p>
       </section>
-      <footer class="footer site-footer" id="paticka">
+      <footer class="footer" id="paticka">
         <div class="footer-line footer-left"></div>
         <div class="footer-line footer-top"></div>
         <div class="footer-line footer-right"></div>
         <section>
-          <h2>Společnost</h2>
-          <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-          <p>Generální dodávky novostaveb a rekonstrukcí</p>
-        </section>
-        <section>
           <h2>Kontakt</h2>
-          <p><a href="mailto:zakazky@austis.cz">zakazky@austis.cz</a></p>
-          <p>K Austisu 680, 154 00 Praha 5 – Slivenec</p>
-          <p class="highlight">IČ: <a href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=07093322">07093322</a> · DIČ: <a href="https://adisspr.mfcr.cz/dpr/adis/idpr_pub/dph_reg/dph_reg.faces">CZ07093322</a></p>
+          <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
+          <p>K Austisu 680, 154 00 Praha 5 – Slivenec<br /><a href="tel:+420721071189">+420 721 071 189</a> · <a href="mailto:zakazky@austis.cz">zakazky@austis.cz</a></p>
+          <p class="highlight">IČ: <a href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico=07093322">07093322</a>&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: <a href="https://adisspr.mfcr.cz/dpr/adis/idpr_pub/dph_reg/dph_reg.faces">CZ07093322</a></p>
         </section>
         <section>
-          <h2>Odkazy</h2>
-          <ul class="footer-links">
+          <h2>Společnost</h2>
+          <ul class="footer-roles">
+            <li><a href="o-spolecnosti.html">O společnosti</a></li>
             <li><a href="sluzby.html">Služby</a></li>
             <li><a href="projekty.html">Realizace</a></li>
-            <li><a href="o-spolecnosti.html">O společnosti</a></li>
-            <li><a href="kontakt.html">Kontakt</a></li>
-            <li><a href="kontakt.html#faq">Časté otázky</a></li>
-            <li><a href="o-spolecnosti.html#kariera">Kariéra</a></li>
+            <li><a href="https://austis-as.vercel.app/austis-kariera">Kariéra</a></li>
+            <li><a href="osobni-udaje.html">Ochrana osobních údajů</a></li>
           </ul>
-          <p class="footer-cta-wrap"><a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a></p>
+          <p>Generální dodávky novostaveb a rekonstrukcí.</p>
         </section>
-        <small>© 2026 AUSTIS Pozemní stavby s.r.o. · <a href="osobni-udaje.html">Informace o zpracování osobních údajů</a></small>
+        <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
       </footer>
     </main>
     <script src="lenis.min.js?v=1.3.26"></script>
-    <script src="script.js?v=20261103d"></script>
+    <script src="script.js?v=20261103e"></script>
   </body>
 </html>

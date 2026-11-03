@@ -201,7 +201,7 @@
       detailHref: "projekty.html#seibert",
       leftImg: "assets/photos/seibertovy-vyhledy-2.webp",
       rightImg: "assets/photos/seibertovy-vyhledy-2.webp",
-      rightAlt: "Vizualizace: Chata Seibert",
+      rightAlt: "Chata Seibert",
     },
     {
       title: "Vraňany Farma Hanč",
@@ -213,7 +213,7 @@
       detailHref: "projekty.html#vranany",
       leftImg: "assets/photos/jahodarna-vranany-2.webp",
       rightImg: "assets/photos/jahodarna-vranany-2.webp",
-      rightAlt: "Vizualizace: Vraňany Farma Hanč",
+      rightAlt: "Vraňany Farma Hanč",
     },
     {
       title: "Rodinný dům Roztoky",
@@ -225,7 +225,7 @@
       detailHref: "projekty.html#roztoky",
       leftImg: "assets/photos/rd-roztoky-1.webp",
       rightImg: "assets/photos/rd-roztoky-1.webp",
-      rightAlt: "Vizualizace: Rodinný dům Roztoky",
+      rightAlt: "Rodinný dům Roztoky",
     },
     {
       title: "Novo Plaza",
@@ -1108,6 +1108,36 @@
     let currentShots = [];
     let currentIndex = 0;
     let lastFocused = null;
+    let touchStartX = 0;
+
+    function parseGallery(el) {
+      const raw = el.getAttribute("data-gallery");
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length) {
+            return parsed.map((shot) => ({
+              src: shot.src || shot.full || "",
+              alt: shot.alt || "",
+              w: Number(shot.w) || 0,
+              h: Number(shot.h) || 0,
+            }));
+          }
+        } catch (error) {
+          /* fall through to DOM shots */
+        }
+      }
+
+      return Array.from(el.querySelectorAll(".ref-shot")).map((shot) => {
+        const img = shot.querySelector("img");
+        return {
+          src: shot.dataset.full || img?.getAttribute("src") || "",
+          alt: img?.getAttribute("alt") || "",
+          w: Number(shot.dataset.w || img?.getAttribute("width")) || 0,
+          h: Number(shot.dataset.h || img?.getAttribute("height")) || 0,
+        };
+      }).filter((shot) => shot.src);
+    }
 
     function render() {
       const shot = currentShots[currentIndex];
@@ -1116,13 +1146,12 @@
         return;
       }
 
-      const full = shot.dataset.full || shot.querySelector("img")?.getAttribute("src") || "";
-      const label = shot.querySelector("img")?.getAttribute("alt") || "";
-
-      imgEl.setAttribute("src", full);
-      imgEl.setAttribute("alt", label);
-      captionEl.textContent = label;
+      imgEl.setAttribute("src", shot.src);
+      imgEl.setAttribute("alt", shot.alt);
+      captionEl.textContent = shot.alt;
       counterEl.textContent = `${currentIndex + 1} / ${currentShots.length}`;
+      imgEl.style.setProperty("--native-w", shot.w ? `${shot.w}px` : "100%");
+      imgEl.style.setProperty("--native-h", shot.h ? `${shot.h}px` : "calc(100vh - 168px)");
 
       const multiple = currentShots.length > 1;
       prevBtn.hidden = !multiple;
@@ -1181,29 +1210,24 @@
       finishClose();
     }
 
-    function visibleShots(shots) {
-      return shots.filter((shot) => getComputedStyle(shot).display !== "none");
-    }
-
     galleries.forEach((gallery) => {
-      const shots = Array.from(gallery.querySelectorAll(".ref-shot"));
-      const shown = visibleShots(shots);
+      const shots = parseGallery(gallery);
+      if (!shots.length) {
+        return;
+      }
 
-      shown.forEach((shot, index) => {
-        shot.setAttribute("aria-label", `Otevřít galerii, foto ${index + 1} z ${shown.length}`);
+      const opener = () => open(shots, 0);
+      gallery.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          return;
+        }
+        opener();
       });
-
-      shots.forEach((shot) => {
-        shot.addEventListener("click", () => {
-          const current = visibleShots(shots);
-          const index = current.indexOf(shot);
-
-          if (index < 0) {
-            return;
-          }
-
-          open(current, index);
-        });
+      gallery.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          opener();
+        }
       });
     });
 
@@ -1216,6 +1240,17 @@
         requestClose();
       }
     });
+    lightbox.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0]?.clientX || 0;
+    }, { passive: true });
+    lightbox.addEventListener("touchend", (event) => {
+      const endX = event.changedTouches[0]?.clientX || 0;
+      const delta = endX - touchStartX;
+      if (Math.abs(delta) < 48) {
+        return;
+      }
+      step(delta < 0 ? 1 : -1);
+    }, { passive: true });
 
     document.addEventListener("keydown", (event) => {
       const isShown = lightbox.open || lightbox.classList.contains("is-open");
@@ -1246,74 +1281,364 @@
   }
 
   const siteSearchIndex = [
-    { title: "Domů", hint: "Generální dodávky novostaveb a rekonstrukcí", href: "index.html", keywords: "domu homepage uvod novostavby rekonstrukce" },
+    { title: "Domov", hint: "Generální dodávky novostaveb a rekonstrukcí", href: "index.html", keywords: "domov domu homepage uvod novostavby rekonstrukce" },
     { title: "Služby", hint: "Generální dodávka a pozemní stavby", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
     { title: "Generální dodávka", hint: "Novostavby a rekonstrukce", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
     { title: "Pozemní stavby", hint: "Novostavby a rekonstrukce", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni rekonstrukce" },
-    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html", keywords: "reference seibert vranany liberec botanicka roztoky" },
+    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html", keywords: "realizace reference seibert vranany liberec botanicka roztoky" },
     { title: "Vybrané realizace", hint: "Chata Seibert, Vraňany, Liberec", href: "index.html#vybrane-realizace", keywords: "vybrane realizace" },
-    { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html", keywords: "spolecnost skupina austis" },
-    { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci info@austis.cz" },
+    { title: "Chata Seibert", hint: "Pec pod Sněžkou — v realizaci", href: "projekty.html#seibert", keywords: "seibert chata pec snezka" },
+    { title: "Rodinný dům Roztoky", hint: "Novostavba rodinného domu", href: "projekty.html#roztoky", keywords: "roztoky rodinny dum" },
+    { title: "Retail Park Příbram", hint: "Úpravy dispozic, fasád a střech", href: "projekty.html#pribram", keywords: "pribram retail park" },
+    { title: "Agrotechnology park Liberec", hint: "Haly A, B a C v Liberci – Doubí", href: "projekty.html#liberec-b", keywords: "liberec agrotechnology hala park doubí" },
+    { title: "OC Novodvorská Plaza", hint: "Rekonstrukce obchodního centra", href: "projekty.html#novodvorska", keywords: "novodvorska plaza oc praha" },
+    { title: "Vraňany Farma Hanč", hint: "Polyfunkční objekt s prodejnou a kavárnou", href: "projekty.html#vranany", keywords: "vranany farma hanc jahodarna" },
+    { title: "Jižní vstup do Botanické zahrady", hint: "Praha 7", href: "projekty.html#botanicka", keywords: "botanicka zahrada vstup" },
+    { title: "Bytový dům U Vinice", hint: "Praha 7", href: "projekty.html#vinice", keywords: "vinice bytovy dum" },
+    { title: "Bytový dům Hlučkova", hint: "Praha", href: "projekty.html#hluckova", keywords: "hluckova bytovy dum" },
+    { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html", keywords: "spolecnost skupina austis zázemí" },
+    { title: "Kariéra v AUSTIS", hint: "Otevřené pozice skupiny AUSTIS", href: "https://austis-as.vercel.app/austis-kariera", keywords: "kariera prace pozice stavbyvedouci" },
     { title: "Kontakt", hint: "zakazky@austis.cz", href: "kontakt.html", keywords: "adresa telefon email slivenec zakazky" },
-    { title: "Časté otázky", hint: "Konzultace, nabídka, regiony", href: "kontakt.html#faq", keywords: "faq otazky" },
+    { title: "Časté otázky", hint: "Konzultace, nabídka, regiony", href: "kontakt.html#faq", keywords: "faq otazky caste" },
     { title: "Poptat spolupráci", hint: "Formulář poptávky", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
   ].map((item) => ({ ...item, haystack: foldSearchText(`${item.title} ${item.hint} ${item.keywords}`) }));
 
+  const searchFavorites = [
+    { title: "Služby", hint: "Generální dodávka a pozemní stavby", href: "sluzby.html" },
+    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html" },
+    { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html" },
+    { title: "Kontakt", hint: "zakazky@austis.cz", href: "kontakt.html" },
+    { title: "Poptat spolupráci", hint: "Formulář poptávky", href: "poptavka.html#poptavka-form" },
+  ];
+
+  function escapeSearchHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function highlightSearchMatch(text, needle) {
+    const source = String(text || "");
+    if (!needle) {
+      return escapeSearchHtml(source);
+    }
+
+    const foldedNeedle = foldSearchText(needle).replace(/ /g, "");
+    if (!foldedNeedle) {
+      return escapeSearchHtml(source);
+    }
+
+    let folded = "";
+    const map = [];
+    for (let i = 0; i < source.length; i += 1) {
+      const piece = source[i]
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+      for (let p = 0; p < piece.length; p += 1) {
+        if (/[a-z0-9]/.test(piece[p])) {
+          folded += piece[p];
+          map.push(i);
+        }
+      }
+    }
+
+    const startFolded = folded.indexOf(foldedNeedle);
+    if (startFolded < 0) {
+      return escapeSearchHtml(source);
+    }
+
+    const start = map[startFolded];
+    const end = map[startFolded + foldedNeedle.length - 1] + 1;
+    return (
+      escapeSearchHtml(source.slice(0, start)) +
+      `<mark>${escapeSearchHtml(source.slice(start, end))}</mark>` +
+      escapeSearchHtml(source.slice(end))
+    );
+  }
+
   function initSiteSearch() {
-    document.querySelectorAll(".hero-search").forEach((form) => {
-      const input = form.querySelector("input[type='search']");
-      const panel = form.querySelector(".hero-search-results");
-      if (!input || !panel) return;
-      let activeIndex = -1;
+    const toggles = Array.from(document.querySelectorAll(".hero-search-toggle"));
+    if (!toggles.length) {
+      return;
+    }
 
-      const close = () => {
-        panel.hidden = true;
-        panel.innerHTML = "";
-        activeIndex = -1;
-      };
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const closeMs = reduceMotion ? 0 : 220;
 
-      const render = (query) => {
-        const needle = foldSearchText(query);
-        if (!needle) {
-          close();
+    const overlay = document.createElement("div");
+    overlay.id = "site-search-overlay";
+    overlay.className = "site-search-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-labelledby", "site-search-title");
+    overlay.setAttribute("aria-hidden", "true");
+    overlay.setAttribute("data-lenis-prevent", "");
+    overlay.innerHTML =
+      '<div class="site-search-backdrop" data-search-close="true"></div>' +
+      '<div class="site-search-panel">' +
+      '<form class="site-search-form" role="search">' +
+      '<h2 id="site-search-title" class="visually-hidden">Hledat na webu</h2>' +
+      '<label class="site-search-field">' +
+      '<span class="hero-search-ico" aria-hidden="true"></span>' +
+      '<input id="site-search-input" type="search" name="q" placeholder="Hledat…" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" aria-label="Hledat na webu" aria-autocomplete="list" aria-controls="site-search-list" />' +
+      "</label>" +
+      '<div class="site-search-results" id="site-search-results">' +
+      '<p class="site-search-kicker">Oblíbené</p>' +
+      '<div class="site-search-list" id="site-search-list" role="listbox" aria-label="Výsledky hledání"></div>' +
+      "</div>" +
+      "</form>" +
+      '<button type="button" class="site-search-close" data-search-close="true" aria-label="Zavřít hledání">' +
+      '<span aria-hidden="true">&times;</span>' +
+      "</button>" +
+      "</div>";
+    document.body.appendChild(overlay);
+
+    const form = overlay.querySelector(".site-search-form");
+    const input = overlay.querySelector("#site-search-input");
+    const panel = overlay.querySelector(".site-search-results");
+    const list = overlay.querySelector(".site-search-list");
+    const kicker = overlay.querySelector(".site-search-kicker");
+    let lastFocus = null;
+    let activeIndex = -1;
+    let visibleItems = [];
+    let lockedScrollY = 0;
+    let closeTimer = 0;
+    let openFrame = 0;
+
+    const isVisible = () => overlay.classList.contains("is-open") || overlay.classList.contains("is-closing");
+
+    const getFocusable = () =>
+      Array.from(
+        overlay.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), textarea, select, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => {
+        if (el.hasAttribute("hidden") || el.closest("[hidden]")) {
+          return false;
+        }
+        const style = window.getComputedStyle(el);
+        return style.display !== "none" && style.visibility !== "hidden";
+      });
+
+    const setExpanded = (open) => {
+      toggles.forEach((btn) => btn.setAttribute("aria-expanded", open ? "true" : "false"));
+    };
+
+    const setPageInert = (inert) => {
+      Array.from(document.body.children).forEach((el) => {
+        if (el === overlay || el.tagName === "SCRIPT") {
           return;
         }
-        const matches = siteSearchIndex.filter((item) => item.haystack.includes(needle)).slice(0, 8);
-        activeIndex = matches.length ? 0 : -1;
-        if (!matches.length) {
-          panel.innerHTML = '<p class="hero-search-empty">Nic nenalezeno</p>';
-          panel.hidden = false;
-          return;
-        }
-        panel.innerHTML = matches
-          .map((item, index) => `<a class="hero-search-result${index === 0 ? " is-active" : ""}" href="${item.href}"><strong>${item.title}</strong><span>${item.hint}</span></a>`)
-          .join("");
-        panel.hidden = false;
-      };
-
-      input.addEventListener("input", () => render(input.value));
-      input.addEventListener("keydown", (event) => {
-        const links = [...panel.querySelectorAll(".hero-search-result")];
-        if (event.key === "Escape") {
-          close();
-          return;
-        }
-        if (!links.length) return;
-        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-          event.preventDefault();
-          activeIndex = event.key === "ArrowDown"
-            ? (activeIndex + 1) % links.length
-            : (activeIndex - 1 + links.length) % links.length;
-          links.forEach((link, index) => link.classList.toggle("is-active", index === activeIndex));
-        }
-        if (event.key === "Enter" && links[activeIndex]) {
-          event.preventDefault();
-          window.location.href = links[activeIndex].href;
+        if (inert) {
+          el.setAttribute("inert", "");
+        } else {
+          el.removeAttribute("inert");
         }
       });
-      document.addEventListener("click", (event) => {
-        if (!form.contains(event.target)) close();
+    };
+
+    const resultLinks = () => Array.from(list.querySelectorAll(".hero-search-result"));
+
+    const highlight = () => {
+      const links = resultLinks();
+      links.forEach((el, index) => {
+        const on = index === activeIndex;
+        el.classList.toggle("is-active", on);
+        if (on) {
+          el.id = el.id || `search-opt-${index}`;
+          input.setAttribute("aria-activedescendant", el.id);
+        }
       });
+      if (activeIndex < 0) {
+        input.removeAttribute("aria-activedescendant");
+      } else {
+        links[activeIndex]?.scrollIntoView({ block: "nearest" });
+      }
+    };
+
+    const renderItems = (items, needle, heading) => {
+      visibleItems = items;
+      activeIndex = items.length ? 0 : -1;
+      kicker.hidden = !heading;
+      kicker.textContent = heading || "";
+      panel.hidden = false;
+
+      if (!items.length) {
+        list.innerHTML =
+          '<div class="hero-search-empty"><strong>Nic nenalezeno</strong><span>Zkuste jiné slovo — třeba liberec, služby nebo poptávka.</span></div>';
+        input.removeAttribute("aria-activedescendant");
+        return;
+      }
+
+      list.innerHTML = items
+        .map((item, index) => {
+          const title = highlightSearchMatch(item.title, needle);
+          const hint = highlightSearchMatch(item.hint, needle);
+          const extra = item.external ? ' target="_blank" rel="noopener"' : "";
+          return `<a class="hero-search-result" id="search-opt-${index}" role="option" href="${item.href}"${extra}><strong>${title}</strong><span>${hint}</span></a>`;
+        })
+        .join("");
+      highlight();
+    };
+
+    const render = (query) => {
+      const needle = foldSearchText(query);
+      const compact = needle.replace(/ /g, "");
+
+      if (compact.length < 2) {
+        renderItems(searchFavorites, "", "Oblíbené");
+        return;
+      }
+
+      const matches = siteSearchIndex.filter((item) => item.haystack.includes(needle)).slice(0, 5);
+      renderItems(matches, needle, "");
+    };
+
+    const finishClose = () => {
+      overlay.classList.remove("is-closing");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("search-overlay-open");
+      document.body.style.top = "";
+      window.scrollTo(0, lockedScrollY);
+      setExpanded(false);
+      setPageInert(false);
+      input.value = "";
+      renderItems(searchFavorites, "", "Oblíbené");
+      syncPageScrollLock();
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        lastFocus.focus();
+      }
+    };
+
+    const close = () => {
+      if (!overlay.classList.contains("is-open")) {
+        return;
+      }
+      window.clearTimeout(closeTimer);
+      overlay.classList.remove("is-open");
+      overlay.classList.add("is-closing");
+      overlay.setAttribute("aria-hidden", "true");
+      closeTimer = window.setTimeout(finishClose, closeMs);
+    };
+
+    const open = (from) => {
+      if (overlay.classList.contains("is-open")) {
+        return;
+      }
+      window.clearTimeout(closeTimer);
+      lastFocus = from || document.activeElement;
+      if (document.body.classList.contains("mobile-menu-open")) {
+        document.querySelectorAll(".mobile-menu-toggle").forEach((toggle) => {
+          if (toggle.getAttribute("aria-expanded") === "true") {
+            toggle.click();
+          }
+        });
+      }
+      lockedScrollY = window.scrollY;
+      document.body.style.top = `-${lockedScrollY}px`;
+      overlay.classList.remove("is-closing");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("search-overlay-open");
+      setExpanded(true);
+      setPageInert(true);
+      input.value = "";
+      renderItems(searchFavorites, "", "Oblíbené");
+      syncPageScrollLock();
+      window.cancelAnimationFrame(openFrame);
+      openFrame = window.requestAnimationFrame(() => {
+        void overlay.offsetWidth;
+        overlay.classList.add("is-open");
+        input.focus();
+      });
+    };
+
+    const goToActive = () => {
+      const links = resultLinks();
+      const target = links[activeIndex] || links[0];
+      if (target) {
+        target.click();
+      }
+    };
+
+    toggles.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (overlay.classList.contains("is-open")) {
+          close();
+        } else {
+          open(btn);
+        }
+      });
+    });
+
+    overlay.querySelectorAll("[data-search-close]").forEach((el) => {
+      el.addEventListener("click", (event) => {
+        event.preventDefault();
+        close();
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (visibleItems.length) {
+        goToActive();
+      }
+    });
+
+    input.addEventListener("input", () => {
+      render(input.value);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!isVisible() || overlay.classList.contains("is-closing")) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const nodes = getFocusable();
+        if (!nodes.length) {
+          event.preventDefault();
+          input.focus();
+          return;
+        }
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+
+      if (!visibleItems.length) {
+        return;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        activeIndex = (activeIndex + 1) % visibleItems.length;
+        highlight();
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        activeIndex = (activeIndex - 1 + visibleItems.length) % visibleItems.length;
+        highlight();
+      } else if (event.key === "Enter" && document.activeElement === input) {
+        event.preventDefault();
+        goToActive();
+      }
     });
   }
 
@@ -1335,7 +1660,10 @@
 
   function syncPageScrollLock() {
     if (!lenis) return;
-    const locked = document.body.classList.contains("lightbox-open") || document.body.classList.contains("mobile-menu-open");
+    const locked =
+      document.body.classList.contains("lightbox-open") ||
+      document.body.classList.contains("mobile-menu-open") ||
+      document.body.classList.contains("search-overlay-open");
     if (locked) lenis.stop();
     else lenis.start();
   }
@@ -1387,10 +1715,44 @@
     });
   }
 
+  function initFaq() {
+    const items = Array.from(document.querySelectorAll(".faq-item"));
+    if (!items.length) {
+      return;
+    }
+
+    items.forEach((item) => {
+      const trigger = item.querySelector(".faq-trigger");
+      const panel = item.querySelector(".faq-panel");
+      if (!trigger || !panel) {
+        return;
+      }
+
+      const setOpen = (open) => {
+        item.classList.toggle("is-open", open);
+        trigger.setAttribute("aria-expanded", open ? "true" : "false");
+        panel.toggleAttribute("hidden", !open);
+        panel.setAttribute("aria-hidden", open ? "false" : "true");
+      };
+
+      trigger.addEventListener("click", () => {
+        setOpen(!item.classList.contains("is-open"));
+      });
+    });
+  }
+
   function initInquiryForm() {
     const form = document.querySelector(".inquiry-form");
     if (!form) return;
     const status = form.querySelector(".inquiry-status");
+    const steps = Array.from(form.querySelectorAll(".inquiry-step"));
+    const navItems = Array.from(form.querySelectorAll(".inquiry-steps li"));
+    const nextBtn = form.querySelector("[data-inquiry-next]");
+    const backBtn = form.querySelector("[data-inquiry-back]");
+    const submitBtn = form.querySelector(".inquiry-submit-btn");
+    const stepButtons = Array.from(form.querySelectorAll("[data-step-target]"));
+    let current = 1;
+
     const showStatus = (kind, message) => {
       if (!status) return;
       status.hidden = false;
@@ -1398,8 +1760,90 @@
       status.classList.toggle("is-error", kind === "error");
       status.textContent = message;
     };
+
+    const requiredFor = (stepEl) => {
+      const checks = [];
+      stepEl.querySelectorAll("[required]").forEach((field) => {
+        if (field.type === "checkbox") {
+          checks.push([field.checked, field, "Potvrďte souhlas se zpracováním osobních údajů."]);
+        } else if (field.type === "email") {
+          const value = field.value.trim();
+          const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+          checks.push([ok, field, value ? "Zadejte platný e-mail." : "Vyplňte prosím všechna povinná pole."]);
+        } else {
+          checks.push([Boolean(field.value.trim()), field, "Vyplňte prosím všechna povinná pole."]);
+        }
+      });
+      return checks;
+    };
+
+    const validateStep = (stepEl) => {
+      form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
+      const failed = requiredFor(stepEl).filter(([ok]) => !ok);
+      if (!failed.length) {
+        if (status) status.hidden = true;
+        return true;
+      }
+      failed.forEach(([, field]) => field?.closest(".inquiry-field, .inquiry-consent")?.classList.add("is-invalid"));
+      failed[0][1]?.focus();
+      showStatus("error", failed[0][2]);
+      return false;
+    };
+
+    const goTo = (step, { validate = true } = {}) => {
+      const next = Math.min(Math.max(step, 1), steps.length);
+      if (next > current && validate) {
+        const currentEl = steps.find((el) => Number(el.dataset.step) === current);
+        if (currentEl && !validateStep(currentEl)) {
+          return;
+        }
+      }
+      current = next;
+      steps.forEach((el) => {
+        const on = Number(el.dataset.step) === current;
+        el.classList.toggle("is-active", on);
+        el.hidden = !on;
+      });
+      navItems.forEach((item, index) => {
+        const n = index + 1;
+        item.classList.toggle("is-active", n === current);
+        item.classList.toggle("is-done", n < current);
+        const btn = item.querySelector("[data-step-target]");
+        if (btn) {
+          if (n === current) btn.setAttribute("aria-current", "step");
+          else btn.removeAttribute("aria-current");
+        }
+      });
+      if (backBtn) backBtn.hidden = current === 1;
+      if (nextBtn) nextBtn.hidden = current === steps.length;
+      if (submitBtn) submitBtn.hidden = current !== steps.length;
+      form.querySelector(".inquiry-steps")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      const first = steps.find((el) => Number(el.dataset.step) === current)?.querySelector("input, select, textarea");
+      first?.focus({ preventScroll: true });
+    };
+
+    nextBtn?.addEventListener("click", () => goTo(current + 1));
+    backBtn?.addEventListener("click", () => goTo(current - 1, { validate: false }));
+    stepButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = Number(btn.getAttribute("data-step-target"));
+        if (!target || target === current) return;
+        if (target < current) {
+          goTo(target, { validate: false });
+          return;
+        }
+        goTo(target);
+      });
+    });
+    goTo(1, { validate: false });
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      const last = steps[steps.length - 1];
+      if (last && !validateStep(last)) {
+        goTo(steps.length, { validate: false });
+        return;
+      }
       form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
       const data = new FormData(form);
       const name = String(data.get("name") || "").trim();
@@ -1423,6 +1867,8 @@
       const invalid = checks.filter(([ok]) => !ok).map(([, field]) => field);
       if (invalid.length) {
         invalid.forEach((field) => field?.closest(".inquiry-field, .inquiry-consent")?.classList.add("is-invalid"));
+        const firstInvalidStep = Number(invalid[0]?.closest(".inquiry-step")?.dataset.step) || 3;
+        goTo(firstInvalidStep, { validate: false });
         invalid[0]?.focus();
         showStatus("error", email && !emailOk ? "Zadejte platný e-mail." : "Vyplňte prosím všechna povinná pole.");
         return;
@@ -1466,6 +1912,7 @@
   initSmoothScroll();
   initMobileMenu();
   initSiteSearch();
+  initFaq();
   initInquiryForm();
 
   window.addEventListener("resize", updateScale, { passive: true });
