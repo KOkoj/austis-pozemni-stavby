@@ -1896,6 +1896,61 @@
     });
   }
 
+  function initBackToTop() {
+    if (document.querySelector(".back-to-top")) {
+      return;
+    }
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "back-to-top";
+    btn.setAttribute("aria-label", "Zpět nahoru");
+    btn.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 6.2 5.6 12.6l1.4 1.4L12 9l5 5 1.4-1.4z"/></svg>';
+    document.body.appendChild(btn);
+
+    const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = false;
+    let frame = 0;
+
+    function pageY() {
+      if (window.austisLenis && typeof window.austisLenis.scroll === "number") {
+        return window.austisLenis.scroll;
+      }
+      return window.scrollY || 0;
+    }
+
+    function paint() {
+      frame = 0;
+      const show = pageY() > 300;
+      if (show === visible) {
+        return;
+      }
+      visible = show;
+      btn.classList.toggle("is-visible", show);
+    }
+
+    function requestPaint() {
+      if (!frame) {
+        frame = window.requestAnimationFrame(paint);
+      }
+    }
+
+    btn.addEventListener("click", () => {
+      if (window.austisLenis && typeof window.austisLenis.scrollTo === "function") {
+        window.austisLenis.scrollTo(0, { immediate: reduceQuery.matches });
+      } else {
+        window.scrollTo({ top: 0, behavior: reduceQuery.matches ? "auto" : "smooth" });
+      }
+    });
+
+    if (window.austisLenis && typeof window.austisLenis.on === "function") {
+      window.austisLenis.on("scroll", requestPaint);
+    }
+    window.addEventListener("scroll", requestPaint, { passive: true });
+    paint();
+  }
+
   updateScale();
   prepareDesignLines();
   const heroApi = prepareHeroDots();
@@ -1914,6 +1969,7 @@
   initSiteSearch();
   initFaq();
   initInquiryForm();
+  initBackToTop();
 
   window.addEventListener("resize", updateScale, { passive: true });
   window.addEventListener("resize", () => designLines.forEach(setLineDirection), { passive: true });

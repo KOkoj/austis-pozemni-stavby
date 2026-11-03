@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103e"
+ASSET_V = "20261103f"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -972,7 +972,7 @@ def render_sluzby():
         "přehled<br />služeb",
     )
     body = """
-      <section id="prehled-sluzeb" class="trio flow-first" aria-labelledby="sp-overview-title">
+      <section id="prehled-sluzeb" class="about-prose services-intro flow-first" aria-labelledby="sp-overview-title">
         <h2 id="sp-overview-title">Služby pro novostavby a rekonstrukce</h2>
         <p>
           <a class="text-link" href="#generalni-dodavka">Generální dodávka</a>
@@ -981,38 +981,39 @@ def render_sluzby():
         </p>
       </section>
 
-      <section id="generalni-dodavka" class="figure-split is-text-only" aria-labelledby="sp-detail-1-title">
-        <div class="figure-split-copy">
-          <h2 id="sp-detail-1-title">Generální dodávka</h2>
-          <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory. Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
-          <ul class="line-list">
-            <li><strong>Příprava a plánování.</strong> Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací. Připravíme postup realizace, harmonogram a rozpočet.</li>
-            <li><strong>Výběr a koordinace subdodavatelů.</strong> Pracujeme se stabilní sítí prověřených firem. Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</li>
-            <li><strong>Řízení harmonogramu.</strong> Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací. Sledujeme klíčové milníky a průběžně vyhodnocujeme postup. Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</li>
-            <li><strong>Kontrola nákladů a změn.</strong> Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas. Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením. Investor tak dostává podklady pro rozhodování během stavby.</li>
-            <li><strong>Kontrola kvality.</strong> Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním. Odpovídáme za kvalitu sjednané dodávky.</li>
-            <li><strong>Informování investora.</strong> V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích. Upozorňujeme na otázky, které vyžadují rozhodnutí investora. Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</li>
-            <li><strong>Dokončení a předání.</strong> Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</li>
-          </ul>
-          <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
-        </div>
+      <section id="generalni-dodavka" class="about-prose services-panel" aria-labelledby="sp-detail-1-title">
+        <h2 id="sp-detail-1-title">Generální dodávka</h2>
+        <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory. Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
+        <h3>Příprava a plánování</h3>
+        <p>Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací. Připravíme postup realizace, harmonogram a rozpočet.</p>
+        <h3>Výběr a koordinace subdodavatelů</h3>
+        <p>Pracujeme se stabilní sítí prověřených firem. Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</p>
+        <h3>Řízení harmonogramu</h3>
+        <p>Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací. Sledujeme klíčové milníky a průběžně vyhodnocujeme postup. Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</p>
+        <h3>Kontrola nákladů a změn</h3>
+        <p>Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas. Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením. Investor tak dostává podklady pro rozhodování během stavby.</p>
+        <h3>Kontrola kvality</h3>
+        <p>Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním. Odpovídáme za kvalitu sjednané dodávky.</p>
+        <h3>Informování investora</h3>
+        <p>V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích. Upozorňujeme na otázky, které vyžadují rozhodnutí investora. Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</p>
+        <h3>Dokončení a předání</h3>
+        <p>Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</p>
+        <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
       </section>
 
-      <section id="pozemni-stavby" class="figure-split is-text-only" aria-labelledby="sp-detail-2-title">
-        <div class="figure-split-copy">
-          <h2 id="sp-detail-2-title">Pozemní stavby</h2>
-          <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
-          <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
-          <h3>Typy staveb a souvisejících prací</h3>
-          <ul class="line-list">
-            <li>Rezidenční objekty a bytové domy.</li>
-            <li>Komerční a administrativní budovy.</li>
-            <li>Provozní a zemědělské areály.</li>
-            <li>Technická zařízení budov.</li>
-            <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
-          </ul>
-          <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
-        </div>
+      <section id="pozemni-stavby" class="about-prose services-panel" aria-labelledby="sp-detail-2-title">
+        <h2 id="sp-detail-2-title">Pozemní stavby</h2>
+        <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
+        <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
+        <h3>Typy staveb a souvisejících prací</h3>
+        <ul class="line-list">
+          <li>Rezidenční objekty a bytové domy.</li>
+          <li>Komerční a administrativní budovy.</li>
+          <li>Provozní a zemědělské areály.</li>
+          <li>Technická zařízení budov.</li>
+          <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
+        </ul>
+        <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
       </section>
 
       <section class="austis-cta" aria-labelledby="sluzby-cta-title">
@@ -1162,7 +1163,7 @@ def render_about():
           </article>
         </div>
         <p>Zajímá vás práce na stavebních projektech? Aktuální pozice skupiny AUSTIS najdete na stránce Kariéra.</p>
-        <a class="btn btn-red" href="{KARIERA_HREF}"><span class="btn-label">Kariéra v AUSTIS</span></a>
+        <a class="austis-intro-more" href="{KARIERA_HREF}">Kariéra v AUSTIS</a>
       </section>
 """
     write("o-spolecnosti.html", html + start + body + page_end())
