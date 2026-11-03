@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103c"
+ASSET_V = "20261103d"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -263,52 +263,26 @@ def head(title, description, path, extra="", og_image=HERO_IMG):
   </head>"""
 
 
-HOME_ACTIONS = """            <p class="hero-actions-caption"><span class="hero-caption-word"><span>Přejít</span></span><span class="hero-caption-word"><span>k</span></span><span class="hero-caption-word"><span>obsahu</span></span><span class="hero-caption-word"><span>webu</span></span></p>
-            <div class="hero-copy">
+HERO_CTA_HREF = "poptavka.html#poptavka-form"
+HERO_CTA_LABEL = "Poptat<br />spolupráci"
+HERO_CTA_ARIA = "Poptat spolupráci"
+
+HOME_ACTIONS = f"""            <div class="hero-copy">
               <div class="hero-copy-main">
                 <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
                 <h1>Generální dodávky<br /> novostaveb a&nbsp;rekonstrukcí</h1>
               </div>
-              <div class="hero-actions" aria-label="Rychlé odkazy">
-                <a class="hero-action" href="sluzby.html">
-                  <span class="hero-action-name">Služby</span>
-                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                </a>
-                <a class="hero-action" href="projekty.html">
-                  <span class="hero-action-name">Realizace</span>
-                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                </a>
-                <a class="hero-action" href="poptavka.html#poptavka-form">
-                  <span class="hero-action-name">Poptat<br />spolupráci</span>
-                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                </a>
-              </div>
+              <a class="hero-jump" href="{HERO_CTA_HREF}" aria-label="{HERO_CTA_ARIA}">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">{HERO_CTA_LABEL}</span>
+              </a>
             </div>"""
 
-HOME_MOBILE = """          <div class="mobile-hero-panel">
-            <div class="hero-copy-main">
+HOME_MOBILE = f"""          <div class="mobile-hero-panel">
             <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
             <h1 class="mobile-hero-title">Generální dodávky novostaveb a&nbsp;rekonstrukcí</h1>
-            </div>
-            <div class="hero-tiles-block">
-              <p class="hero-actions-caption"><span class="hero-caption-word"><span>Přejít</span></span><span class="hero-caption-word"><span>k</span></span><span class="hero-caption-word"><span>obsahu</span></span><span class="hero-caption-word"><span>webu</span></span></p>
-              <div class="mobile-activity-grid" aria-label="Rychlé odkazy">
-              <a class="mobile-activity" href="sluzby.html">
-                <span class="activity-name">Služby</span>
-                <span class="activity-mark" aria-hidden="true"></span>
-              </a>
-              <a class="mobile-activity" href="projekty.html">
-                <span class="activity-name">Realizace</span>
-                <span class="activity-mark" aria-hidden="true"></span>
-              </a>
-              <a class="mobile-activity" href="poptavka.html#poptavka-form">
-                <span class="activity-name">Poptat<br />spolupráci</span>
-                <span class="activity-mark" aria-hidden="true"></span>
-              </a>
-              <a class="mobile-activity mobile-activity-about" href="o-spolecnosti.html">
-                <span class="activity-name">O společnosti</span>
-              </a>
-            </div>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="{HERO_CTA_HREF}">{HERO_CTA_ARIA}</a>
             </div>
           </div>"""
 
@@ -330,16 +304,16 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
                 <h1>{h1}</h1>
                 <p class="hero-copy-lead">{lead}</p>
               </div>
-              <a class="hero-jump" href="{jump_href}" aria-label="{jump_aria}">
+              <a class="hero-jump" href="{HERO_CTA_HREF}" aria-label="{HERO_CTA_ARIA}">
                 <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                <span class="hero-jump-label">{jump_label}</span>
+                <span class="hero-jump-label">{HERO_CTA_LABEL}</span>
               </a>
             </div>"""
         mobile_panel = f"""          <div class="mobile-hero-panel">
             <h1 class="mobile-hero-title">{h1}</h1>
             <p>{lead}</p>
             <div class="mobile-hero-actions">
-              <a class="mobile-text-link" href="{jump_href}">{jump_aria}</a>
+              <a class="mobile-text-link" href="{HERO_CTA_HREF}">{HERO_CTA_ARIA}</a>
             </div>
           </div>"""
     return f"""
