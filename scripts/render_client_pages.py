@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103a"
+ASSET_V = "20261103c"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -263,12 +263,88 @@ def head(title, description, path, extra="", og_image=HERO_IMG):
   </head>"""
 
 
-def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_label, extra_hero="", cta_active=False):
+HOME_ACTIONS = """            <p class="hero-actions-caption"><span class="hero-caption-word"><span>Přejít</span></span><span class="hero-caption-word"><span>k</span></span><span class="hero-caption-word"><span>obsahu</span></span><span class="hero-caption-word"><span>webu</span></span></p>
+            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
+                <h1>Generální dodávky<br /> novostaveb a&nbsp;rekonstrukcí</h1>
+              </div>
+              <div class="hero-actions" aria-label="Rychlé odkazy">
+                <a class="hero-action" href="sluzby.html">
+                  <span class="hero-action-name">Služby</span>
+                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                </a>
+                <a class="hero-action" href="projekty.html">
+                  <span class="hero-action-name">Realizace</span>
+                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                </a>
+                <a class="hero-action" href="poptavka.html#poptavka-form">
+                  <span class="hero-action-name">Poptat<br />spolupráci</span>
+                  <span class="hero-action-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                </a>
+              </div>
+            </div>"""
+
+HOME_MOBILE = """          <div class="mobile-hero-panel">
+            <div class="hero-copy-main">
+            <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
+            <h1 class="mobile-hero-title">Generální dodávky novostaveb a&nbsp;rekonstrukcí</h1>
+            </div>
+            <div class="hero-tiles-block">
+              <p class="hero-actions-caption"><span class="hero-caption-word"><span>Přejít</span></span><span class="hero-caption-word"><span>k</span></span><span class="hero-caption-word"><span>obsahu</span></span><span class="hero-caption-word"><span>webu</span></span></p>
+              <div class="mobile-activity-grid" aria-label="Rychlé odkazy">
+              <a class="mobile-activity" href="sluzby.html">
+                <span class="activity-name">Služby</span>
+                <span class="activity-mark" aria-hidden="true"></span>
+              </a>
+              <a class="mobile-activity" href="projekty.html">
+                <span class="activity-name">Realizace</span>
+                <span class="activity-mark" aria-hidden="true"></span>
+              </a>
+              <a class="mobile-activity" href="poptavka.html#poptavka-form">
+                <span class="activity-name">Poptat<br />spolupráci</span>
+                <span class="activity-mark" aria-hidden="true"></span>
+              </a>
+              <a class="mobile-activity mobile-activity-about" href="o-spolecnosti.html">
+                <span class="activity-name">O společnosti</span>
+              </a>
+            </div>
+            </div>
+          </div>"""
+
+
+def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_label, extra_hero="", cta_active=False, home=False):
     links = nav_links(active)
     cta = cta_btn(cta_active)
+    body_class = (
+        "home-page austis-home flow-subpage subpage-body"
+        if home
+        else f"subpage-body flow-subpage austis-page {active}-page"
+    )
+    if home:
+        desktop_copy = HOME_ACTIONS
+        mobile_panel = HOME_MOBILE
+    else:
+        desktop_copy = f"""            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <h1>{h1}</h1>
+                <p class="hero-copy-lead">{lead}</p>
+              </div>
+              <a class="hero-jump" href="{jump_href}" aria-label="{jump_aria}">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">{jump_label}</span>
+              </a>
+            </div>"""
+        mobile_panel = f"""          <div class="mobile-hero-panel">
+            <h1 class="mobile-hero-title">{h1}</h1>
+            <p>{lead}</p>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="{jump_href}">{jump_aria}</a>
+            </div>
+          </div>"""
     return f"""
   <body
-    class="subpage-body flow-subpage {active}-page"
+    class="{body_class}"
     data-hero-image="{HERO_IMG}"
     data-hero-video=""
     data-hero-name="{hero_name}"
@@ -316,6 +392,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
             <div class="line line-hero-mid"></div>
             <div class="line line-hero-right"></div>
             <div class="line line-hero-bottom"></div>
+            <div class="hero-tail-blur" aria-hidden="true"></div>
             <div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
@@ -336,19 +413,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
             <div class="slide-dots" aria-label="Sídlo">
               <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
             </div>
-            <div class="hero-copy">
-              <div class="hero-copy-main">
-                <h1>{h1}</h1>
-                <div class="hero-copy-aside">
-                  <p>{lead}</p>
-                  {extra_hero}
-                </div>
-              </div>
-              <a class="hero-jump" href="{jump_href}" aria-label="{jump_aria}">
-                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                <span class="hero-jump-label">{jump_label}</span>
-              </a>
-            </div>
+{desktop_copy}
           </section>
         </div>
       </div>
@@ -386,14 +451,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
             />
           </div>
           <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
-          <div class="mobile-hero-panel">
-            <h1 class="mobile-hero-title">{h1}</h1>
-            <p>{lead}</p>
-            <div class="mobile-hero-actions">
-              {extra_hero}
-              <a class="mobile-text-link" href="{jump_href}">{jump_aria}</a>
-            </div>
-          </div>
+{mobile_panel}
         </section>
       </div>
 """
@@ -443,15 +501,6 @@ def page_end():
 
 IN_PROGRESS = [
     {
-        "id": "prodlouzena",
-        "title": "Bytový dům Prodloužená",
-        "desc": "Výstavba čtyřpatrového bytového domu.",
-        "place": "Praha – Velká Chuchle, ulice Prodloužená",
-        "period_label": "Plánované období realizace",
-        "period": "srpen 2026 – prosinec 2027",
-        "status": "V realizaci",
-    },
-    {
         "id": "seibert",
         "title": "Chata Seibert",
         "desc": "Nástavba, přístavba a celkové stavební úpravy původního rekreačního objektu.",
@@ -484,20 +533,6 @@ IN_PROGRESS = [
 ]
 
 DONE = [
-    {
-        "id": "melnik",
-        "title": "Parkoviště Mělník",
-        "desc": "Nové parkoviště s infrastrukturou a sadovými úpravami.",
-        "place": "Mělník",
-        "period": "červen 2025 – listopad 2025",
-    },
-    {
-        "id": "rokycanska",
-        "title": "OC Rokycanská",
-        "desc": "Sanace střešního parkoviště obchodního centra.",
-        "place": "Plzeň",
-        "period": "březen 2025 – listopad 2025",
-    },
     {
         "id": "pribram",
         "title": "Retail Park Příbram",
@@ -552,27 +587,6 @@ DONE = [
         "h": 749,
         "small": True,
         "vizualizace": True,
-    },
-    {
-        "id": "kostelec",
-        "title": "Rodinný dům Kostelec nad Černými lesy",
-        "desc": "Novostavba rodinného domu.",
-        "place": "Kostelec nad Černými lesy",
-        "period": "červenec 2022 – duben 2023",
-    },
-    {
-        "id": "bondy",
-        "title": "OC Bondy",
-        "desc": "Sanace parkoviště, ramp, můstků a nosných konstrukcí.",
-        "place": "Mladá Boleslav",
-        "period": "srpen 2021 – září 2022",
-    },
-    {
-        "id": "tmobile-plochy",
-        "title": "T-Mobile úpravy venkovních ploch",
-        "desc": "Obnova zpevněných ploch a zámečnických konstrukcí.",
-        "place": "Praha 4",
-        "period": "květen 2021 – leden 2022",
     },
     {
         "id": "novodvorska",
@@ -680,6 +694,10 @@ DONE = [
         "period": "červen 2018 – říjen 2018",
     },
 ]
+
+# Matej: publish only projects that have a real photo from the approved set.
+IN_PROGRESS = [p for p in IN_PROGRESS if p.get("photo")]
+DONE = [p for p in DONE if p.get("photo")]
 
 
 def photo_alt(item):
@@ -811,10 +829,8 @@ def write(name, html):
 
 def render_index():
     seibert = next(p for p in IN_PROGRESS if p["id"] == "seibert")
-    prodlouzena = next(p for p in IN_PROGRESS if p["id"] == "prodlouzena")
     vranany = next(p for p in DONE if p["id"] == "vranany")
     liberec_b = next(p for p in DONE if p["id"] == "liberec-b")
-    extra = '<a class="btn btn-red hero-inline-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>'
     html = head(
         "AUSTIS Pozemní stavby | Generální dodávky novostaveb a rekonstrukcí",
         "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov.",
@@ -825,15 +841,11 @@ def render_index():
         "AUSTIS Pozemní stavby",
         "Agrotechnology park Liberec",
         "Generální dodávky novostaveb a rekonstrukcí",
-        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov. Zaměřujeme se na generální dodávky novostaveb a rekonstrukcí většího rozsahu. Naše zkušenosti představují dokončené i právě probíhající realizace.",
+        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov.",
         "#vybrane-realizace",
         "Prohlédnout realizace",
         "Prohlédnout<br />realizace",
-        extra,
-    )
-    start = start.replace(
-        'class="subpage-body flow-subpage home-page"',
-        'class="home-page flow-subpage subpage-body"',
+        home=True,
     )
     body = f"""
       <section id="co-zajistime" class="trio flow-first" aria-labelledby="zajistime-title">
@@ -859,7 +871,6 @@ def render_index():
         </div>
         <div class="picked-grid">
 {picked_card(seibert, "projekty.html#seibert")}
-{picked_card(prodlouzena, "projekty.html#prodlouzena")}
 {picked_card(vranany, "projekty.html#vranany")}
 {picked_card(liberec_b, "projekty.html#liberec-b")}
         </div>

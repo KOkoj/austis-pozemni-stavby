@@ -998,7 +998,9 @@
 
     scrollNavConfigs.forEach(({ shell, trigger }) => {
       const scrollNav = document.querySelector(shell);
-      const triggerEl = document.querySelector(trigger);
+      const mobileTrigger = document.querySelector(".mobile-header, .mobile-hero");
+      const isMobile = window.matchMedia("(max-width: 1024px)").matches;
+      const triggerEl = (isMobile && mobileTrigger) || document.querySelector(trigger);
 
       if (!scrollNav || !triggerEl) {
         return;
@@ -1248,8 +1250,8 @@
     { title: "Služby", hint: "Generální dodávka a pozemní stavby", href: "sluzby.html", keywords: "sluzby dodavka rekonstrukce" },
     { title: "Generální dodávka", hint: "Novostavby a rekonstrukce", href: "sluzby.html#generalni-dodavka", keywords: "generalni dodavka smlouva" },
     { title: "Pozemní stavby", hint: "Novostavby a rekonstrukce", href: "sluzby.html#pozemni-stavby", keywords: "novostavba pozemni rekonstrukce" },
-    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html", keywords: "reference seibert vranany prodlouzena liberec" },
-    { title: "Vybrané realizace", hint: "Chata Seibert, Prodloužená, Vraňany, Liberec", href: "index.html#vybrane-realizace", keywords: "vybrane realizace" },
+    { title: "Realizace", hint: "Dokončené i probíhající stavby", href: "projekty.html", keywords: "reference seibert vranany liberec botanicka roztoky" },
+    { title: "Vybrané realizace", hint: "Chata Seibert, Vraňany, Liberec", href: "index.html#vybrane-realizace", keywords: "vybrane realizace" },
     { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html", keywords: "spolecnost skupina austis" },
     { title: "Kariéra", hint: "Stavbyvedoucí a výrobní příprava", href: "o-spolecnosti.html#kariera", keywords: "prace pozice stavbyvedouci info@austis.cz" },
     { title: "Kontakt", hint: "zakazky@austis.cz", href: "kontakt.html", keywords: "adresa telefon email slivenec zakazky" },
