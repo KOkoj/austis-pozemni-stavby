@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104q"
+ASSET_V = "20261104r"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -15,7 +15,7 @@ PHOTO = {
     "liberec_2": "assets/photos/agrotechnology-park-liberec-2.webp",
     "liberec_3": "assets/photos/agrotechnology-park-liberec-3.webp",
     "liberec_4": HERO_IMG,
-    # Visualization — used on Služby GD only. Never on Seibert cards/lightbox.
+    # Visualization — Chata Seibert cards/lightbox, labeled Vizualizace.
     "seibert": "assets/photos/seibertovy-vyhledy-2.webp",
     "vranany": "assets/photos/jahodarna-vranany-2.webp",
     "botanicka": "assets/photos/botanicka-zahrada-3.webp",
@@ -513,7 +513,11 @@ IN_PROGRESS = [
         "period": "květen 2025 – listopad 2027",
         "role": "Generální dodavatel",
         "status": "V realizaci",
-        # No real photo yet; seibertovy-vyhledy-2.webp is a visualization.
+        "photo": PHOTO["seibert"],
+        "w": 1000,
+        "h": 750,
+        "small": True,
+        "vizualizace": True,
     },
     {
         "id": "roztoky",
@@ -749,20 +753,24 @@ LIBEREC_SHOTS = [
 
 
 def photo_alt(item):
-    return item["title"]
+    title = item["title"]
+    return f"Vizualizace: {title}" if item.get("vizualizace") else title
 
 
 def media_img(item):
     dims = ""
     if item.get("w") and item.get("h"):
         dims = f' width="{item["w"]}" height="{item["h"]}"'
-    return f'<img src="{item["photo"]}" alt="{photo_alt(item)}"{dims} loading="lazy" decoding="async" />'
+    caption = '<span class="media-caption">Vizualizace</span>' if item.get("vizualizace") else ""
+    return f'<img src="{item["photo"]}" alt="{photo_alt(item)}"{dims} loading="lazy" decoding="async" />{caption}'
 
 
 def media_classes(item, base):
     classes = [base]
     if item.get("small"):
         classes.append("is-small-slot")
+    if item.get("vizualizace"):
+        classes.append("is-viz")
     return " ".join(classes)
 
 
@@ -774,7 +782,10 @@ def gallery_shots(item):
         rest = [shot for shot in LIBEREC_SHOTS if shot["src"] != item["photo"]]
         return own + rest
     if item.get("photo"):
-        return [{"src": item["photo"], "alt": photo_alt(item), "w": item.get("w"), "h": item.get("h")}]
+        shot = {"src": item["photo"], "alt": photo_alt(item), "w": item.get("w"), "h": item.get("h")}
+        if item.get("vizualizace"):
+            shot["viz"] = True
+        return [shot]
     return []
 
 
@@ -783,23 +794,22 @@ def gallery_attr(item):
     return f"data-gallery='{payload}'"
 
 
-def gd_split(title, paragraphs, image, alt, flip=False, section_id=None, extra=""):
-    cls = "figure-split gd-split" + (" is-copy-right" if flip else "")
+def service_block(num, title, paragraphs, extra="", section_id=None, heading_tag="h2"):
     sid = f' id="{section_id}"' if section_id else ""
     labelled = f' aria-labelledby="{section_id}-title"' if section_id else ""
     title_id = f' id="{section_id}-title"' if section_id else ""
-    heading = f"<h2{title_id}>{title}</h2>" if title else ""
-    paras = "\n          ".join(f"<p>{p}</p>" for p in paragraphs)
-    return f"""      <section class="{cls}"{sid}{labelled}>
-        <div class="figure-split-copy">
-          {heading}
-          {paras}
-          {extra}
-        </div>
-        <figure>
-          <img src="{image}" alt="{alt}" loading="lazy" decoding="async" />
-        </figure>
-      </section>"""
+    heading = f"<{heading_tag}{title_id}>{title}</{heading_tag}>" if title else ""
+    paras = "\n            ".join(f"<p>{p}</p>" for p in paragraphs)
+    extra_html = f"\n            {extra}" if extra else ""
+    return f"""        <article class="service-row"{sid}{labelled}>
+          <div class="service-row-head">
+            <span class="service-row-num" aria-hidden="true">{num}</span>
+            {heading}
+          </div>
+          <div class="service-row-body">
+            {paras}{extra_html}
+          </div>
+        </article>"""
 
 
 def photo_count_label(count):
@@ -1134,91 +1144,103 @@ def render_sluzby():
         '<a class="btn btn-red" href="poptavka.html#poptavka-form">'
         '<span class="btn-label">Poptat generální dodávku</span></a>'
     )
+    ps_cta = (
+        '<a class="btn btn-red" href="poptavka.html#poptavka-form">'
+        '<span class="btn-label">Poptat pozemní stavbu</span></a>'
+    )
     gd_rows = "\n".join(
         [
-            gd_split(
+            service_block(
+                "01",
                 "Generální dodávka",
                 [
                     "Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.",
                     "Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.",
                 ],
-                PHOTO["botanicka"],
-                "Jižní vstup do Botanické zahrady",
                 section_id="generalni-dodavka",
             ),
-            gd_split(
+            service_block(
+                "02",
                 "Příprava a plánování.",
                 [
                     "Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.",
                     "Připravíme postup realizace, harmonogram a rozpočet.",
                 ],
-                PHOTO["seibert"],
-                "Chata Seibert",
-                flip=True,
             ),
-            gd_split(
+            service_block(
+                "03",
                 "Výběr a koordinace subdodavatelů.",
                 [
                     "Pracujeme se stabilní sítí prověřených firem.",
                     "Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.",
                 ],
-                PHOTO["liberec_1"],
-                "Agrotechnology park Liberec hala B",
             ),
-            gd_split(
+            service_block(
+                "04",
                 "Řízení harmonogramu.",
                 [
                     "Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.",
                     "Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.",
                     "Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.",
                 ],
-                PHOTO["pribram"],
-                "Retail Park Příbram",
-                flip=True,
             ),
-            gd_split(
+            service_block(
+                "05",
                 "Kontrola nákladů a změn.",
                 [
                     "Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.",
                     "Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.",
                     "Investor tak dostává podklady pro rozhodování během stavby.",
                 ],
-                PHOTO["liberec_2"],
-                "Agrotechnology park Liberec hala C",
             ),
-            gd_split(
+            service_block(
+                "06",
                 "Kontrola kvality.",
                 [
                     "Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.",
                     "Odpovídáme za kvalitu sjednané dodávky.",
                 ],
-                PHOTO["roztoky"],
-                "Rodinný dům Roztoky",
-                flip=True,
             ),
-            gd_split(
+            service_block(
+                "07",
                 "Informování investora.",
                 [
                     "V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.",
                     "Upozorňujeme na otázky, které vyžadují rozhodnutí investora.",
                     "Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.",
                 ],
-                PHOTO["vinice"],
-                "Bytový dům U Vinice",
             ),
-            gd_split(
+            service_block(
+                "08",
                 "Dokončení a předání.",
                 [
                     "Předáme dokončené dílo.",
                     "Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.",
                 ],
-                PHOTO["vranany"],
-                "Vraňany Farma Hanč",
-                flip=True,
                 extra=gd_cta,
+            ),
+            service_block(
+                "09",
+                "Pozemní stavby",
+                [
+                    "Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.",
+                    "Rozsah díla vychází z projektové dokumentace a sjednaného zadání.",
+                ],
+                extra=(
+                    "<h3>Typy staveb a souvisejících prací</h3>"
+                    '<ul class="line-list">'
+                    "<li>Rezidenční objekty a bytové domy.</li>"
+                    "<li>Komerční a administrativní budovy.</li>"
+                    "<li>Provozní a zemědělské areály.</li>"
+                    "<li>Technická zařízení budov.</li>"
+                    "<li>Inženýrské sítě a venkovní zpevněné plochy.</li>"
+                    f"</ul>\n            {ps_cta}"
+                ),
+                section_id="pozemni-stavby",
             ),
         ]
     )
+    # Keep the types heading as an h3, not a paragraph of HTML.
     body = f"""
       <section id="prehled-sluzeb" class="about-prose services-intro flow-first" aria-labelledby="sp-overview-title">
         <h2 id="sp-overview-title">Služby pro novostavby a rekonstrukce</h2>
@@ -1229,21 +1251,8 @@ def render_sluzby():
         </p>
       </section>
 
+      <section class="service-list" aria-label="Služby">
 {gd_rows}
-
-      <section id="pozemni-stavby" class="about-prose services-panel" aria-labelledby="sp-detail-2-title">
-        <h2 id="sp-detail-2-title">Pozemní stavby</h2>
-        <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
-        <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
-        <h3>Typy staveb a souvisejících prací</h3>
-        <ul class="line-list">
-          <li>Rezidenční objekty a bytové domy.</li>
-          <li>Komerční a administrativní budovy.</li>
-          <li>Provozní a zemědělské areály.</li>
-          <li>Technická zařízení budov.</li>
-          <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
-        </ul>
-        <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
       </section>
 
       <section class="austis-cta" aria-labelledby="sluzby-cta-title">
@@ -1303,6 +1312,7 @@ def render_projekty():
         <div class="lightbox-backdrop" data-lightbox-close="true"></div>
         <figure class="lightbox-stage">
           <img class="lightbox-img" alt="" />
+          <span class="media-caption lightbox-viz" hidden>Vizualizace</span>
           <figcaption class="lightbox-caption"></figcaption>
         </figure>
         <button type="button" class="lightbox-close" data-lightbox-close="true" aria-label="Zavřít">&times;</button>

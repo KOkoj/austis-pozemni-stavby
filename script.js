@@ -1182,6 +1182,7 @@
 
     const imgEl = lightbox.querySelector(".lightbox-img");
     const captionEl = lightbox.querySelector(".lightbox-caption");
+    const vizEl = lightbox.querySelector(".lightbox-viz");
     const counterEl = lightbox.querySelector(".lightbox-counter");
     const prevBtn = lightbox.querySelector("[data-lightbox-prev]");
     const nextBtn = lightbox.querySelector("[data-lightbox-next]");
@@ -1203,6 +1204,7 @@
               alt: shot.alt || "",
               w: Number(shot.w) || 0,
               h: Number(shot.h) || 0,
+              viz: Boolean(shot.viz),
             }));
           }
         } catch (error) {
@@ -1231,6 +1233,7 @@
       imgEl.setAttribute("src", shot.src);
       imgEl.setAttribute("alt", shot.alt);
       captionEl.textContent = shot.alt;
+      if (vizEl) vizEl.hidden = !shot.viz;
       counterEl.textContent = `${currentIndex + 1} / ${currentShots.length}`;
       imgEl.style.setProperty("--native-w", shot.w ? `${shot.w}px` : "100%");
       imgEl.style.setProperty("--native-h", shot.h ? `${shot.h}px` : "calc(100vh - 168px)");
