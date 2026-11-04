@@ -12220,3 +12220,42 @@ html.has-media-parallax .realizace-media > img {
 .contact-steps + .section-follow {
   margin-top: 32px;
 }
+
+/* Jak probíhá spolupráce: background line icons */
+#spoluprace .contact-steps li {
+  position: relative;
+  overflow: hidden;
+}
+#spoluprace .contact-steps li > * {
+  position: relative;
+  z-index: 1;
+}
+#spoluprace .contact-steps li::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 112px;
+  height: 112px;
+  background: center / contain no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+}
+#spoluprace .contact-steps li:nth-child(1)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='M6 8h26v18H16l-6 6v-6H6z'/%3E%3Cpath d='M32 16h10v18h-4v6l-6-6H20v-6'/%3E%3C/svg%3E");
+}
+#spoluprace .contact-steps li:nth-child(2)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='M8 6h32v36H8z'/%3E%3Cpath d='M8 18h32M8 30h32M20 6v36M30 18v24'/%3E%3C/svg%3E");
+}
+#spoluprace .contact-steps li:nth-child(3)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='M14 42V10M20 42V10M14 10l3-4 3 4M10 42h14'/%3E%3Cpath d='M14 14l20 0 6 0M14 10h26v4'/%3E%3Cpath d='M36 14v10M33 24h6v4h-6z'/%3E%3Cpath d='M14 18l6 6M20 18l-6 6M14 28l6 6M20 28l-6 6'/%3E%3C/svg%3E");
+}
+#spoluprace .contact-steps li:nth-child(4)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='M6 22L24 8l18 14'/%3E%3Cpath d='M10 19v23h28V19'/%3E%3Cpath d='M20 42V30h8v12'/%3E%3C/svg%3E");
+}
+@media (max-width: 1024px) {
+  #spoluprace .contact-steps li::after {
+    width: 80px;
+    height: 80px;
+  }
+}
