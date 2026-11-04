@@ -12282,3 +12282,8 @@ html.has-media-parallax .realizace-media > img {
 #spoluprace .contact-steps li::after {
   opacity: 0.08;
 }
+
+/* Vybrané realizace: lower photos */
+.picked-media {
+  aspect-ratio: 16 / 9;
+}
