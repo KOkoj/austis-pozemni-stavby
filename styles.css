@@ -12215,3 +12215,8 @@ html.has-media-parallax .realizace-media > img {
 .flow-subpage .contact-steps {
   border-bottom: 1px solid rgba(30, 30, 30, 0.12);
 }
+
+/* space between contact-steps line and follow link */
+.contact-steps + .section-follow {
+  margin-top: 32px;
+}
