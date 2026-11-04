@@ -12319,3 +12319,13 @@ html.has-media-parallax .realizace-media > img {
     font-size: 17px;
   }
 }
+
+/* Služby: nicer line breaks */
+.service-row-body p,
+.service-row-body li {
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+.service-row-body p + p {
+  margin-top: 14px;
+}
