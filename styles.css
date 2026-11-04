@@ -12551,3 +12551,14 @@ footer small {
   .sv-type { min-height: 110px; }
   .sv-type:last-child { grid-column: auto; }
 }
+
+/* sv-types photos */
+.sv-type{position:relative;overflow:hidden;isolation:isolate;min-height:200px;display:flex;align-items:flex-end;color:#fff!important;background:#222 center/cover no-repeat}
+.sv-type::after{content:none!important;display:none!important}
+.sv-type::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(0,0,0,.78),rgba(0,0,0,.25))}
+.sv-type *{color:#fff!important}
+.sv-type-1{background-image:url(assets/photos/bd-hluckova-1.webp)}
+.sv-type-2{background-image:url(assets/photos/oc-novodvorska-1.webp)}
+.sv-type-3{background-image:url(assets/photos/jahodarna-vranany-2.webp)}
+.sv-type-4{background-image:url(assets/photos/botanicka-zahrada-3.webp)}
+.sv-type-5{background-image:url(assets/photos/retail-park-pribram-1.webp)}
