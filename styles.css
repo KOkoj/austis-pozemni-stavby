@@ -9895,12 +9895,14 @@ img[src*="placeholder-blueprint.svg"],
 
 .picked-all {
   display: grid;
+  place-items: center;
   width: 224px;
   min-width: 224px;
   height: 47px;
   margin: 0;
   border-radius: 0;
-  overflow: hidden;
+  overflow: visible;
+  box-shadow: none;
 }
 
 .section-follow {
@@ -10325,7 +10327,8 @@ img[src*="placeholder-blueprint.svg"],
   height: 47px;
   padding: 0 24px;
   border-radius: 0;
-  overflow: hidden;
+  overflow: visible;
+  box-shadow: none;
   white-space: nowrap;
 }
 
@@ -11473,7 +11476,8 @@ body.search-overlay-open {
 }
 
 .picked-more {
-  margin: 28px var(--flow-pad-x, 36px) 36px;
+  margin: 28px var(--flow-pad-x, 36px) 0;
+  padding-bottom: 36px;
   overflow: visible;
 }
 
