@@ -12303,3 +12303,19 @@ html.has-media-parallax .realizace-media > img {
   margin-left: 32px;
   margin-right: 32px;
 }
+
+/* Služby: larger body text */
+.service-row-body p,
+.service-row-body li {
+  font-size: 18px;
+  line-height: 1.6;
+}
+.service-row-body h3 {
+  font-size: 20px;
+}
+@media (max-width: 640px) {
+  .service-row-body p,
+  .service-row-body li {
+    font-size: 17px;
+  }
+}
