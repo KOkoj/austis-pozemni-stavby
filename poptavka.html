@@ -348,7 +348,7 @@
             <legend>Typ a rozsah projektu</legend>
             <div class="inquiry-form-row">
               <div class="inquiry-field">
-                <label for="typ-realizace">Typ realizace</label>
+                <label for="typ-realizace">Typ realizace <span class="field-optional">— nepovinné</span></label>
                 <select id="typ-realizace" name="typ-realizace">
                   <option value="">Vyberte typ realizace</option>
                   <option value="novostavba">Novostavba</option>
@@ -357,7 +357,7 @@
                 </select>
               </div>
               <div class="inquiry-field inquiry-field--full">
-                <label for="typ-stavby">Typ stavby</label>
+                <label for="typ-stavby">Typ stavby <span class="field-optional">— nepovinné</span></label>
                 <select id="typ-stavby" name="typ-stavby">
                   <option value="">Vyberte typ</option>
                   <option value="bytovy-dum">Bytový dům nebo rezidenční soubor</option>
@@ -374,12 +374,12 @@
           <fieldset class="inquiry-step" data-step="2" hidden>
             <legend>Lokalita, termín a podrobnosti</legend>
             <div class="inquiry-field inquiry-field--full">
-              <label for="location">Lokalita</label>
+              <label for="location">Lokalita <span class="field-optional">— nepovinné</span></label>
               <input type="text" id="location" name="location" aria-describedby="location-hint" />
               <p class="inquiry-hint" id="location-hint">Město nebo kraj, ve kterém plánujete realizaci.</p>
             </div>
             <div class="inquiry-field inquiry-field--full">
-              <label for="termin">Předpokládaný termín</label>
+              <label for="termin">Předpokládaný termín <span class="field-optional">— nepovinné</span></label>
               <input type="text" id="termin" name="termin" aria-describedby="termin-hint" />
               <p class="inquiry-hint" id="termin-hint">Uveďte plánované zahájení nebo dokončení. Pokud termín ještě neznáte, nechte pole prázdné.</p>
             </div>
@@ -397,7 +397,7 @@
                 <input type="text" id="name" name="name" autocomplete="name" required />
               </div>
               <div class="inquiry-field">
-                <label for="company">Společnost</label>
+                <label for="company">Společnost <span class="field-optional">— nepovinné</span></label>
                 <input type="text" id="company" name="company" autocomplete="organization" />
               </div>
             </div>
@@ -407,7 +407,7 @@
                 <input type="email" id="email" name="email" autocomplete="email" required />
               </div>
               <div class="inquiry-field">
-                <label for="phone">Telefon</label>
+                <label for="phone">Telefon <span class="field-optional">— nepovinné</span></label>
                 <input type="tel" id="phone" name="phone" autocomplete="tel" />
               </div>
             </div>

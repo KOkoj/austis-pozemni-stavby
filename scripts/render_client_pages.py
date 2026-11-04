@@ -848,7 +848,7 @@ def project_card(item, period_label=None):
     label = period_label or item.get("period_label") or "Období realizace"
     rows = []
     if item.get("place"):
-        rows.append(f'<div><dt>Místo</dt><dd>{item["place"]}</dd></div>')
+        rows.append(f'<div><dt>Oblast</dt><dd>{item["place"]}</dd></div>')
     if item.get("period"):
         rows.append(f'<div><dt>{label}</dt><dd>{item["period"]}</dd></div>')
     if item.get("role"):
@@ -1403,7 +1403,7 @@ def render_about():
           </article>
         </div>
         <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:{CAREER_EMAIL}">{CAREER_EMAIL}</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
-        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Napsat na info@austis.cz</span></a>
+        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Mám zájem o práci</span></a>
       </section>
 """
     write("o-spolecnosti.html", html + start + body + page_end())
@@ -1551,7 +1551,7 @@ def render_poptavka():
             <legend>Typ a rozsah projektu</legend>
             <div class="inquiry-form-row">
               <div class="inquiry-field">
-                <label for="typ-realizace">Typ realizace</label>
+                <label for="typ-realizace">Typ realizace <span class="field-optional">— nepovinné</span></label>
                 <select id="typ-realizace" name="typ-realizace">
                   <option value="">Vyberte typ realizace</option>
                   <option value="novostavba">Novostavba</option>
@@ -1560,7 +1560,7 @@ def render_poptavka():
                 </select>
               </div>
               <div class="inquiry-field inquiry-field--full">
-                <label for="typ-stavby">Typ stavby</label>
+                <label for="typ-stavby">Typ stavby <span class="field-optional">— nepovinné</span></label>
                 <select id="typ-stavby" name="typ-stavby">
                   <option value="">Vyberte typ</option>
                   <option value="bytovy-dum">Bytový dům nebo rezidenční soubor</option>
@@ -1577,12 +1577,12 @@ def render_poptavka():
           <fieldset class="inquiry-step" data-step="2" hidden>
             <legend>Lokalita, termín a podrobnosti</legend>
             <div class="inquiry-field inquiry-field--full">
-              <label for="location">Lokalita</label>
+              <label for="location">Lokalita <span class="field-optional">— nepovinné</span></label>
               <input type="text" id="location" name="location" aria-describedby="location-hint" />
               <p class="inquiry-hint" id="location-hint">Město nebo kraj, ve kterém plánujete realizaci.</p>
             </div>
             <div class="inquiry-field inquiry-field--full">
-              <label for="termin">Předpokládaný termín</label>
+              <label for="termin">Předpokládaný termín <span class="field-optional">— nepovinné</span></label>
               <input type="text" id="termin" name="termin" aria-describedby="termin-hint" />
               <p class="inquiry-hint" id="termin-hint">Uveďte plánované zahájení nebo dokončení. Pokud termín ještě neznáte, nechte pole prázdné.</p>
             </div>
@@ -1600,7 +1600,7 @@ def render_poptavka():
                 <input type="text" id="name" name="name" autocomplete="name" required />
               </div>
               <div class="inquiry-field">
-                <label for="company">Společnost</label>
+                <label for="company">Společnost <span class="field-optional">— nepovinné</span></label>
                 <input type="text" id="company" name="company" autocomplete="organization" />
               </div>
             </div>
@@ -1610,7 +1610,7 @@ def render_poptavka():
                 <input type="email" id="email" name="email" autocomplete="email" required />
               </div>
               <div class="inquiry-field">
-                <label for="phone">Telefon</label>
+                <label for="phone">Telefon <span class="field-optional">— nepovinné</span></label>
                 <input type="tel" id="phone" name="phone" autocomplete="tel" />
               </div>
             </div>

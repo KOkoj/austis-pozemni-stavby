@@ -12634,3 +12634,4 @@ main .faq-trigger{padding-top:20px!important;padding-bottom:20px!important}
 main .faq-panel p{font-size:18px!important;font-weight:400!important;line-height:1.6!important;max-width:68ch}
 main .faq-more{margin-top:12px!important}
 @media(max-width:1024px){main .contact-detail{grid-template-columns:1fr!important;gap:32px!important}main .contact-mail-value{font-size:24px!important}main .contact-hq{min-height:220px}main .faq-trigger,main .faq-trigger span{font-size:18px!important}}
+.field-optional{font-weight:400;color:#6b6e70;font-size:16px}

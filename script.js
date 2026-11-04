@@ -1987,7 +1987,7 @@
       ].filter(Boolean).join("\n");
       const href = `mailto:zakazky@austis.cz?subject=${encodeURIComponent("Poptávka z webu AUSTIS Pozemní stavby")}&body=${encodeURIComponent(body)}`;
       try {
-        window.location.href = href;
+        window.location.href = href; showStatus("success", "Děkujeme za poptávku. Vaše zpráva byla odeslána. Ozveme se vám na uvedený kontakt a domluvíme další postup.");
       } catch (error) {
         showStatus("error", failMessage);
       }
