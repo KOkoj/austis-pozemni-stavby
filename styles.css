@@ -12270,3 +12270,11 @@ html.has-media-parallax .realizace-media > img {
     bottom: -34px;
   }
 }
+
+/* Spoluprace icons 2 + 3 replaced */
+#spoluprace .contact-steps li:nth-child(2)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M6 42V10l32 32z'/%3E%3Cpath d='M12 36V24l12 12z'/%3E%3Cpath d='M30 6l6 6-14 14-8 2 2-8z'/%3E%3Cpath d='M27 9l6 6'/%3E%3C/svg%3E");
+}
+#spoluprace .contact-steps li:nth-child(3)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%231e1e1e' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M8 32a16 16 0 0 1 32 0'/%3E%3Cpath d='M4 32h40v5H4z'/%3E%3Cpath d='M20 17v-5h8v5M24 12v20M14 22v10M34 22v10'/%3E%3C/svg%3E");
+}
