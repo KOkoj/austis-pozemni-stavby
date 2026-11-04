@@ -8565,18 +8565,18 @@ html.has-media-parallax .gd-split figure > img {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
-    max-width: calc(100% - 108px);
+    gap: 8px;
+    max-width: calc(100% - 132px);
   }
 
   .scroll-nav-logo .logo-img {
-    height: 24px;
-    max-height: 28px;
+    height: 20px;
+    max-height: 22px;
   }
 
   .scroll-nav-logo .logo-sub {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.01em;
