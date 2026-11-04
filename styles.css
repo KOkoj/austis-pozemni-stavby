@@ -9812,7 +9812,6 @@ img[src*="placeholder-blueprint.svg"],
   display: -webkit-box;
   overflow: hidden;
   margin: 0;
-  min-height: calc(1.3em * 2);
   color: var(--ink);
   font-size: 18px;
   font-weight: 500;
@@ -10036,7 +10035,6 @@ img[src*="placeholder-blueprint.svg"],
 .realizace-card.is-text .realizace-meta,
 .realizace-card.is-text .realizace-body dl.realizace-meta {
   color: #5c5d60;
-  font-size: 16px;
 }
 
 .realizace-card .realizace-meta,
@@ -10045,7 +10043,7 @@ img[src*="placeholder-blueprint.svg"],
   margin: auto 0 0;
   padding: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: 0.01em;
@@ -10066,10 +10064,6 @@ img[src*="placeholder-blueprint.svg"],
   .gd-blocks,
   .realizace-list {
     grid-template-columns: 1fr;
-  }
-
-  .realizace-title {
-    min-height: 0;
   }
 }
 
