@@ -2123,7 +2123,7 @@
   }
 
   function initMediaParallax() {
-    const images = Array.from(document.querySelectorAll(".gd-split figure > img")).filter((img) => {
+    const images = Array.from(document.querySelectorAll(".gd-split figure > img, .picked-media > img, .realizace-media > img")).filter((img) => {
       const src = img.getAttribute("src") || "";
       return !src.endsWith(".svg");
     });
@@ -2133,7 +2133,7 @@
 
     const items = images.map((img) => ({
       img,
-      frame: img.closest(".gd-split figure") || img.parentElement,
+      frame: img.closest(".gd-split figure, .picked-media, .realizace-media") || img.parentElement,
     }));
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
