@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261103p"
+ASSET_V = "20261104a"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -28,10 +28,16 @@ PHOTO = {
 }
 HQ_PHOTO = PHOTO["slivenec"]
 HQ_HERO_PHOTO = PHOTO["hq_hero"]
-KARIERA_HREF = "https://austis-as.vercel.app/austis-kariera"
+KARIERA_HREF = "o-spolecnosti.html#kariera"
 PHONE = "+420 721 071 189"
 PHONE_TEL = "+420721071189"
 EMAIL = "zakazky@austis.cz"
+CAREER_EMAIL = "info@austis.cz"
+HOME_INTRO = (
+    "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov. "
+    "Zaměřujeme se na generální dodávky novostaveb a rekonstrukcí většího rozsahu. "
+    "Naše zkušenosti představují dokončené i právě probíhající realizace."
+)
 ICO = "07093322"
 DIC = "CZ07093322"
 ICO_HREF = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=07093322"
@@ -286,10 +292,11 @@ HOME_ACTIONS = f"""            <div class="hero-copy">
               <div class="hero-copy-main">
                 <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
                 <h1>Generální dodávky<br /> novostaveb a&nbsp;rekonstrukcí</h1>
+                <p class="hero-copy-lead">{HOME_INTRO}</p>
               </div>
-              <a class="hero-jump" href="{HERO_CTA_HREF}" aria-label="{HERO_CTA_ARIA}">
+              <a class="hero-jump" href="projekty.html" aria-label="Prohlédnout realizace">
                 <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                <span class="hero-jump-label">{HERO_CTA_LABEL}</span>
+                <span class="hero-jump-label">Prohlédnout<br />realizace</span>
               </a>
             </div>"""
 
@@ -297,9 +304,10 @@ HOME_MOBILE = f"""          <div class="mobile-hero-panel">
             <div class="hero-copy-main">
             <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
             <h1 class="mobile-hero-title">Generální dodávky novostaveb a&nbsp;rekonstrukcí</h1>
+            <p class="hero-copy-lead">{HOME_INTRO}</p>
             </div>
             <div class="mobile-hero-actions">
-              <a class="mobile-text-link" href="{HERO_CTA_HREF}">{HERO_CTA_ARIA}</a>
+              <a class="mobile-text-link" href="projekty.html">Prohlédnout realizace</a>
             </div>
           </div>"""
 
@@ -444,28 +452,34 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
 
 
 def footer():
-    return f"""      <footer class="footer" id="paticka">
+    return f"""      <footer class="footer site-footer" id="paticka">
         <div class="footer-line footer-left"></div>
         <div class="footer-line footer-top"></div>
         <div class="footer-line footer-right"></div>
         <section>
-          <h2>Kontakt</h2>
+          <h2>Společnost</h2>
           <p><strong>AUSTIS Pozemní stavby s.r.o.</strong></p>
-          <p>K Austisu 680, 154 00 Praha 5 – Slivenec<br /><a href="tel:{PHONE_TEL}">{PHONE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-          <p class="highlight">IČ: <a href="{ICO_HREF}">{ICO}</a>&nbsp;&nbsp;|&nbsp;&nbsp;DIČ: <a href="{DIC_HREF}">{DIC}</a></p>
+          <p>Generální dodávky novostaveb a rekonstrukcí</p>
         </section>
         <section>
-          <h2>Společnost</h2>
-          <ul class="footer-roles">
-            <li><a href="o-spolecnosti.html">O společnosti</a></li>
+          <h2>Kontakt</h2>
+          <p><a href="mailto:{EMAIL}">{EMAIL}</a></p>
+          <p>K Austisu 680, 154 00 Praha 5 – Slivenec</p>
+          <p class="highlight">IČ: <a href="{ICO_HREF}">{ICO}</a> · DIČ: <a href="{DIC_HREF}">{DIC}</a></p>
+        </section>
+        <section>
+          <h2>Odkazy</h2>
+          <ul class="footer-links">
             <li><a href="sluzby.html">Služby</a></li>
             <li><a href="projekty.html">Realizace</a></li>
+            <li><a href="o-spolecnosti.html">O společnosti</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="kontakt.html#faq">Časté otázky</a></li>
             <li><a href="{KARIERA_HREF}">Kariéra</a></li>
-            <li><a href="osobni-udaje.html">Ochrana osobních údajů</a></li>
           </ul>
-          <p>Generální dodávky novostaveb a rekonstrukcí.</p>
+          <p class="footer-cta-wrap"><a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a></p>
         </section>
-        <small>© 2026 AUSTIS Pozemní stavby s.r.o.</small>
+        <small>© 2026 AUSTIS Pozemní stavby s.r.o. · <a href="osobni-udaje.html">Informace o zpracování osobních údajů</a></small>
       </footer>
     </main>
     <script src="lenis.min.js?v=1.3.26"></script>
@@ -480,6 +494,15 @@ def page_end():
 
 
 IN_PROGRESS = [
+    {
+        "id": "prodlouzena",
+        "title": "Bytový dům Prodloužená",
+        "desc": "Výstavba čtyřpatrového bytového domu.",
+        "place": "Praha – Velká Chuchle, ulice Prodloužená",
+        "period_label": "Plánované období realizace",
+        "period": "srpen 2026 – prosinec 2027",
+        "status": "V realizaci",
+    },
     {
         "id": "seibert",
         "title": "Chata Seibert",
@@ -511,6 +534,20 @@ IN_PROGRESS = [
 ]
 
 DONE = [
+    {
+        "id": "melnik",
+        "title": "Parkoviště Mělník",
+        "desc": "Nové parkoviště s infrastrukturou a sadovými úpravami.",
+        "place": "Mělník",
+        "period": "červen 2025 – listopad 2025",
+    },
+    {
+        "id": "rokycanska",
+        "title": "OC Rokycanská",
+        "desc": "Sanace střešního parkoviště obchodního centra.",
+        "place": "Plzeň",
+        "period": "březen 2025 – listopad 2025",
+    },
     {
         "id": "pribram",
         "title": "Retail Park Příbram",
@@ -564,6 +601,27 @@ DONE = [
         "small": True,
     },
     {
+        "id": "kostelec",
+        "title": "Rodinný dům Kostelec nad Černými lesy",
+        "desc": "Novostavba rodinného domu.",
+        "place": "Kostelec nad Černými lesy",
+        "period": "červenec 2022 – duben 2023",
+    },
+    {
+        "id": "bondy",
+        "title": "OC Bondy",
+        "desc": "Sanace parkoviště, ramp, můstků a nosných konstrukcí.",
+        "place": "Mladá Boleslav",
+        "period": "srpen 2021 – září 2022",
+    },
+    {
+        "id": "tmobile-plochy",
+        "title": "T-Mobile úpravy venkovních ploch",
+        "desc": "Obnova zpevněných ploch a zámečnických konstrukcí.",
+        "place": "Praha 4",
+        "period": "květen 2021 – leden 2022",
+    },
+    {
         "id": "novodvorska",
         "title": "OC Novodvorská Plaza",
         "desc": "Rekonstrukce obchodního centra včetně eskalátoru, sociálního zázemí a fasády.",
@@ -615,6 +673,7 @@ DONE = [
         "small": True,
     },
     {
+        # TODO: not in the 23 Oct Word list. Photo exists in the approved set; no period/street in client brief.
         "id": "hluckova",
         "title": "Bytový dům Hlučkova",
         "desc": "Novostavba bytového domu.",
@@ -667,10 +726,6 @@ DONE = [
         "period": "červen 2018 – říjen 2018",
     },
 ]
-
-# Matej: publish only projects that have a real photo from the approved set.
-IN_PROGRESS = [p for p in IN_PROGRESS if p.get("photo")]
-DONE = [p for p in DONE if p.get("photo")]
 
 LIBEREC_SHOTS = [
     {"src": PHOTO["liberec_1"], "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749},
@@ -765,10 +820,11 @@ def project_card(item, period_label=None):
             f' data-lightbox {gallery_attr(item)} tabindex="0" role="button" '
             f'aria-label="{title_attr} – otevřít galerii"'
         )
+    desc = f'\n            <p class="realizace-desc">{item["desc"]}</p>' if item.get("desc") else ""
     return f"""        <article class="realizace-card" id="{item["id"]}"{extra}>
           {media}
           <div class="realizace-body">
-            <h3 class="realizace-title">{item["title"]}</h3>
+            <h3 class="realizace-title">{item["title"]}</h3>{desc}
             <p class="realizace-meta">{meta}</p>
           </div>
         </article>"""
@@ -823,7 +879,7 @@ FAQ = [
     ),
     (
         "Zajímá vás práce u nás",
-        "Aktuální pozice skupiny AUSTIS najdete na stránce Kariéra. Životopis nebo stručné představení můžete poslat na austis@austis.cz.",
+        f"Aktuální pozice najdete v části Kariéra na stránce O společnosti. Životopis nebo stručné představení můžete poslat na {CAREER_EMAIL}.",
     ),
 ]
 
@@ -853,6 +909,7 @@ def write(name, html):
 
 def render_index():
     seibert = next(p for p in IN_PROGRESS if p["id"] == "seibert")
+    prodlouzena = next(p for p in IN_PROGRESS if p["id"] == "prodlouzena")
     vranany = next(p for p in DONE if p["id"] == "vranany")
     liberec_b = next(p for p in DONE if p["id"] == "liberec-b")
     html = head(
@@ -895,6 +952,7 @@ def render_index():
         </div>
         <div class="picked-grid">
 {picked_card(seibert, "projekty.html#seibert")}
+{picked_card(prodlouzena, "projekty.html#prodlouzena")}
 {picked_card(vranany, "projekty.html#vranany")}
 {picked_card(liberec_b, "projekty.html#liberec-b")}
         </div>
@@ -946,8 +1004,8 @@ def render_index():
         </div>
         <div class="about-teaser-career" id="kariera-teaser">
           <h2>Kariéra</h2>
-          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu. Zajímá vás práce na stavebních projektech? Podívejte se na aktuální pozice a napište nám.</p>
-          <p><a class="text-link" href="{KARIERA_HREF}">Kariéra v AUSTIS</a></p>
+          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu. Zajímá vás práce na stavebních projektech? Podívejte se na aktuální pozice a napište nám na {CAREER_EMAIL}.</p>
+          <p><a class="text-link" href="{KARIERA_HREF}">Volné pozice</a></p>
         </div>
       </section>
 
@@ -1266,8 +1324,8 @@ def render_about():
             <p>Příprava zakázek, rozpočtů, harmonogramů a podkladů pro navazující realizaci.</p>
           </article>
         </div>
-        <p>Zajímá vás práce na stavebních projektech? Aktuální pozice skupiny AUSTIS najdete na stránce Kariéra.</p>
-        <a class="austis-intro-more" href="{KARIERA_HREF}">Kariéra v AUSTIS</a>
+        <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:{CAREER_EMAIL}">{CAREER_EMAIL}</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
+        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Mám zájem o práci</span></a>
       </section>
 """
     write("o-spolecnosti.html", html + start + body + page_end())
@@ -1371,7 +1429,7 @@ def render_kontakt():
         <div class="faq-list">
 {faqs}
         </div>
-        <p class="section-follow"><a class="text-link" href="{KARIERA_HREF}">Kariéra v AUSTIS</a></p>
+        <p class="section-follow"><a class="text-link" href="{KARIERA_HREF}">Volné pozice</a></p>
       </section>
 """
     write("kontakt.html", html + start + body + page_end())
@@ -1515,7 +1573,7 @@ def render_privacy():
         "AUSTIS informace o zpracování osobních údajů",
         "Agrotechnology park Liberec",
         "Informace o zpracování osobních údajů",
-        "Text informací o zpracování osobních údajů provozovatel dosud nedodal.",
+        "Kdo je správcem osobních údajů a jak nás můžete kontaktovat.",
         "#osobni-udaje",
         "k textu",
         "k textu",
@@ -1523,8 +1581,37 @@ def render_privacy():
     body = f"""
       <section id="osobni-udaje" class="about-prose flow-first" aria-labelledby="privacy-title">
         <h2 id="privacy-title">Informace o zpracování osobních údajů</h2>
-        <p>Text informací o zpracování osobních údajů provozovatel dosud nedodal. Doplníme jej po dodání od odpovědné osoby.</p>
-        <p>Poptávky zatím posílejte na <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        <p>Tyto informace se týkají zpracování osobních údajů návštěvníků webu a osob, které nás kontaktují. Kde níže chybí údaj od provozovatele, je to výslovně označeno jako TODO.</p>
+
+        <h3>Správce osobních údajů</h3>
+        <p>Správcem je <strong>AUSTIS Pozemní stavby s.r.o.</strong>, IČ {ICO}, se sídlem K Austisu 680, 154 00 Praha 5 – Slivenec.</p>
+        <p>Kontakt: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        <p>TODO: jméno a kontakt pověřence pro ochranu osobních údajů, pokud je jmenován.</p>
+
+        <h3>Účely zpracování</h3>
+        <p>TODO: potvrdit účely. Na webu je formulář poptávky a e-mail {EMAIL}; zpracování údajů z poptávek a korespondence je zřejmým účelem, rozsah a další účely (newsletter, cookies, statistiky, kamerový systém sídla) provozovatel nedodal.</p>
+
+        <h3>Právní základy</h3>
+        <p>TODO: právní základy podle čl. 6 GDPR (smlouva / jednání o smlouvě, oprávněný zájem, souhlas, právní povinnost) provozovatel nedodal.</p>
+
+        <h3>Kategorie osobních údajů</h3>
+        <p>TODO: přesný výčet. Formulář poptávky sbírá jméno, společnost, e-mail, telefon, popis projektu a souhlas se zpracováním za účelem vyřízení poptávky. Další kategorie provozovatel nedodal.</p>
+
+        <h3>Příjemci a zpracovatelé</h3>
+        <p>TODO: seznam příjemců a zpracovatelů (hosting, e-mail, analytika) provozovatel nedodal.</p>
+
+        <h3>Doba uchování</h3>
+        <p>TODO: doby uchování jednotlivých kategorií údajů provozovatel nedodal.</p>
+
+        <h3>Předání mimo EU</h3>
+        <p>TODO: zda dochází k předání osobních údajů mimo Evropskou unii / Evropský hospodářský prostor, provozovatel nedodal.</p>
+
+        <h3>Práva subjektů údajů</h3>
+        <p>Podle nařízení GDPR můžete požádat o přístup k osobním údajům, jejich opravu nebo výmaz, omezení zpracování, vznést námitku a uplatnit právo na přenositelnost. Stížnost můžete podat u Úřadu pro ochranu osobních údajů.</p>
+        <p>TODO: postup vyřizování žádostí u společnosti (lhůty nad rámec zákona, formulář, interní kontaktní osoba).</p>
+
+        <h3>Cookies a měření webu</h3>
+        <p>TODO: zda web používá cookies nebo měřicí nástroje a na jakém právním základě, provozovatel nedodal.</p>
       </section>
 """
     write("osobni-udaje.html", html + start + body + page_end())

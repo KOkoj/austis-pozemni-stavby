@@ -9632,7 +9632,7 @@ img[src*="placeholder-blueprint.svg"],
 
 .picked-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background: #ebebeb;
 }
@@ -10255,6 +10255,8 @@ html.as-enter-out .mobile-hero {
 }
 
 .austis-home {
+  --hero-panel-height: 360px;
+  --hero-action-size: 224px;
   --hero-actions-width: var(--hero-action-size);
   --hero-main-width: calc(var(--content-width) - var(--hero-actions-width));
   --hero-copy-split: calc(var(--content-left) + var(--hero-main-width));
@@ -11610,5 +11612,118 @@ body.mobile-menu-open .back-to-top {
 
   .inquiry-step-btn {
     border-bottom: 1px solid rgba(30, 30, 30, 0.12);
+  }
+}
+
+/* Client 4 Nov: home intro, 4 picked cards, 3-col footer */
+.austis-home .hero-copy-main {
+  justify-content: flex-start;
+  gap: calc(16px / var(--scale));
+  overflow: visible;
+}
+
+.austis-home .hero-copy-lead,
+.austis-home .hero-copy-main .hero-copy-lead {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin: calc(8px / var(--scale)) 0 0;
+  max-width: 38em;
+  color: #46474a;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+.austis-home .hero-jump {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 224px;
+  min-width: 224px;
+  height: auto;
+}
+
+.picked-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.realizace-desc {
+  margin: 0 0 10px;
+  color: #46474a;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.subpage-body .footer.site-footer,
+.austis-home.subpage-body .footer.site-footer,
+.austis-page.subpage-body .footer.site-footer {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.subpage-body .footer.site-footer section:nth-of-type(3) {
+  position: relative;
+  z-index: 2;
+  max-width: none;
+  padding-bottom: 48px;
+}
+
+.footer-links {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links li {
+  padding: 6px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.subpage-body .footer.site-footer small {
+  border-top: 1px solid rgba(180, 181, 182, 0.45);
+}
+
+@media (max-width: 1024px) {
+  .picked-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subpage-body .footer.site-footer,
+  .austis-home.subpage-body .footer.site-footer,
+  .austis-page.subpage-body .footer.site-footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .austis-home .mobile-hero-panel .hero-copy-main {
+    gap: 16px;
+  }
+
+  .austis-home .mobile-hero-panel .hero-copy-lead {
+    margin: 0;
+    max-width: none;
+    color: #46474a;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .austis-home .mobile-hero-panel .hero-copy-main .mobile-hero-title {
+    margin-bottom: 0;
   }
 }
