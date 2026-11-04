@@ -92,7 +92,7 @@
     calc(var(--scroll-nav-content-right) - var(--scroll-nav-logo-left))
   );
   --scroll-nav-logo-gap: calc(16px * var(--scale));
-  --scroll-nav-logo-slot: calc(236px * var(--scale));
+  --scroll-nav-logo-slot: calc(292px * var(--scale));
   --scroll-nav-bar-left: calc(var(--scroll-nav-logo-left) + var(--scroll-nav-logo-slot));
   --scroll-nav-bar-width: calc(var(--scroll-nav-content-width) - var(--scroll-nav-logo-slot));
   --subpage-logo-overhang: calc(var(--header-offset) + 122px - (var(--nav-bar-offset) + var(--scroll-nav-bar-height)));
@@ -3198,10 +3198,10 @@ button.project-link {
   left: calc(20px * var(--scale));
   z-index: 2;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 3px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: calc(12px * var(--scale));
   width: max-content;
   max-width: none;
   height: 100%;
@@ -3215,7 +3215,7 @@ button.project-link {
   align-items: center;
   flex-shrink: 0;
   width: auto;
-  height: auto;
+  height: 100%;
   overflow: visible;
 }
 
@@ -3225,31 +3225,38 @@ button.project-link {
   left: auto;
   top: auto;
   width: auto;
-  height: 20px;
-  max-height: none;
+  height: calc(26px * var(--scale));
+  max-height: calc(var(--scroll-nav-bar-height) - 16px);
   object-fit: contain;
 }
 
 .scroll-nav-logo .logo-sub {
-  display: block;
+  display: flex;
+  align-items: center;
   flex: 0 0 auto;
+  gap: calc(12px * var(--scale));
   width: auto;
   max-width: none;
   margin: 0;
   padding: 0;
   background: none;
-  color: rgba(255, 255, 255, 0.82);
+  color: #fff;
   white-space: nowrap;
   overflow: visible;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: calc(14px * var(--scale));
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 
 .scroll-nav-logo .logo-sub::before {
-  display: none;
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  width: 1px;
+  height: 0.85em;
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .scroll-nav-logo,
@@ -8545,24 +8552,30 @@ html.has-media-parallax .gd-split figure > img {
 
   .scroll-nav-logo {
     left: var(--mobile-header-pad-x, clamp(28px, 7vw, 48px));
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 3px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
     max-width: calc(100% - 108px);
   }
 
   .scroll-nav-logo .logo-img {
-    height: 18px;
-    max-height: none;
+    height: 24px;
+    max-height: 28px;
   }
 
   .scroll-nav-logo .logo-sub {
-    display: block;
-    font-size: 16px;
-    letter-spacing: 0.04em;
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     line-height: 1;
     white-space: nowrap;
+  }
+
+  .scroll-nav-logo .logo-sub::before {
+    height: 0.85em;
   }
 
   .scroll-nav-menu-toggle {
