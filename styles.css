@@ -12346,3 +12346,12 @@ html.has-media-parallax .realizace-media > img {
 footer small {
   border-top: 0 !important;
 }
+
+@media (max-width: 1024px) {
+  .footer-line.footer-top {
+    display: none !important;
+  }
+  footer small {
+    border-top: 1px solid rgba(180, 181, 182, 0.45) !important;
+  }
+}
