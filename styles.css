@@ -12341,3 +12341,8 @@ html.has-media-parallax .realizace-media > img {
   padding: 0 32px;
   align-self: flex-start;
 }
+
+/* Footer: remove doubled line above copyright */
+footer small {
+  border-top: 0 !important;
+}
