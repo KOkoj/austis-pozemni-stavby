@@ -10255,8 +10255,7 @@ html.as-enter-out .mobile-hero {
 }
 
 .austis-home {
-  --hero-panel-height: 360px;
-  --hero-action-size: 224px;
+  --hero-action-size: var(--hero-panel-height);
   --hero-actions-width: var(--hero-action-size);
   --hero-main-width: calc(var(--content-width) - var(--hero-actions-width));
   --hero-copy-split: calc(var(--content-left) + var(--hero-main-width));
@@ -11615,35 +11614,55 @@ body.mobile-menu-open .back-to-top {
   }
 }
 
-/* Client 4 Nov: home intro, 4 picked cards, 3-col footer */
-.austis-home .hero-copy-main {
-  justify-content: flex-start;
-  gap: calc(16px / var(--scale));
-  overflow: visible;
-}
-
+/* Keep home intro in normal flow on every viewport so the mobile lead
+   (same .hero-copy-lead class) cannot overlay the photo. Desktop-only
+   rules below size the 224px panel and square jump without touching
+   the Matej-approved mobile hero. */
 .austis-home .hero-copy-lead,
 .austis-home .hero-copy-main .hero-copy-lead {
   position: static;
   left: auto;
   right: auto;
   bottom: auto;
-  margin: calc(8px / var(--scale)) 0 0;
-  max-width: 38em;
-  color: #46474a;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: 0;
-  text-wrap: pretty;
 }
 
-.austis-home .hero-jump {
-  flex-shrink: 0;
-  align-self: stretch;
-  width: 224px;
-  min-width: 224px;
-  height: auto;
+@media (min-width: 1025px) {
+  .austis-home .hero-copy-main {
+    justify-content: flex-start;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .austis-home .hero-copy h1,
+  .austis-home .hero-copy h1:has(.hero-title-brand) {
+    margin-top: 12px;
+    max-width: 16em;
+  }
+
+  .austis-home .hero-copy-lead,
+  .austis-home .hero-copy-main .hero-copy-lead {
+    margin-top: auto;
+    max-width: none;
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-wrap: pretty;
+  }
+
+  .austis-home .hero-jump {
+    flex-shrink: 0;
+    align-self: stretch;
+    width: var(--hero-panel-height);
+    min-width: var(--hero-panel-height);
+    height: auto;
+    border-radius: 0;
+  }
+
+  .austis-home .hero-jump-mark {
+    border-radius: 0;
+  }
 }
 
 .picked-grid {
