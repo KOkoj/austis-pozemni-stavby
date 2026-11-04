@@ -12180,3 +12180,15 @@ body.mobile-menu-open .back-to-top {
 .btn.picked-link:focus-visible {
   color: #fff;
 }
+
+/* Více o realizaci: outline variant */
+.btn.btn-dark.picked-link {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.btn.btn-dark.picked-link:hover,
+.btn.btn-dark.picked-link:focus-visible {
+  background: var(--ink);
+  color: #fff;
+}
