@@ -12291,3 +12291,9 @@ html.has-media-parallax .realizace-media > img {
 .picked-card .realizace-panel {
   aspect-ratio: 16 / 9;
 }
+
+/* Více o realizaci: underlined text link */
+.picked-link {
+  align-self: flex-start;
+  padding-bottom: 2px;
+}
