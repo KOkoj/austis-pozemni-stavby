@@ -8281,6 +8281,34 @@ body.lightbox-open .mobile-nav-panel {
   object-position: center;
 }
 
+.sluzby-page .gd-split img {
+  filter: grayscale(1) contrast(0.92);
+  opacity: 0.75;
+}
+
+@media (min-width: 1025px) {
+  .sluzby-page .gd-split {
+    min-height: 280px;
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
+  }
+
+  .sluzby-page .gd-split.is-copy-right {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  }
+
+  .sluzby-page .gd-split figure {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sluzby-page .gd-split figure,
+  .sluzby-page .gd-split.is-copy-right figure {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+}
+
 html.has-media-parallax .gd-split figure > img {
   width: 118%;
   height: 118%;
