@@ -10649,7 +10649,7 @@ html.as-enter-out .mobile-hero {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc(40px / var(--scale)) var(--home-inset-hero) calc(32px / var(--scale));
+  padding: calc(36px / var(--scale)) var(--home-inset-hero);
 }
 
 .austis-home .hero-copy-main > *,
@@ -10745,7 +10745,7 @@ html.as-enter-out .mobile-hero {
 
 @media (min-width: 1025px) and (max-width: 1360px) {
   .austis-home .hero-copy-main {
-    padding: calc(32px / var(--scale)) var(--home-inset-hero) calc(24px / var(--scale));
+    padding: calc(32px / var(--scale)) var(--home-inset-hero);
   }
 
   .austis-home .hero-copy h1,
@@ -12047,17 +12047,19 @@ body.mobile-menu-open .back-to-top {
     justify-content: flex-start;
     gap: 0;
     overflow: visible;
+    padding: calc(36px / var(--scale)) var(--home-inset-hero);
   }
 
   .austis-home .hero-copy h1,
   .austis-home .hero-copy h1:has(.hero-title-brand) {
     margin-top: 12px;
+    margin-bottom: 0;
     max-width: 16em;
   }
 
   .austis-home .hero-copy-lead,
   .austis-home .hero-copy-main .hero-copy-lead {
-    margin-top: auto;
+    margin-top: 18px;
     max-width: none;
     color: var(--muted);
     font-size: 16px;

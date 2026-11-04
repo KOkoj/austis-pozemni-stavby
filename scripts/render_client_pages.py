@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104s"
+ASSET_V = "20261104t"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -1161,7 +1161,7 @@ def render_sluzby():
             ),
             service_block(
                 "02",
-                "Příprava a plánování.",
+                "Příprava a plánování",
                 [
                     "Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.",
                     "Připravíme postup realizace, harmonogram a rozpočet.",
@@ -1169,7 +1169,7 @@ def render_sluzby():
             ),
             service_block(
                 "03",
-                "Výběr a koordinace subdodavatelů.",
+                "Výběr a koordinace subdodavatelů",
                 [
                     "Pracujeme se stabilní sítí prověřených firem.",
                     "Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.",
@@ -1177,7 +1177,7 @@ def render_sluzby():
             ),
             service_block(
                 "04",
-                "Řízení harmonogramu.",
+                "Řízení harmonogramu",
                 [
                     "Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.",
                     "Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.",
@@ -1186,7 +1186,7 @@ def render_sluzby():
             ),
             service_block(
                 "05",
-                "Kontrola nákladů a změn.",
+                "Kontrola nákladů a změn",
                 [
                     "Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.",
                     "Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.",
@@ -1195,7 +1195,7 @@ def render_sluzby():
             ),
             service_block(
                 "06",
-                "Kontrola kvality.",
+                "Kontrola kvality",
                 [
                     "Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.",
                     "Odpovídáme za kvalitu sjednané dodávky.",
@@ -1203,7 +1203,7 @@ def render_sluzby():
             ),
             service_block(
                 "07",
-                "Informování investora.",
+                "Informování investora",
                 [
                     "V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.",
                     "Upozorňujeme na otázky, které vyžadují rozhodnutí investora.",
@@ -1212,7 +1212,7 @@ def render_sluzby():
             ),
             service_block(
                 "08",
-                "Dokončení a předání.",
+                "Dokončení a předání",
                 [
                     "Předáme dokončené dílo.",
                     "Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.",
