@@ -921,7 +921,7 @@ def picked_card(item, href):
                 <h3>{item["title"]}</h3>
                 <p>{item["desc"]}</p>
                 <p class="picked-status">{item["status"]}</p>
-                <a class="picked-link" href="{href}">Více o realizaci</a>
+                <a class="btn btn-dark picked-link" href="{href}"><span class="btn-label">Více o realizaci</span></a>
               </div>
             </article>"""
 

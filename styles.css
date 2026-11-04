@@ -12166,3 +12166,17 @@ body.mobile-menu-open .back-to-top {
     margin-bottom: 0;
   }
 }
+
+/* Více o realizaci: same button as the others */
+.btn.picked-link {
+  margin-top: auto;
+  align-self: flex-start;
+  color: #fff;
+  letter-spacing: 0.01em;
+  border-bottom: 0;
+  text-decoration: none;
+}
+.btn.picked-link:hover,
+.btn.picked-link:focus-visible {
+  color: #fff;
+}
