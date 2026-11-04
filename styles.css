@@ -9793,16 +9793,18 @@ img[src*="placeholder-blueprint.svg"],
 
 .picked-card {
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto 1fr;
   background: #fff;
 }
 
 .picked-card .realizace-panel {
   width: 100%;
+  aspect-ratio: 3 / 2;
 }
 
 .picked-media {
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  aspect-ratio: 3 / 2;
 }
 
 .picked-media,
@@ -9958,7 +9960,17 @@ img[src*="placeholder-blueprint.svg"],
 }
 
 .picked-body {
+  display: flex;
+  flex-direction: column;
   padding: 28px 32px 32px;
+}
+
+.picked-body p:not(.picked-status) {
+  margin: 0 0 16px;
+  color: #46474a;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .realizace-body {
@@ -9989,12 +10001,13 @@ img[src*="placeholder-blueprint.svg"],
   -webkit-line-clamp: 2;
 }
 
+.realizace-body p.realizace-desc,
 .realizace-desc {
   flex: 1 1 auto;
   margin: 0 !important;
   color: #56575b;
-  font-size: 18px !important;
-  font-weight: 300;
+  font-size: 16px !important;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -10008,6 +10021,7 @@ img[src*="placeholder-blueprint.svg"],
 }
 
 .picked-link {
+  margin-top: auto;
   color: var(--ink);
   font-size: 16px;
   font-weight: 500;
