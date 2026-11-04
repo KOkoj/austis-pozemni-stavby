@@ -12259,3 +12259,14 @@ html.has-media-parallax .realizace-media > img {
     height: 130px;
   }
 }
+/* Spoluprace icons: bleed off the corner */
+#spoluprace .contact-steps li::after {
+  right: -48px;
+  bottom: -48px;
+}
+@media (max-width: 1024px) {
+  #spoluprace .contact-steps li::after {
+    right: -34px;
+    bottom: -34px;
+  }
+}
