@@ -1357,7 +1357,7 @@
     { title: "OC Rokycanská", hint: "Plzeň", href: "projekty.html#rokycanska", keywords: "rokycanska plzen oc" },
     { title: "Retail Park Příbram", hint: "Úpravy dispozic, fasád a střech", href: "projekty.html#pribram", keywords: "pribram retail park" },
     { title: "T-Mobile rekonstrukce střechy a teras", hint: "Praha", href: "projekty.html#tmobile-strecha", keywords: "tmobile strecha terasy" },
-    { title: "Agrotechnology park Liberec", hint: "Haly A, B a C v Liberci – Doubí", href: "projekty.html#liberec-b", keywords: "liberec agrotechnology hala park doubí" },
+    { title: "Agrotechnology park Liberec", hint: "Haly A, B a C v Liberci – Doubí", href: "projekty.html#liberec", keywords: "liberec agrotechnology hala park doubí" },
     { title: "Rodinný dům Kostelec nad Černými lesy", hint: "Kostelec nad Černými lesy", href: "projekty.html#kostelec", keywords: "kostelec rodinny dum" },
     { title: "OC Bondy", hint: "Mladá Boleslav", href: "projekty.html#bondy", keywords: "bondy oc mlada boleslav" },
     { title: "T-Mobile úpravy venkovních ploch", hint: "Praha 4", href: "projekty.html#tmobile-plochy", keywords: "tmobile plochy" },

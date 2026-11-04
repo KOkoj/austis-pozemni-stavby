@@ -576,6 +576,9 @@ DONE = [
         "w": 1000,
         "h": 749,
         "small": True,
+        "group": "Agrotechnology park Liberec",
+        "group_id": "liberec",
+        "group_note": "Hala C · hala B · hala A",
     },
     {
         "id": "liberec-b",
@@ -588,6 +591,9 @@ DONE = [
         "h": 749,
         "small": True,
         "status": "Dokončeno",
+        "group": "Agrotechnology park Liberec",
+        "group_id": "liberec",
+        "group_note": "Hala C · hala B · hala A",
     },
     {
         "id": "liberec-a",
@@ -599,6 +605,9 @@ DONE = [
         "w": 1000,
         "h": 749,
         "small": True,
+        "group": "Agrotechnology park Liberec",
+        "group_id": "liberec",
+        "group_note": "Hala C · hala B · hala A",
     },
     {
         "id": "kostelec",
@@ -835,6 +844,44 @@ def project_card(item, period_label=None):
             <p class="realizace-meta">{meta}</p>
           </div>
         </article>"""
+
+
+def project_cards_html(items, use_item_period_label=False):
+    parts = []
+    i = 0
+    n = len(items)
+    while i < n:
+        group = items[i].get("group")
+        if not group:
+            period_label = items[i].get("period_label") if use_item_period_label else None
+            parts.append(project_card(items[i], period_label))
+            i += 1
+            continue
+        run = [items[i]]
+        i += 1
+        while i < n and items[i].get("group") == group:
+            run.append(items[i])
+            i += 1
+        inner = "\n".join(
+            project_card(p, p.get("period_label") if use_item_period_label else None)
+            for p in run
+        )
+        title = html.escape(group)
+        note = html.escape(run[0].get("group_note") or "")
+        gid = html.escape(run[0].get("group_id") or "", quote=True)
+        id_attr = f' id="{gid}"' if gid else ""
+        note_html = f'\n            <p class="realizace-cluster-note">{note}</p>' if note else ""
+        parts.append(
+            f"""        <div class="realizace-cluster"{id_attr} role="group" aria-label="{title}">
+          <div class="realizace-cluster-head">
+            <p class="realizace-cluster-title">{title}</p>{note_html}
+          </div>
+          <div class="realizace-cluster-list">
+{inner}
+          </div>
+        </div>"""
+        )
+    return "\n".join(parts)
 
 
 def picked_card(item, href):
@@ -1213,8 +1260,8 @@ def render_projekty():
         "přehled realizací",
         "přehled<br />realizací",
     )
-    in_progress = "\n".join(project_card(p, p.get("period_label")) for p in IN_PROGRESS)
-    done = "\n".join(project_card(p) for p in DONE)
+    in_progress = project_cards_html(IN_PROGRESS, use_item_period_label=True)
+    done = project_cards_html(DONE)
     body = f"""
       <section id="v-realizaci" class="realizace-group flow-first" aria-labelledby="inprogress-title">
         <h2 id="inprogress-title">V realizaci</h2>
