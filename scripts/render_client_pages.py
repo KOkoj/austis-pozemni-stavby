@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104e"
+ASSET_V = "20261104f"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -963,7 +963,7 @@ def render_index():
 {picked_card(vranany, "projekty.html#vranany")}
 {picked_card(liberec_b, "projekty.html#liberec-b")}
         </div>
-        <p class="picked-more"><a class="austis-intro-more" href="projekty.html">Všechny realizace</a></p>
+        <p class="picked-more"><a class="btn btn-dark picked-all" href="projekty.html"><span class="btn-label">Všechny realizace</span></a></p>
       </section>
 
       <section id="spoluprace" class="contact-steps-section" aria-labelledby="spoluprace-title">

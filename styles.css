@@ -91,8 +91,8 @@
     calc(100vw - 24px - var(--scroll-nav-logo-left)),
     calc(var(--scroll-nav-content-right) - var(--scroll-nav-logo-left))
   );
-  --scroll-nav-logo-gap: calc(10px * var(--scale));
-  --scroll-nav-logo-slot: calc(200px * var(--scale));
+  --scroll-nav-logo-gap: calc(16px * var(--scale));
+  --scroll-nav-logo-slot: calc(236px * var(--scale));
   --scroll-nav-bar-left: calc(var(--scroll-nav-logo-left) + var(--scroll-nav-logo-slot));
   --scroll-nav-bar-width: calc(var(--scroll-nav-content-width) - var(--scroll-nav-logo-slot));
   --subpage-logo-overhang: calc(var(--header-offset) + 122px - (var(--nav-bar-offset) + var(--scroll-nav-bar-height)));
@@ -3201,9 +3201,9 @@ button.project-link {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 4px;
-  width: auto;
-  max-width: calc(var(--scroll-nav-logo-slot) - 24px);
+  gap: 3px;
+  width: max-content;
+  max-width: none;
   height: 100%;
   overflow: visible;
   text-align: left;
@@ -3225,8 +3225,8 @@ button.project-link {
   left: auto;
   top: auto;
   width: auto;
-  height: calc(26px * var(--scale));
-  max-height: calc(var(--scroll-nav-bar-height) - 16px);
+  height: 20px;
+  max-height: none;
   object-fit: contain;
 }
 
@@ -3234,22 +3234,29 @@ button.project-link {
   display: block;
   flex: 0 0 auto;
   width: auto;
-  max-width: 100%;
+  max-width: none;
   margin: 0;
   padding: 0;
   background: none;
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.82);
   white-space: nowrap;
-  overflow: hidden;
-  font-size: 13px;
+  overflow: visible;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .scroll-nav-logo .logo-sub::before {
   display: none;
+}
+
+.scroll-nav-logo,
+.scroll-nav-logo:hover,
+.scroll-nav-logo:focus-visible {
+  filter: none;
+  transform: none;
 }
 
 .scroll-nav-menu-toggle {
@@ -8538,19 +8545,24 @@ html.has-media-parallax .gd-split figure > img {
 
   .scroll-nav-logo {
     left: var(--mobile-header-pad-x, clamp(28px, 7vw, 48px));
-    flex-direction: row;
-    align-items: center;
-    gap: 0;
-    max-width: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3px;
+    max-width: calc(100% - 108px);
   }
 
   .scroll-nav-logo .logo-img {
-    height: 24px;
-    max-height: 28px;
+    height: 18px;
+    max-height: none;
   }
 
   .scroll-nav-logo .logo-sub {
-    display: none;
+    display: block;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .scroll-nav-menu-toggle {
@@ -9756,8 +9768,9 @@ img[src*="placeholder-blueprint.svg"],
 }
 
 .hq-photo.hq-photo-hero {
-  width: 100%;
-  max-width: none;
+  width: min(50%, 560px);
+  max-width: 50%;
+  max-height: 420px;
   margin: 32px 0 8px;
   background: #fff;
   overflow: hidden;
@@ -9767,7 +9780,8 @@ img[src*="placeholder-blueprint.svg"],
   display: block;
   width: 100%;
   max-width: none;
-  height: auto;
+  height: 100%;
+  max-height: 420px;
   aspect-ratio: 2560 / 1429;
   object-fit: cover;
   object-position: center 38%;
@@ -9855,9 +9869,12 @@ img[src*="placeholder-blueprint.svg"],
 
 .picked-all {
   display: grid;
-  width: auto;
+  width: 224px;
   min-width: 224px;
-  margin: 28px auto 36px;
+  height: 47px;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 .section-follow {
@@ -10216,7 +10233,6 @@ img[src*="placeholder-blueprint.svg"],
 .flow-subpage .inquiry-form .btn,
 .flow-subpage .footer-cta-wrap .btn,
 .flow-subpage .contact-actions .btn,
-.flow-subpage .picked-all,
 .flow-subpage .career-block .btn,
 .flow-subpage .about-prose .btn {
   width: fit-content;
@@ -10224,6 +10240,20 @@ img[src*="placeholder-blueprint.svg"],
   max-width: 100%;
   height: 47px;
   padding: 0 24px;
+  white-space: nowrap;
+}
+
+.flow-subpage .picked-all,
+.flow-subpage .picked-more .btn {
+  display: grid;
+  place-items: center;
+  width: 224px;
+  min-width: 224px;
+  max-width: 100%;
+  height: 47px;
+  padding: 0 24px;
+  border-radius: 0;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -10251,7 +10281,6 @@ img[src*="placeholder-blueprint.svg"],
   .flow-subpage .inquiry-form .btn,
   .flow-subpage .footer-cta-wrap .btn,
   .flow-subpage .contact-actions .btn,
-  .flow-subpage .picked-all,
   .flow-subpage .career-block .btn,
   .flow-subpage .about-prose .btn {
     white-space: normal;
@@ -10260,6 +10289,27 @@ img[src*="placeholder-blueprint.svg"],
     min-height: 47px;
     padding: 12px 20px;
     text-align: center;
+  }
+
+  .flow-subpage .picked-all,
+  .flow-subpage .picked-more .btn {
+    width: 224px;
+    max-width: 100%;
+    height: 47px;
+    min-height: 47px;
+    padding: 0 24px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .hq-photo.hq-photo-hero {
+    width: 100%;
+    max-width: 100%;
+    max-height: 280px;
+  }
+
+  .hq-photo-hero img {
+    max-height: 280px;
   }
 }
 
@@ -11362,6 +11412,7 @@ body.search-overlay-open {
 
 .picked-more {
   margin: 28px var(--flow-pad-x, 36px) 36px;
+  overflow: visible;
 }
 
 .realizace-open {
