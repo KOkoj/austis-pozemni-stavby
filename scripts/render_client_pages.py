@@ -24,7 +24,7 @@ PHOTO = {
     "vinice": "assets/photos/bd-u-vinice-1.webp",
     "hluckova": "assets/photos/bd-hluckova-1.webp",
     "pribram": "assets/photos/retail-park-pribram-1.webp",
-    "slivenec": "assets/photos/sidlo-austis-slivenec-1.webp",
+    "slivenec": "assets/photos/austis-sign-hero.webp",
     "hq_hero": "assets/photos/austis-sign-hero.webp",
 }
 HQ_PHOTO = PHOTO["slivenec"]
