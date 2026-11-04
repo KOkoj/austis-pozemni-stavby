@@ -12565,3 +12565,9 @@ footer small {
 
 .sv-type{background-color:#2a2a2a;background-blend-mode:luminosity}
 .sv-type::before{background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.5))}
+
+.sv-steps .sv-step:last-child{grid-column:1/-1;background:#1d1d1b;color:#fff;padding:40px!important;border:0!important;border-left:4px solid #9b1c2c!important}
+.sv-steps .sv-step:last-child *{color:#fff!important}
+.sv-steps .sv-step:last-child .sv-step-num{color:#e04a5a!important}
+.sv-steps .sv-step:last-child h3{font-size:24px}
+@media(max-width:1024px){.sv-steps .sv-step:last-child{padding:28px!important}}
