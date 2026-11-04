@@ -1325,7 +1325,7 @@ def render_about():
           </article>
         </div>
         <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:{CAREER_EMAIL}">{CAREER_EMAIL}</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
-        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Mám zájem o práci</span></a>
+        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Napsat na info@austis.cz</span></a>
       </section>
 """
     write("o-spolecnosti.html", html + start + body + page_end())
