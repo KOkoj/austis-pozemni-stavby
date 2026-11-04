@@ -12571,3 +12571,9 @@ footer small {
 .sv-steps .sv-step:last-child .sv-step-num{color:#e04a5a!important}
 .sv-steps .sv-step:last-child h3{font-size:24px}
 @media(max-width:1024px){.sv-steps .sv-step:last-child{padding:28px!important}}
+
+.sv-types{gap:2px!important;border:0!important;background:transparent!important}
+.sv-type{background-color:#555!important;min-height:220px;padding:28px!important;border:0!important;box-shadow:none!important;outline:0!important}
+.sv-type::before{inset:-1px!important;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 80%)!important}
+.sv-type,.sv-type *{font-size:22px!important;font-weight:600!important;line-height:1.3!important;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+@media(max-width:1024px){.sv-type,.sv-type *{font-size:19px!important}.sv-type{min-height:180px}}
