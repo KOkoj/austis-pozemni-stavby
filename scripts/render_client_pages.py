@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104c"
+ASSET_V = "20261104d"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -802,11 +802,6 @@ def project_card(item, period_label=None):
     shots = gallery_shots(item) if photo else []
     count_label = photo_count_label(len(shots))
     count_html = f'<span class="realizace-count">{count_label}</span>' if count_label else ""
-    media = (
-        f'<div class="{media_classes(item, "realizace-media")}">{media_img(item)}{count_html}</div>'
-        if photo
-        else '<div class="realizace-media is-empty" aria-hidden="true"></div>'
-    )
     meta_parts = [item.get("place") or ""]
     if item.get("period"):
         meta_parts.append(item["period"])
@@ -814,14 +809,26 @@ def project_card(item, period_label=None):
         meta_parts.append(item["role"])
     meta = " · ".join(part for part in meta_parts if part)
     extra = ""
+    card_class = "realizace-card"
     if photo:
+        media = (
+            f'<div class="{media_classes(item, "realizace-media")}">'
+            f"{media_img(item)}{count_html}</div>"
+        )
         title_attr = html.escape(item["title"], quote=True)
         extra = (
             f' data-lightbox {gallery_attr(item)} tabindex="0" role="button" '
             f'aria-label="{title_attr} – otevřít galerii"'
         )
+    else:
+        initial = html.escape((item["title"][:1] or "").upper())
+        media = (
+            f'<div class="realizace-panel" aria-hidden="true">'
+            f'<span class="realizace-panel-mark">{initial}</span></div>'
+        )
+        card_class = "realizace-card is-text"
     desc = f'\n            <p class="realizace-desc">{item["desc"]}</p>' if item.get("desc") else ""
-    return f"""        <article class="realizace-card" id="{item["id"]}"{extra}>
+    return f"""        <article class="{card_class}" id="{item["id"]}"{extra}>
           {media}
           <div class="realizace-body">
             <h3 class="realizace-title">{item["title"]}</h3>{desc}

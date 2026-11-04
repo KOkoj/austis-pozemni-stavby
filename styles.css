@@ -9955,8 +9955,11 @@ img[src*="placeholder-blueprint.svg"],
   border: 0;
   box-shadow: none;
   scroll-margin-top: 96px;
-  cursor: pointer;
   overflow: hidden;
+}
+
+.realizace-card[data-lightbox] {
+  cursor: pointer;
 }
 
 .realizace-card:focus-visible {
@@ -9970,6 +9973,70 @@ img[src*="placeholder-blueprint.svg"],
 
 .realizace-card .realizace-media.is-empty {
   display: none;
+}
+
+.realizace-card.is-text {
+  cursor: default;
+  background: #f7f7f7;
+}
+
+.realizace-panel {
+  position: relative;
+  flex: 0 0 auto;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #3c3938;
+  color: #fff;
+}
+
+.realizace-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 42%),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 17px,
+      rgba(255, 255, 255, 0.045) 17px 18px
+    );
+  pointer-events: none;
+}
+
+.realizace-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 56px;
+  background: var(--red);
+}
+
+.realizace-panel-mark {
+  position: absolute;
+  right: 10px;
+  bottom: -8px;
+  font-size: clamp(92px, 22vw, 132px);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.realizace-card.is-text .realizace-title {
+  color: var(--ink);
+}
+
+.realizace-card.is-text .realizace-desc {
+  color: #56575b;
+}
+
+.realizace-card.is-text .realizace-meta,
+.realizace-card.is-text .realizace-body dl.realizace-meta {
+  color: #5c5d60;
+  font-size: 16px;
 }
 
 .realizace-card .realizace-meta,
