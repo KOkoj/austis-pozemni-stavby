@@ -12562,3 +12562,6 @@ footer small {
 .sv-type-3{background-image:url(assets/photos/jahodarna-vranany-2.webp)}
 .sv-type-4{background-image:url(assets/photos/botanicka-zahrada-3.webp)}
 .sv-type-5{background-image:url(assets/photos/retail-park-pribram-1.webp)}
+
+.sv-type{background-color:#2a2a2a;background-blend-mode:luminosity}
+.sv-type::before{background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.5))}
