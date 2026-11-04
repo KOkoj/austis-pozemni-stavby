@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104m"
+ASSET_V = "20261104n"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -409,9 +409,6 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               {search_toggle()}
               {cta}
             </header>
-            <div class="slide-dots" aria-label="Sídlo">
-              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
-            </div>
 {desktop_copy}
           </section>
         </div>
@@ -449,7 +446,6 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               decoding="async"
             />
           </div>
-          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
 {mobile_panel}
         </section>
       </div>
