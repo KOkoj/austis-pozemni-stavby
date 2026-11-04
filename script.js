@@ -1366,7 +1366,6 @@
     { title: "Vraňany Farma Hanč", hint: "Polyfunkční objekt s prodejnou a kavárnou", href: "projekty.html#vranany", keywords: "vranany farma hanc jahodarna" },
     { title: "Jižní vstup do Botanické zahrady", hint: "Praha 7", href: "projekty.html#botanicka", keywords: "botanicka zahrada vstup" },
     { title: "Bytový dům U Vinice", hint: "Praha 7", href: "projekty.html#vinice", keywords: "vinice bytovy dum" },
-    { title: "Bytový dům Hlučkova", hint: "Praha", href: "projekty.html#hluckova", keywords: "hluckova bytovy dum" },
     { title: "T-Mobile opravy střechy a teras", hint: "Praha 4", href: "projekty.html#tmobile-opravy", keywords: "tmobile opravy strecha" },
     { title: "OC Olympia Mladá Boleslav", hint: "Mladá Boleslav", href: "projekty.html#olympia-mb", keywords: "olympia mlada boleslav" },
     { title: "Rodinný dům Nebušice", hint: "Praha 6", href: "projekty.html#nebusice", keywords: "nebusice rodinny dum" },

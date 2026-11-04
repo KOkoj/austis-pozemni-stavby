@@ -3243,7 +3243,7 @@ button.project-link {
   color: #fff;
   white-space: nowrap;
   overflow: visible;
-  font-size: calc(14px * var(--scale));
+  font-size: max(16px, calc(16px * var(--scale)));
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.01em;
@@ -4332,7 +4332,7 @@ button.project-link {
     margin: 0 0 20px;
     max-width: 36em;
     color: rgba(255, 255, 255, 0.92);
-    font-size: clamp(15px, 1.9vw, 17px);
+    font-size: clamp(16px, 1.9vw, 17px);
     font-weight: 300;
     line-height: 1.6;
   }
@@ -7469,8 +7469,18 @@ body.lightbox-open .mobile-nav-panel {
 
 .inquiry-form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
+}
+
+.inquiry-form-row .inquiry-field--full {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.inquiry-field select {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .inquiry-field {
@@ -8567,7 +8577,7 @@ html.has-media-parallax .gd-split figure > img {
   .scroll-nav-logo .logo-sub {
     display: flex;
     gap: 10px;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.01em;
     line-height: 1;
@@ -10137,7 +10147,8 @@ img[src*="placeholder-blueprint.svg"],
 
 .realizace-card .realizace-meta,
 .realizace-body dl.realizace-meta {
-  display: block;
+  display: grid;
+  gap: 10px;
   margin: auto 0 0;
   padding: 0;
   color: var(--muted);
@@ -10148,7 +10159,8 @@ img[src*="placeholder-blueprint.svg"],
 }
 
 .realizace-meta > div {
-  display: contents;
+  display: grid;
+  gap: 2px;
 }
 
 @media (max-width: 1024px) {
@@ -10174,7 +10186,7 @@ img[src*="placeholder-blueprint.svg"],
 .realizace-body dt,
 .realizace-meta dt {
   color: var(--muted);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.3;
@@ -10183,9 +10195,9 @@ img[src*="placeholder-blueprint.svg"],
 
 .realizace-body dd,
 .realizace-meta dd {
-  margin: 4px 0 0;
+  margin: 0;
   color: var(--ink);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
 }
@@ -10898,8 +10910,11 @@ html.as-enter-out .mobile-hero {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
-  .austis-home .mobile-hero-label {
-    display: none;
+  .austis-home .mobile-hero-label,
+  .austis-page .mobile-hero-label {
+    display: inline-flex;
+    top: calc(var(--mobile-hero-media) - 46px);
+    font-size: 16px;
   }
 
   .austis-home .mobile-hero,
@@ -10973,6 +10988,7 @@ html.as-enter-out .mobile-hero {
     margin-bottom: 0;
     max-width: 32em;
     color: #56575b;
+    font-size: 16px;
   }
 
   .austis-home .mobile-hero-actions,
@@ -11503,10 +11519,10 @@ body.search-overlay-open {
   right: 8px;
   bottom: 8px;
   z-index: 1;
-  padding: 4px 7px;
+  padding: 5px 8px;
   background: rgba(30, 30, 30, 0.68);
   color: #fff;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -11637,6 +11653,21 @@ body.search-overlay-open {
 }
 
 @media (max-width: 1024px) {
+  html {
+    scroll-padding-top: calc(var(--mobile-header-bar, 68px) + 16px);
+  }
+
+  .flow-subpage .subpage-site > .flow-first,
+  .inquiry-section,
+  .contact-detail,
+  .services-intro,
+  .about-prose.flow-first,
+  .realizace-group.flow-first,
+  .trio.flow-first {
+    scroll-margin-top: calc(var(--mobile-header-bar, 68px) + 16px);
+    padding-top: calc(var(--mobile-header-bar, 68px) + 20px);
+  }
+
   .site-search-field input {
     font-size: 18px;
   }
@@ -11677,8 +11708,10 @@ body.search-overlay-open {
   .realizace-group,
   .realizace-card,
   .career-block,
-  .faq-section {
-    scroll-margin-top: 24px;
+  .faq-section,
+  .inquiry-section,
+  .contact-detail {
+    scroll-margin-top: calc(var(--mobile-header-bar, 68px) + 16px);
   }
 }
 

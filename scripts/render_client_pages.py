@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104i"
+ASSET_V = "20261104j"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -15,6 +15,7 @@ PHOTO = {
     "liberec_2": "assets/photos/agrotechnology-park-liberec-2.webp",
     "liberec_3": "assets/photos/agrotechnology-park-liberec-3.webp",
     "liberec_4": HERO_IMG,
+    # Visualization — used on Služby GD only. Never on Seibert cards/lightbox.
     "seibert": "assets/photos/seibertovy-vyhledy-2.webp",
     "vranany": "assets/photos/jahodarna-vranany-2.webp",
     "botanicka": "assets/photos/botanicka-zahrada-3.webp",
@@ -408,6 +409,9 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               {search_toggle()}
               {cta}
             </header>
+            <div class="slide-dots" aria-label="Sídlo">
+              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
+            </div>
 {desktop_copy}
           </section>
         </div>
@@ -445,6 +449,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               decoding="async"
             />
           </div>
+          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
 {mobile_panel}
         </section>
       </div>
@@ -512,10 +517,7 @@ IN_PROGRESS = [
         "period": "květen 2025 – listopad 2027",
         "role": "Generální dodavatel",
         "status": "V realizaci",
-        "photo": PHOTO["seibert"],
-        "w": 1000,
-        "h": 750,
-        "small": True,
+        # No real photo yet; seibertovy-vyhledy-2.webp is a visualization.
     },
     {
         "id": "roztoky",
@@ -682,17 +684,6 @@ DONE = [
         "small": True,
     },
     {
-        # TODO: not in the 23 Oct Word list. Photo exists in the approved set; no period/street in client brief.
-        "id": "hluckova",
-        "title": "Bytový dům Hlučkova",
-        "desc": "Novostavba bytového domu.",
-        "place": "Praha",
-        "photo": PHOTO["hluckova"],
-        "w": 909,
-        "h": 523,
-        "small": True,
-    },
-    {
         "id": "tmobile-opravy",
         "title": "T-Mobile opravy střechy a teras",
         "desc": "Rekonstrukce střešního pláště prvního nadzemního podlaží a vybraných teras.",
@@ -733,6 +724,23 @@ DONE = [
         "desc": "Sanace, zesílení a odvodnění mostních konstrukcí.",
         "place": "Radějovice – Babice",
         "period": "červen 2018 – říjen 2018",
+    },
+]
+
+# Hidden until the client sends materials. Invented copy — not in the 23 Oct list.
+# Keep flagged here so it can be restored without rewriting.
+HIDDEN_UNTIL_CLIENT = [
+    {
+        "id": "hluckova",
+        "title": "Bytový dům Hlučkova",
+        "desc": "Novostavba bytového domu.",
+        "place": "Praha",
+        "photo": PHOTO["hluckova"],
+        "w": 909,
+        "h": 523,
+        "small": True,
+        "hidden": True,
+        "hidden_reason": "Invented copy; wait for client materials.",
     },
 ]
 
@@ -811,12 +819,6 @@ def project_card(item, period_label=None):
     shots = gallery_shots(item) if photo else []
     count_label = photo_count_label(len(shots))
     count_html = f'<span class="realizace-count">{count_label}</span>' if count_label else ""
-    meta_parts = [item.get("place") or ""]
-    if item.get("period"):
-        meta_parts.append(item["period"])
-    if item.get("role"):
-        meta_parts.append(item["role"])
-    meta = " · ".join(part for part in meta_parts if part)
     extra = ""
     card_class = "realizace-card"
     if photo:
@@ -837,11 +839,22 @@ def project_card(item, period_label=None):
         )
         card_class = "realizace-card is-text"
     desc = f'\n            <p class="realizace-desc">{item["desc"]}</p>' if item.get("desc") else ""
+    label = period_label or item.get("period_label") or "Období realizace"
+    rows = []
+    if item.get("place"):
+        rows.append(f'<div><dt>Místo</dt><dd>{item["place"]}</dd></div>')
+    if item.get("period"):
+        rows.append(f'<div><dt>{label}</dt><dd>{item["period"]}</dd></div>')
+    if item.get("role"):
+        rows.append(f'<div><dt>Role</dt><dd>{item["role"]}</dd></div>')
+    meta = "\n              ".join(rows)
     return f"""        <article class="{card_class}" id="{item["id"]}"{extra}>
           {media}
           <div class="realizace-body">
             <h3 class="realizace-title">{item["title"]}</h3>{desc}
-            <p class="realizace-meta">{meta}</p>
+            <dl class="realizace-meta">
+              {meta}
+            </dl>
           </div>
         </article>"""
 
@@ -1535,7 +1548,7 @@ def render_poptavka():
                   <option value="nejsem-si-jisty">Nejsem si jistý</option>
                 </select>
               </div>
-              <div class="inquiry-field">
+              <div class="inquiry-field inquiry-field--full">
                 <label for="typ-stavby">Typ stavby</label>
                 <select id="typ-stavby" name="typ-stavby">
                   <option value="">Vyberte typ</option>
@@ -1627,7 +1640,7 @@ def render_privacy():
         "AUSTIS informace o zpracování osobních údajů",
         "Agrotechnology park Liberec",
         "Informace o zpracování osobních údajů",
-        "Kdo je správcem osobních údajů a jak nás můžete kontaktovat.",
+        "Text informací o zpracování osobních údajů provozovatel dosud nedodal.",
         "#osobni-udaje",
         "k textu",
         "k textu",
@@ -1635,37 +1648,7 @@ def render_privacy():
     body = f"""
       <section id="osobni-udaje" class="about-prose flow-first" aria-labelledby="privacy-title">
         <h2 id="privacy-title">Informace o zpracování osobních údajů</h2>
-        <p>Tyto informace se týkají zpracování osobních údajů návštěvníků webu a osob, které nás kontaktují. Kde níže chybí údaj od provozovatele, je to výslovně označeno jako TODO.</p>
-
-        <h3>Správce osobních údajů</h3>
-        <p>Správcem je <strong>AUSTIS Pozemní stavby s.r.o.</strong>, IČ {ICO}, se sídlem K Austisu 680, 154 00 Praha 5 – Slivenec.</p>
-        <p>Kontakt: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
-        <p>TODO: jméno a kontakt pověřence pro ochranu osobních údajů, pokud je jmenován.</p>
-
-        <h3>Účely zpracování</h3>
-        <p>TODO: potvrdit účely. Na webu je formulář poptávky a e-mail {EMAIL}; zpracování údajů z poptávek a korespondence je zřejmým účelem, rozsah a další účely (newsletter, cookies, statistiky, kamerový systém sídla) provozovatel nedodal.</p>
-
-        <h3>Právní základy</h3>
-        <p>TODO: právní základy podle čl. 6 GDPR (smlouva / jednání o smlouvě, oprávněný zájem, souhlas, právní povinnost) provozovatel nedodal.</p>
-
-        <h3>Kategorie osobních údajů</h3>
-        <p>TODO: přesný výčet. Formulář poptávky sbírá jméno, společnost, e-mail, telefon, popis projektu a souhlas se zpracováním za účelem vyřízení poptávky. Další kategorie provozovatel nedodal.</p>
-
-        <h3>Příjemci a zpracovatelé</h3>
-        <p>TODO: seznam příjemců a zpracovatelů (hosting, e-mail, analytika) provozovatel nedodal.</p>
-
-        <h3>Doba uchování</h3>
-        <p>TODO: doby uchování jednotlivých kategorií údajů provozovatel nedodal.</p>
-
-        <h3>Předání mimo EU</h3>
-        <p>TODO: zda dochází k předání osobních údajů mimo Evropskou unii / Evropský hospodářský prostor, provozovatel nedodal.</p>
-
-        <h3>Práva subjektů údajů</h3>
-        <p>Podle nařízení GDPR můžete požádat o přístup k osobním údajům, jejich opravu nebo výmaz, omezení zpracování, vznést námitku a uplatnit právo na přenositelnost. Stížnost můžete podat u Úřadu pro ochranu osobních údajů.</p>
-        <p>TODO: postup vyřizování žádostí u společnosti (lhůty nad rámec zákona, formulář, interní kontaktní osoba).</p>
-
-        <h3>Cookies a měření webu</h3>
-        <p>TODO: zda web používá cookies nebo měřicí nástroje a na jakém právním základě, provozovatel nedodal.</p>
+        <p>Text informací o zpracování osobních údajů provozovatel dosud nedodal. Doplníme jej po dodání od odpovědné osoby.</p>
       </section>
 """
     write("osobni-udaje.html", html + start + body + page_end())
