@@ -39,6 +39,25 @@
     mobilePage?.setAttribute("aria-hidden", String(isDesktop));
     desktopShell?.toggleAttribute("inert", !isDesktop);
     mobilePage?.toggleAttribute("inert", isDesktop);
+    window.requestAnimationFrame(fitHeroPanel);
+  }
+
+  function fitHeroPanel() {
+    if (window.innerWidth < desktopMin) {
+      if (root.style.getPropertyValue("--hero-panel-height")) {
+        root.style.removeProperty("--hero-panel-height");
+      }
+      return;
+    }
+    const copy = desktopShell?.querySelector(".hero-copy");
+    if (!copy) return;
+    const scale = Number.parseFloat(getComputedStyle(root).getPropertyValue("--scale")) || 1;
+    const artboardH = copy.getBoundingClientRect().height / scale;
+    const next = Math.max(224, Math.ceil(artboardH + 0.5));
+    const nextStr = `${next}px`;
+    if (root.style.getPropertyValue("--hero-panel-height") !== nextStr) {
+      root.style.setProperty("--hero-panel-height", nextStr);
+    }
   }
 
   function setLineDirection(line) {
@@ -2271,6 +2290,12 @@
   }
 
   updateScale();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      updateScale();
+      fitHeroPanel();
+    });
+  }
   prepareDesignLines();
   const heroApi = prepareHeroDots();
   initHeroVideo(revealHeroLines);

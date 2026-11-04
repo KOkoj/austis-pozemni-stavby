@@ -10484,11 +10484,12 @@ html.as-enter-out .mobile-hero {
   --acc-tds: #c0882e;
   --acc-sprava: #3b6ea5;
   --acc-sprava-dark: #1e4a7a;
-  --hero-action-size: var(--hero-panel-height);
+  /* Jump stays a 224px tile even when the copy panel grows with the text. */
+  --hero-action-size: 224px;
 }
 
 .austis-home {
-  --hero-action-size: var(--hero-panel-height);
+  --hero-action-size: 224px;
   --hero-actions-width: var(--hero-action-size);
   --hero-main-width: calc(var(--content-width) - var(--hero-actions-width));
   --hero-copy-split: calc(var(--content-left) + var(--hero-main-width));
@@ -10498,8 +10499,13 @@ html.as-enter-out .mobile-hero {
 
 .austis-home .hero-copy,
 .austis-page .hero-copy {
+  /* Pin to the viewport-anchored bottom so extra copy grows into the photo,
+     not down into .desktop-shell { overflow: hidden }. */
+  top: auto;
+  bottom: calc(var(--hero-overlay-height) - var(--hero-panel-bottom));
   height: auto;
   min-height: var(--hero-panel-height);
+  max-height: none;
   overflow: visible;
   align-items: stretch;
 }
@@ -10507,7 +10513,19 @@ html.as-enter-out .mobile-hero {
 .austis-home .hero-copy-main,
 .austis-page .hero-copy-main {
   height: auto;
+  max-height: none;
+  min-height: 0;
   overflow: visible;
+}
+
+.austis-home .hero-jump,
+.austis-page .hero-jump {
+  width: 224px;
+  min-width: 224px;
+  max-width: 224px;
+  height: auto;
+  flex-shrink: 0;
+  align-self: stretch;
 }
 
 .austis-home .hero-copy-main {
@@ -10523,16 +10541,25 @@ html.as-enter-out .mobile-hero {
   z-index: 1;
 }
 
+.austis-page .hero-copy-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 38px var(--hero-copy-pad-x, var(--content-pad-x)) 32px;
+}
+
 .austis-home .hero-copy h1,
 .austis-home .hero-copy h1:has(.hero-title-brand),
 .austis-page .hero-copy h1,
 .flow-subpage .hero-copy h1 {
-  position: absolute;
-  left: var(--hero-copy-pad-x, var(--content-pad-x));
-  top: 38px;
-  width: calc(100% - 2 * var(--hero-copy-pad-x, var(--content-pad-x)));
+  position: static;
+  left: auto;
+  top: auto;
+  width: auto;
   max-width: none;
   height: auto;
+  max-height: none;
   display: block;
   margin: 0;
   color: var(--ink);
@@ -10580,18 +10607,19 @@ html.as-enter-out .mobile-hero {
 .austis-home .hero-copy-lead,
 .austis-page .hero-copy-lead,
 .flow-subpage .hero-copy-lead {
-  position: absolute;
-  left: var(--hero-copy-pad-x, var(--content-pad-x));
-  right: var(--hero-copy-pad-x, var(--content-pad-x));
-  bottom: 32px;
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
   margin: 0;
   max-width: 34em;
+  max-height: none;
   color: #56575b;
   font-size: min(20px, calc(20px / var(--scale)));
   font-weight: 300;
   line-height: 1.45;
   letter-spacing: 0.01em;
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .austis-home .slide-dots {
@@ -10936,6 +10964,7 @@ html.as-enter-out .mobile-hero {
   .austis-page .mobile-hero {
     --mobile-hero-media: clamp(320px, 48vh, 440px);
     min-height: 0;
+    overflow: visible;
     background: #fff;
     color: var(--ink);
   }
@@ -10965,6 +10994,9 @@ html.as-enter-out .mobile-hero {
     --mobile-hero-pad-x: var(--mobile-header-pad-x, clamp(28px, 7vw, 48px));
     margin-top: var(--mobile-hero-media);
     padding: 32px var(--mobile-hero-pad-x) 40px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
     background: #fff;
     color: var(--ink);
     backdrop-filter: none;
@@ -11918,11 +11950,13 @@ body.mobile-menu-open .back-to-top {
     text-wrap: pretty;
   }
 
-  .austis-home .hero-jump {
+  .austis-home .hero-jump,
+  .austis-page .hero-jump {
     flex-shrink: 0;
     align-self: stretch;
-    width: var(--hero-panel-height);
-    min-width: var(--hero-panel-height);
+    width: 224px;
+    min-width: 224px;
+    max-width: 224px;
     height: auto;
     border-radius: 0;
   }
