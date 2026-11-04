@@ -12333,3 +12333,11 @@ html.has-media-parallax .realizace-media > img {
 .service-row-body p + p {
   margin-top: 0;
 }
+
+/* Služby CTA: side padding */
+.service-row-body .btn {
+  width: auto;
+  min-width: 224px;
+  padding: 0 32px;
+  align-self: flex-start;
+}
