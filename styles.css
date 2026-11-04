@@ -12579,3 +12579,13 @@ footer small {
 @media(max-width:1024px){.sv-type,.sv-type *{font-size:19px!important}.sv-type{min-height:180px}}
 .sv-type *{max-width:none!important}
 .sv-type::before{background:linear-gradient(to top,rgba(58,60,62,.82) 0%,rgba(70,72,74,.55) 55%,rgba(80,82,84,.3) 100%)!important}
+
+/* realizace card hierarchy */
+.realizace-card .realizace-body{padding:24px 24px 28px!important;display:flex;flex-direction:column}
+.realizace-card .realizace-title{font-size:22px!important;font-weight:600!important;line-height:1.25;letter-spacing:-.01em;margin:0 0 8px!important}
+.realizace-card .realizace-desc{font-size:16px;line-height:1.55;margin:0 0 20px!important}
+.realizace-card .realizace-meta{margin:auto 0 0!important;padding-top:16px;border-top:1px solid rgba(0,0,0,.1);display:grid;gap:10px}
+.realizace-card .realizace-meta>div{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:16px;align-items:baseline}
+.realizace-card .realizace-meta dt{font-size:16px!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;color:#76777a!important;margin:0}
+.realizace-card .realizace-meta dd{margin:0;font-size:16px;color:#1e1e1e}
+@media(max-width:600px){.realizace-card .realizace-body{padding:20px 20px 24px!important}.realizace-card .realizace-meta>div{grid-template-columns:1fr;gap:2px}}
