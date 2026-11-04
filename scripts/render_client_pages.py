@@ -1,15 +1,43 @@
 #!/usr/bin/env python3
 """Render site pages from the 23 Oct 2026 accepted client texts."""
 
+import html
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261102u"
-HERO_IMG = "assets/agrotechnology-park-liberec.jpg"
+ASSET_V = "20261104b"
+# Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
+HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
+PHOTO = {
+    "liberec_hero": HERO_IMG,
+    "liberec_1": "assets/photos/agrotechnology-park-liberec-1.webp",
+    "liberec_2": "assets/photos/agrotechnology-park-liberec-2.webp",
+    "liberec_3": "assets/photos/agrotechnology-park-liberec-3.webp",
+    "liberec_4": HERO_IMG,
+    "seibert": "assets/photos/seibertovy-vyhledy-2.webp",
+    "vranany": "assets/photos/jahodarna-vranany-2.webp",
+    "botanicka": "assets/photos/botanicka-zahrada-3.webp",
+    "roztoky": "assets/photos/rd-roztoky-1.webp",
+    "novodvorska": "assets/photos/oc-novodvorska-1.webp",
+    "vinice": "assets/photos/bd-u-vinice-1.webp",
+    "hluckova": "assets/photos/bd-hluckova-1.webp",
+    "pribram": "assets/photos/retail-park-pribram-1.webp",
+    "slivenec": "assets/photos/sidlo-austis-slivenec-1.webp",
+    "hq_hero": "assets/photos/austis-sign-hero.webp",
+}
+HQ_PHOTO = PHOTO["slivenec"]
+HQ_HERO_PHOTO = PHOTO["hq_hero"]
+KARIERA_HREF = "o-spolecnosti.html#kariera"
 PHONE = "+420 721 071 189"
 PHONE_TEL = "+420721071189"
 EMAIL = "zakazky@austis.cz"
+CAREER_EMAIL = "info@austis.cz"
+HOME_INTRO = (
+    "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov. "
+    "Zaměřujeme se na generální dodávky novostaveb a rekonstrukcí většího rozsahu. "
+    "Naše zkušenosti představují dokončené i právě probíhající realizace."
+)
 ICO = "07093322"
 DIC = "CZ07093322"
 ICO_HREF = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=07093322"
@@ -198,6 +226,7 @@ def breadcrumb(name, path):
 
 def nav_links(active):
     items = [
+        ("index.html", "Domov", "home"),
         ("sluzby.html", "Služby", "sluzby"),
         ("projekty.html", "Realizace", "projekty"),
         ("o-spolecnosti.html", "O společnosti", "o-spolecnosti"),
@@ -214,6 +243,15 @@ def cta_btn(active=False, href="poptavka.html#poptavka-form"):
     cls = ' class="btn btn-red active"' if active else ' class="btn btn-red"'
     current = ' aria-current="page"' if active else ""
     return f'<a{cls} href="{href}"{current}><span class="btn-label">Poptat spolupráci</span></a>'
+
+
+def search_toggle(extra_class=""):
+    cls = f"hero-search-toggle {extra_class}".strip()
+    return (
+        f'<button type="button" class="{cls}" aria-label="Hledat" aria-haspopup="dialog" '
+        'aria-controls="site-search-overlay" aria-expanded="false">'
+        '<span class="hero-search-ico" aria-hidden="true"></span></button>'
+    )
 
 
 def head(title, description, path, extra="", og_image=HERO_IMG):
@@ -246,12 +284,66 @@ def head(title, description, path, extra="", og_image=HERO_IMG):
   </head>"""
 
 
-def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_label, extra_hero="", cta_active=False):
+HERO_CTA_HREF = "poptavka.html#poptavka-form"
+HERO_CTA_LABEL = "Poptat<br />spolupráci"
+HERO_CTA_ARIA = "Poptat spolupráci"
+
+HOME_ACTIONS = f"""            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
+                <h1>Generální dodávky<br /> novostaveb a&nbsp;rekonstrukcí</h1>
+                <p class="hero-copy-lead">{HOME_INTRO}</p>
+              </div>
+              <a class="hero-jump" href="projekty.html" aria-label="Prohlédnout realizace">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">Prohlédnout<br />realizace</span>
+              </a>
+            </div>"""
+
+HOME_MOBILE = f"""          <div class="mobile-hero-panel">
+            <div class="hero-copy-main">
+            <p class="hero-copy-eyebrow">AUSTIS Pozemní stavby</p>
+            <h1 class="mobile-hero-title">Generální dodávky novostaveb a&nbsp;rekonstrukcí</h1>
+            <p class="hero-copy-lead">{HOME_INTRO}</p>
+            </div>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="projekty.html">Prohlédnout realizace</a>
+            </div>
+          </div>"""
+
+
+def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_label, extra_hero="", cta_active=False, home=False):
     links = nav_links(active)
     cta = cta_btn(cta_active)
+    body_class = (
+        "home-page austis-home flow-subpage subpage-body"
+        if home
+        else f"subpage-body flow-subpage austis-page {active}-page"
+    )
+    if home:
+        desktop_copy = HOME_ACTIONS
+        mobile_panel = HOME_MOBILE
+    else:
+        desktop_copy = f"""            <div class="hero-copy">
+              <div class="hero-copy-main">
+                <h1>{h1}</h1>
+                <p class="hero-copy-lead">{lead}</p>
+              </div>
+              <a class="hero-jump" href="{HERO_CTA_HREF}" aria-label="{HERO_CTA_ARIA}">
+                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
+                <span class="hero-jump-label">{HERO_CTA_LABEL}</span>
+              </a>
+            </div>"""
+        mobile_panel = f"""          <div class="mobile-hero-panel">
+            <h1 class="mobile-hero-title">{h1}</h1>
+            <p>{lead}</p>
+            <div class="mobile-hero-actions">
+              <a class="mobile-text-link" href="{HERO_CTA_HREF}">{HERO_CTA_ARIA}</a>
+            </div>
+          </div>"""
     return f"""
   <body
-    class="subpage-body flow-subpage {active}-page"
+    class="{body_class}"
     data-hero-image="{HERO_IMG}"
     data-hero-video=""
     data-hero-name="{hero_name}"
@@ -266,13 +358,18 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
           <div class="scroll-nav-inner">
             <a class="logo scroll-nav-logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="assets/SVG/austis%20type.svg" alt="" /></span>
+              <span class="logo-sub">Pozemní stavby</span>
             </a>
             <header class="subpage-header">
               <nav class="subpage-nav" aria-label="Hlavní navigace">
 {links}
               </nav>
-              {cta}
+              <div class="header-cta-group">
+                {search_toggle()}
+                {cta}
+              </div>
             </header>
+            {search_toggle("mobile-search-toggle scroll-nav-search-toggle")}
             <button type="button" class="mobile-menu-toggle scroll-nav-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
               <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
             </button>
@@ -299,6 +396,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
             <div class="line line-hero-mid"></div>
             <div class="line line-hero-right"></div>
             <div class="line line-hero-bottom"></div>
+            <div class="hero-tail-blur" aria-hidden="true"></div>
             <div class="line line-hero-left" aria-hidden="true"></div>
             <header class="header">
               <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
@@ -307,31 +405,10 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               <nav class="nav" aria-label="Hlavní navigace">
 {links}
               </nav>
+              {search_toggle()}
               {cta}
-              <form class="hero-search" role="search">
-                <label class="hero-search-field">
-                  <span class="hero-search-ico" aria-hidden="true"></span>
-                  <input type="search" name="q" placeholder="Hledat…" autocomplete="off" enterkeyhint="search" aria-label="Hledat na webu" />
-                </label>
-                <div class="hero-search-results" hidden role="listbox" aria-label="Výsledky hledání"></div>
-              </form>
             </header>
-            <div class="slide-dots" aria-label="Sídlo">
-              <strong class="slide-label">K Austisu 680, Praha 5 – Slivenec</strong>
-            </div>
-            <div class="hero-copy">
-              <div class="hero-copy-main">
-                <h1>{h1}</h1>
-                <div class="hero-copy-aside">
-                  <p>{lead}</p>
-                  {extra_hero}
-                </div>
-              </div>
-              <a class="hero-jump" href="{jump_href}" aria-label="{jump_aria}">
-                <span class="hero-jump-mark" aria-hidden="true"><span class="hero-action-arrow"></span></span>
-                <span class="hero-jump-label">{jump_label}</span>
-              </a>
-            </div>
+{desktop_copy}
           </section>
         </div>
       </div>
@@ -345,13 +422,13 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
       <div class="mobile-page" aria-label="{aria} mobile">
         <header class="mobile-header">
           <div class="mobile-header-row">
-            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
-              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
-            </button>
             <a class="logo" href="index.html" aria-label="AUSTIS Pozemní stavby">
               <span class="logo-mark"><img class="logo-img" src="logo.svg" alt="AUSTIS Pozemní stavby" /></span>
             </a>
-            {cta}
+            {search_toggle("mobile-search-toggle")}
+            <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Otevřít menu">
+              <span class="mobile-menu-toggle-bars" aria-hidden="true"></span>
+            </button>
           </div>
           <nav class="mobile-nav" aria-label="Hlavní navigace">
 {links}
@@ -368,15 +445,7 @@ def chrome_start(active, aria, hero_name, h1, lead, jump_href, jump_aria, jump_l
               decoding="async"
             />
           </div>
-          <span class="mobile-hero-label">K Austisu 680, Praha 5 – Slivenec</span>
-          <div class="mobile-hero-panel">
-            <h1 class="mobile-hero-title">{h1}</h1>
-            <p>{lead}</p>
-            <div class="mobile-hero-actions">
-              {extra_hero}
-              <a class="mobile-text-link" href="{jump_href}">{jump_aria}</a>
-            </div>
-          </div>
+{mobile_panel}
         </section>
       </div>
 """
@@ -406,9 +475,9 @@ def footer():
             <li><a href="o-spolecnosti.html">O společnosti</a></li>
             <li><a href="kontakt.html">Kontakt</a></li>
             <li><a href="kontakt.html#faq">Časté otázky</a></li>
-            <li><a href="o-spolecnosti.html#kariera">Kariéra</a></li>
+            <li><a href="{KARIERA_HREF}">Kariéra</a></li>
           </ul>
-          <p class="footer-cta-wrap">{cta_btn()}</p>
+          <p class="footer-cta-wrap"><a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a></p>
         </section>
         <small>© 2026 AUSTIS Pozemní stavby s.r.o. · <a href="osobni-udaje.html">Informace o zpracování osobních údajů</a></small>
       </footer>
@@ -443,6 +512,10 @@ IN_PROGRESS = [
         "period": "květen 2025 – listopad 2027",
         "role": "Generální dodavatel",
         "status": "V realizaci",
+        "photo": PHOTO["seibert"],
+        "w": 1000,
+        "h": 750,
+        "small": True,
     },
     {
         "id": "roztoky",
@@ -453,6 +526,10 @@ IN_PROGRESS = [
         "period": "říjen 2025 – prosinec 2026",
         "role": "Generální dodavatel",
         "status": "V realizaci",
+        "photo": PHOTO["roztoky"],
+        "w": 544,
+        "h": 302,
+        "small": True,
     },
 ]
 
@@ -477,6 +554,10 @@ DONE = [
         "desc": "Úpravy dispozic, technologií, fasád, střech a zpevněných ploch.",
         "place": "Příbram",
         "period": "březen 2024 – červenec 2025",
+        "photo": PHOTO["pribram"],
+        "w": 800,
+        "h": 533,
+        "small": True,
     },
     {
         "id": "tmobile-strecha",
@@ -491,6 +572,10 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – květen 2023",
+        "photo": PHOTO["liberec_2"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
     },
     {
         "id": "liberec-b",
@@ -498,7 +583,10 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – prosinec 2023",
-        "photo": HERO_IMG,
+        "photo": PHOTO["liberec_1"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
         "status": "Dokončeno",
     },
     {
@@ -507,6 +595,10 @@ DONE = [
         "desc": "Výstavba výrobně administrativní a skladové haly s infrastrukturou.",
         "place": "Liberec – Doubí",
         "period": "duben 2021 – listopad 2021",
+        "photo": PHOTO["liberec_3"],
+        "w": 1000,
+        "h": 749,
+        "small": True,
     },
     {
         "id": "kostelec",
@@ -535,6 +627,10 @@ DONE = [
         "desc": "Rekonstrukce obchodního centra včetně eskalátoru, sociálního zázemí a fasády.",
         "place": "Praha 4",
         "period": "srpen 2020 – prosinec 2020",
+        "photo": PHOTO["novodvorska"],
+        "w": 544,
+        "h": 725,
+        "small": True,
     },
     {
         "id": "olympia-teplice",
@@ -551,6 +647,9 @@ DONE = [
         "period": "únor 2020 – duben 2021",
         "role": "Generální dodavatel",
         "status": "Dokončeno",
+        "photo": PHOTO["vranany"],
+        "w": 1920,
+        "h": 1080,
     },
     {
         "id": "botanicka",
@@ -558,6 +657,9 @@ DONE = [
         "desc": "Vybudování nového jižního vstupu do Botanické zahrady hl. m. Prahy.",
         "place": "Praha 7",
         "period": "červenec 2019 – červen 2020",
+        "photo": PHOTO["botanicka"],
+        "w": 1919,
+        "h": 1280,
     },
     {
         "id": "vinice",
@@ -565,6 +667,21 @@ DONE = [
         "desc": "Novostavba bytového domu.",
         "place": "Praha 7",
         "period": "červenec 2019 – červen 2020",
+        "photo": PHOTO["vinice"],
+        "w": 544,
+        "h": 264,
+        "small": True,
+    },
+    {
+        # TODO: not in the 23 Oct Word list. Photo exists in the approved set; no period/street in client brief.
+        "id": "hluckova",
+        "title": "Bytový dům Hlučkova",
+        "desc": "Novostavba bytového domu.",
+        "place": "Praha",
+        "photo": PHOTO["hluckova"],
+        "w": 909,
+        "h": 523,
+        "small": True,
     },
     {
         "id": "tmobile-opravy",
@@ -610,26 +727,105 @@ DONE = [
     },
 ]
 
+LIBEREC_SHOTS = [
+    {"src": PHOTO["liberec_1"], "alt": "Agrotechnology park Liberec hala B", "w": 1000, "h": 749},
+    {"src": PHOTO["liberec_2"], "alt": "Agrotechnology park Liberec hala C", "w": 1000, "h": 749},
+    {"src": PHOTO["liberec_3"], "alt": "Agrotechnology park Liberec hala A", "w": 1000, "h": 749},
+    {"src": PHOTO["liberec_4"], "alt": "Agrotechnology park Liberec", "w": 2400, "h": 1797},
+]
+
+
+def photo_alt(item):
+    return item["title"]
+
+
+def media_img(item):
+    dims = ""
+    if item.get("w") and item.get("h"):
+        dims = f' width="{item["w"]}" height="{item["h"]}"'
+    return f'<img src="{item["photo"]}" alt="{photo_alt(item)}"{dims} loading="lazy" decoding="async" />'
+
+
+def media_classes(item, base):
+    classes = [base]
+    if item.get("small"):
+        classes.append("is-small-slot")
+    return " ".join(classes)
+
+
+def gallery_shots(item):
+    if item.get("gallery"):
+        return item["gallery"]
+    if item["id"].startswith("liberec-"):
+        own = [shot for shot in LIBEREC_SHOTS if shot["src"] == item["photo"]]
+        rest = [shot for shot in LIBEREC_SHOTS if shot["src"] != item["photo"]]
+        return own + rest
+    if item.get("photo"):
+        return [{"src": item["photo"], "alt": photo_alt(item), "w": item.get("w"), "h": item.get("h")}]
+    return []
+
+
+def gallery_attr(item):
+    payload = json.dumps(gallery_shots(item), ensure_ascii=False).replace("&", "&amp;").replace("'", "&#39;")
+    return f"data-gallery='{payload}'"
+
+
+def gd_split(title, paragraphs, image, alt, flip=False, section_id=None, extra=""):
+    cls = "figure-split gd-split" + (" is-copy-right" if flip else "")
+    sid = f' id="{section_id}"' if section_id else ""
+    labelled = f' aria-labelledby="{section_id}-title"' if section_id else ""
+    title_id = f' id="{section_id}-title"' if section_id else ""
+    heading = f"<h2{title_id}>{title}</h2>" if title else ""
+    paras = "\n          ".join(f"<p>{p}</p>" for p in paragraphs)
+    return f"""      <section class="{cls}"{sid}{labelled}>
+        <div class="figure-split-copy">
+          {heading}
+          {paras}
+          {extra}
+        </div>
+        <figure>
+          <img src="{image}" alt="{alt}" loading="lazy" decoding="async" />
+        </figure>
+      </section>"""
+
+
+def photo_count_label(count):
+    if count <= 1:
+        return ""
+    if count < 5:
+        return f"{count} fotky"
+    return f"{count} fotek"
+
 
 def project_card(item, period_label=None):
     photo = item.get("photo")
+    shots = gallery_shots(item) if photo else []
+    count_label = photo_count_label(len(shots))
+    count_html = f'<span class="realizace-count">{count_label}</span>' if count_label else ""
     media = (
-        f'<div class="realizace-media"><img src="{photo}" alt="{item["title"]}" loading="lazy" decoding="async" /></div>'
+        f'<div class="{media_classes(item, "realizace-media")}">{media_img(item)}{count_html}</div>'
         if photo
         else '<div class="realizace-media is-empty" aria-hidden="true"></div>'
     )
-    role = f'<div><dt>Role</dt><dd>{item["role"]}</dd></div>' if item.get("role") else ""
-    label = period_label or item.get("period_label") or "Období realizace"
-    return f"""        <article class="realizace-card" id="{item["id"]}">
+    meta_parts = [item.get("place") or ""]
+    if item.get("period"):
+        meta_parts.append(item["period"])
+    if item.get("role"):
+        meta_parts.append(item["role"])
+    meta = " · ".join(part for part in meta_parts if part)
+    extra = ""
+    if photo:
+        title_attr = html.escape(item["title"], quote=True)
+        extra = (
+            f' data-lightbox {gallery_attr(item)} tabindex="0" role="button" '
+            f'aria-label="{title_attr} – otevřít galerii"'
+        )
+    desc = f'\n            <p class="realizace-desc">{item["desc"]}</p>' if item.get("desc") else ""
+    return f"""        <article class="realizace-card" id="{item["id"]}"{extra}>
           {media}
           <div class="realizace-body">
-            <h3>{item["title"]}</h3>
-            <p>{item["desc"]}</p>
-            <dl>
-              <div><dt>Místo</dt><dd>{item["place"]}</dd></div>
-              <div><dt>{label}</dt><dd>{item["period"]}</dd></div>
-              {role}
-            </dl>
+            <h3 class="realizace-title">{item["title"]}</h3>{desc}
+            <p class="realizace-meta">{meta}</p>
           </div>
         </article>"""
 
@@ -637,12 +833,12 @@ def project_card(item, period_label=None):
 def picked_card(item, href):
     photo = item.get("photo")
     media = (
-        f'<img src="{photo}" alt="{item["title"]}" loading="lazy" decoding="async" />'
+        f'<div class="{media_classes(item, "picked-media")}">{media_img(item)}</div>'
         if photo
-        else '<div class="picked-empty" aria-hidden="true"></div>'
+        else '<div class="picked-media"><div class="picked-empty" aria-hidden="true"></div></div>'
     )
     return f"""            <article class="picked-card">
-              <div class="picked-media">{media}</div>
+              {media}
               <div class="picked-body">
                 <h3>{item["title"]}</h3>
                 <p>{item["desc"]}</p>
@@ -683,7 +879,7 @@ FAQ = [
     ),
     (
         "Zajímá vás práce u nás",
-        "Aktuální pozice najdete v části Kariéra na stránce O společnosti. Životopis nebo stručné představení můžete poslat na rada@austis.cz.",
+        f"Aktuální pozice najdete v části Kariéra na stránce O společnosti. Životopis nebo stručné představení můžete poslat na {CAREER_EMAIL}.",
     ),
 ]
 
@@ -716,7 +912,6 @@ def render_index():
     prodlouzena = next(p for p in IN_PROGRESS if p["id"] == "prodlouzena")
     vranany = next(p for p in DONE if p["id"] == "vranany")
     liberec_b = next(p for p in DONE if p["id"] == "liberec-b")
-    extra = '<a class="btn btn-red hero-inline-cta" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>'
     html = head(
         "AUSTIS Pozemní stavby | Generální dodávky novostaveb a rekonstrukcí",
         "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov.",
@@ -727,15 +922,11 @@ def render_index():
         "AUSTIS Pozemní stavby",
         "Agrotechnology park Liberec",
         "Generální dodávky novostaveb a rekonstrukcí",
-        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov. Zaměřujeme se na generální dodávky novostaveb a rekonstrukcí většího rozsahu. Naše zkušenosti představují dokončené i právě probíhající realizace.",
+        "Realizujeme rezidenční, komerční a provozní objekty pro developery, investory a provozovatele budov.",
         "#vybrane-realizace",
         "Prohlédnout realizace",
         "Prohlédnout<br />realizace",
-        extra,
-    )
-    start = start.replace(
-        'class="subpage-body flow-subpage home-page"',
-        'class="home-page flow-subpage subpage-body"',
+        home=True,
     )
     body = f"""
       <section id="co-zajistime" class="trio flow-first" aria-labelledby="zajistime-title">
@@ -765,7 +956,7 @@ def render_index():
 {picked_card(vranany, "projekty.html#vranany")}
 {picked_card(liberec_b, "projekty.html#liberec-b")}
         </div>
-        <a class="btn btn-dark picked-all" href="projekty.html"><span class="btn-label">Všechny realizace</span></a>
+        <p class="picked-more"><a class="austis-intro-more" href="projekty.html">Všechny realizace</a></p>
       </section>
 
       <section id="spoluprace" class="contact-steps-section" aria-labelledby="spoluprace-title">
@@ -813,8 +1004,8 @@ def render_index():
         </div>
         <div class="about-teaser-career" id="kariera-teaser">
           <h2>Kariéra</h2>
-          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu. Zajímá vás práce na stavebních projektech? Podívejte se na aktuální pozice a napište nám.</p>
-          <p><a class="text-link" href="o-spolecnosti.html#kariera">Volné pozice</a></p>
+          <p>Rozšiřujeme tým. Hledáme kolegy pro vedení staveb a výrobní přípravu. Zajímá vás práce na stavebních projektech? Podívejte se na aktuální pozice a napište nám na {CAREER_EMAIL}.</p>
+          <p><a class="text-link" href="{KARIERA_HREF}">Volné pozice</a></p>
         </div>
       </section>
 
@@ -871,8 +1062,97 @@ def render_sluzby():
         "přehled služeb",
         "přehled<br />služeb",
     )
-    body = """
-      <section id="prehled-sluzeb" class="trio flow-first" aria-labelledby="sp-overview-title">
+    gd_cta = (
+        '<a class="btn btn-red" href="poptavka.html#poptavka-form">'
+        '<span class="btn-label">Poptat generální dodávku</span></a>'
+    )
+    gd_rows = "\n".join(
+        [
+            gd_split(
+                "Generální dodávka",
+                [
+                    "Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory.",
+                    "Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.",
+                ],
+                PHOTO["botanicka"],
+                "Jižní vstup do Botanické zahrady",
+                section_id="generalni-dodavka",
+            ),
+            gd_split(
+                "Příprava a plánování.",
+                [
+                    "Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací.",
+                    "Připravíme postup realizace, harmonogram a rozpočet.",
+                ],
+                PHOTO["seibert"],
+                "Chata Seibert",
+                flip=True,
+            ),
+            gd_split(
+                "Výběr a koordinace subdodavatelů.",
+                [
+                    "Pracujeme se stabilní sítí prověřených firem.",
+                    "Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.",
+                ],
+                PHOTO["liberec_1"],
+                "Agrotechnology park Liberec hala B",
+            ),
+            gd_split(
+                "Řízení harmonogramu.",
+                [
+                    "Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací.",
+                    "Sledujeme klíčové milníky a průběžně vyhodnocujeme postup.",
+                    "Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.",
+                ],
+                PHOTO["pribram"],
+                "Retail Park Příbram",
+                flip=True,
+            ),
+            gd_split(
+                "Kontrola nákladů a změn.",
+                [
+                    "Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas.",
+                    "Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením.",
+                    "Investor tak dostává podklady pro rozhodování během stavby.",
+                ],
+                PHOTO["liberec_2"],
+                "Agrotechnology park Liberec hala C",
+            ),
+            gd_split(
+                "Kontrola kvality.",
+                [
+                    "Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním.",
+                    "Odpovídáme za kvalitu sjednané dodávky.",
+                ],
+                PHOTO["roztoky"],
+                "Rodinný dům Roztoky",
+                flip=True,
+            ),
+            gd_split(
+                "Informování investora.",
+                [
+                    "V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích.",
+                    "Upozorňujeme na otázky, které vyžadují rozhodnutí investora.",
+                    "Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.",
+                ],
+                PHOTO["vinice"],
+                "Bytový dům U Vinice",
+            ),
+            gd_split(
+                "Dokončení a předání.",
+                [
+                    "Předáme dokončené dílo.",
+                    "Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.",
+                ],
+                PHOTO["vranany"],
+                "Vraňany Farma Hanč",
+                flip=True,
+                extra=gd_cta,
+            ),
+        ]
+    )
+    body = f"""
+      <section id="prehled-sluzeb" class="about-prose services-intro flow-first" aria-labelledby="sp-overview-title">
         <h2 id="sp-overview-title">Služby pro novostavby a rekonstrukce</h2>
         <p>
           <a class="text-link" href="#generalni-dodavka">Generální dodávka</a>
@@ -881,38 +1161,21 @@ def render_sluzby():
         </p>
       </section>
 
-      <section id="generalni-dodavka" class="figure-split is-text-only" aria-labelledby="sp-detail-1-title">
-        <div class="figure-split-copy">
-          <h2 id="sp-detail-1-title">Generální dodávka</h2>
-          <p>Zajišťujeme generální dodávky novostaveb a rekonstrukcí pro developery a investory. Konkrétní rozsah dodávky a podmínky realizace sjednáváme podle projektové dokumentace a zadání investora.</p>
-          <ul class="line-list">
-            <li><strong>Příprava a plánování.</strong> Projdeme zadání a dostupnou projektovou dokumentaci, posoudíme podmínky místa a upřesníme rozsah prací. Připravíme postup realizace, harmonogram a rozpočet.</li>
-            <li><strong>Výběr a koordinace subdodavatelů.</strong> Pracujeme se stabilní sítí prověřených firem. Pro každou stavbu vybíráme dodavatele jednotlivých profesí, organizujeme návaznost prací na stavbě a zajišťujeme jejich vzájemnou součinnost.</li>
-            <li><strong>Řízení harmonogramu.</strong> Harmonogram sestavujeme podle požadavků projektu, dodávek materiálů a návaznosti prací. Sledujeme klíčové milníky a průběžně vyhodnocujeme postup. Pokud se podmínky změní, projednáme potřebnou úpravu plánu a její dopad na další fáze realizace.</li>
-            <li><strong>Kontrola nákladů a změn.</strong> Rozpočet sledujeme průběžně a na odchylky upozorňujeme včas. Změny a jejich dopad na cenu, rozsah nebo termín projednáváme před jejich provedením. Investor tak dostává podklady pro rozhodování během stavby.</li>
-            <li><strong>Kontrola kvality.</strong> Kontrolujeme provedené práce a jejich soulad s projektovým a smluvním zadáním. Odpovídáme za kvalitu sjednané dodávky.</li>
-            <li><strong>Informování investora.</strong> V pravidelných přehledech předáváme informace o rozpracovanosti, čerpání rozpočtu a rizicích. Upozorňujeme na otázky, které vyžadují rozhodnutí investora. Formu a četnost informování nastavíme na začátku spolupráce podle potřeb zakázky.</li>
-            <li><strong>Dokončení a předání.</strong> Předáme dokončené dílo. Rozsah součinnosti při kolaudaci a navazujících činnostech vychází ze smluvního zadání.</li>
-          </ul>
-          <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat generální dodávku</span></a>
-        </div>
-      </section>
+{gd_rows}
 
-      <section id="pozemni-stavby" class="figure-split is-text-only" aria-labelledby="sp-detail-2-title">
-        <div class="figure-split-copy">
-          <h2 id="sp-detail-2-title">Pozemní stavby</h2>
-          <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
-          <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
-          <h3>Typy staveb a souvisejících prací</h3>
-          <ul class="line-list">
-            <li>Rezidenční objekty a bytové domy.</li>
-            <li>Komerční a administrativní budovy.</li>
-            <li>Provozní a zemědělské areály.</li>
-            <li>Technická zařízení budov.</li>
-            <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
-          </ul>
-          <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
-        </div>
+      <section id="pozemni-stavby" class="about-prose services-panel" aria-labelledby="sp-detail-2-title">
+        <h2 id="sp-detail-2-title">Pozemní stavby</h2>
+        <p>Realizujeme novostavby a rekonstrukce rezidenčních, komerčních a provozních objektů. Dodávka může zahrnovat celý stavební projekt od zemních prací a hrubé stavby přes technická zařízení budov až po dokončovací práce a předání.</p>
+        <p>Rozsah díla vychází z projektové dokumentace a sjednaného zadání.</p>
+        <h3>Typy staveb a souvisejících prací</h3>
+        <ul class="line-list">
+          <li>Rezidenční objekty a bytové domy.</li>
+          <li>Komerční a administrativní budovy.</li>
+          <li>Provozní a zemědělské areály.</li>
+          <li>Technická zařízení budov.</li>
+          <li>Inženýrské sítě a venkovní zpevněné plochy.</li>
+        </ul>
+        <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat pozemní stavbu</span></a>
       </section>
 
       <section class="austis-cta" aria-labelledby="sluzby-cta-title">
@@ -967,6 +1230,18 @@ def render_projekty():
         </div>
         <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
       </section>
+
+      <dialog class="lightbox" id="lightbox" aria-label="Galerie realizace">
+        <div class="lightbox-backdrop" data-lightbox-close="true"></div>
+        <figure class="lightbox-stage">
+          <img class="lightbox-img" alt="" />
+          <figcaption class="lightbox-caption"></figcaption>
+        </figure>
+        <button type="button" class="lightbox-close" data-lightbox-close="true" aria-label="Zavřít">&times;</button>
+        <button type="button" class="lightbox-nav lightbox-prev" data-lightbox-prev aria-label="Předchozí">‹</button>
+        <button type="button" class="lightbox-nav lightbox-next" data-lightbox-next aria-label="Další">›</button>
+        <p class="lightbox-counter" aria-live="polite"></p>
+      </dialog>
 """
     write("projekty.html", html + start + body + page_end())
 
@@ -983,12 +1258,12 @@ def render_about():
         "AUSTIS o společnosti",
         "Agrotechnology park Liberec",
         "AUSTIS Pozemní stavby",
-        "AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS. Zaměřujeme se především na generální dodávky průmyslové, občanské a bytové výstavby na klíč. Našimi zákazníky jsou developeři, soukromí investoři, firmy i veřejní zadavatelé; spolupracujeme také s jejich pověřenými zástupci.",
+        "Generální dodávky novostaveb a rekonstrukcí.",
         "#o-spolecnosti",
         "více o společnosti",
         "více o<br />společnosti",
     )
-    body = """
+    body = f"""
       <section id="o-spolecnosti" class="about-prose flow-first" aria-labelledby="about-intro-title">
         <h2 id="about-intro-title">AUSTIS Pozemní stavby</h2>
         <p>AUSTIS Pozemní stavby s.r.o. je součástí skupiny AUSTIS. Zaměřujeme se především na generální dodávky průmyslové, občanské a bytové výstavby na klíč. Našimi zákazníky jsou developeři, soukromí investoři, firmy i veřejní zadavatelé; spolupracujeme také s jejich pověřenými zástupci.</p>
@@ -999,6 +1274,9 @@ def render_about():
         <h2 id="group-title">Zázemí skupiny AUSTIS</h2>
         <p>Společnost AUSTIS a.s. byla založena v roce 1990. Její činnost zahrnuje stavební chemii, stavební činnost a správu nemovitostí. Stavebním zakázkám se věnuje od roku 1996.</p>
         <p>S rozšířením těchto aktivit byly stavební a stavebně technické služby rozděleny mezi dceřiné společnosti AUSTIS Pozemní stavby s.r.o. a AUSTIS stavební s.r.o. AUSTIS Pozemní stavby se soustředí na generální dodávky stavebních projektů. AUSTIS stavební se specializuje na technický dozor stavebníka a koordinaci BOZP na staveništi.</p>
+        <figure class="hq-photo hq-photo-hero">
+          <img src="{HQ_HERO_PHOTO}" alt="Sídlo skupiny AUSTIS, K Austisu 680, Praha 5 – Slivenec" width="2560" height="1429" loading="lazy" decoding="async" />
+        </figure>
       </section>
 
       <section class="trio" aria-labelledby="who-title">
@@ -1046,8 +1324,8 @@ def render_about():
             <p>Příprava zakázek, rozpočtů, harmonogramů a podkladů pro navazující realizaci.</p>
           </article>
         </div>
-        <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:info@austis.cz">info@austis.cz</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
-        <a class="btn btn-red" href="mailto:info@austis.cz"><span class="btn-label">Mám zájem o práci</span></a>
+        <p>Zajímá vás některá z pozic? Pošlete nám na <a href="mailto:{CAREER_EMAIL}">{CAREER_EMAIL}</a> životopis nebo stručné představení a uveďte oblast svého zájmu. Domluvíme další kontakt a probereme náplň práce i podmínky spolupráce.</p>
+        <a class="btn btn-red" href="mailto:{CAREER_EMAIL}"><span class="btn-label">Napsat na info@austis.cz</span></a>
       </section>
 """
     write("o-spolecnosti.html", html + start + body + page_end())
@@ -1071,11 +1349,17 @@ def render_kontakt():
         "kontaktní<br />údaje",
     )
     faqs = "\n".join(
-        f"""          <details class="faq-item">
-            <summary>{q}</summary>
-            <p>{a}</p>
-          </details>"""
-        for q, a in FAQ
+        f"""          <div class="faq-item">
+            <h3>
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-{idx}" id="faq-btn-{idx}">
+                <span>{q}</span>
+              </button>
+            </h3>
+            <div class="faq-panel" id="faq-panel-{idx}" role="region" aria-labelledby="faq-btn-{idx}" hidden>
+              <p>{a}</p>
+            </div>
+          </div>"""
+        for idx, (q, a) in enumerate(FAQ, start=1)
     )
     body = f"""
       <section id="kontakt-udaje" class="contact-detail flow-first" aria-labelledby="contact-detail-title">
@@ -1097,6 +1381,9 @@ def render_kontakt():
             <a class="btn btn-red" href="poptavka.html#poptavka-form"><span class="btn-label">Poptat spolupráci</span></a>
           </div>
         </div>
+        <figure class="contact-hq is-small-slot">
+          <img src="{HQ_PHOTO}" alt="Sídlo skupiny AUSTIS, K Austisu 680, Praha 5 – Slivenec" width="693" height="517" loading="lazy" decoding="async" />
+        </figure>
       </section>
 
       <section id="spoluprace-kroky" class="contact-steps-section" aria-labelledby="contact-process-title">
@@ -1142,7 +1429,7 @@ def render_kontakt():
         <div class="faq-list">
 {faqs}
         </div>
-        <p class="section-follow"><a class="text-link" href="o-spolecnosti.html#kariera">Volné pozice</a></p>
+        <p class="section-follow"><a class="text-link" href="{KARIERA_HREF}">Volné pozice</a></p>
       </section>
 """
     write("kontakt.html", html + start + body + page_end())
@@ -1175,72 +1462,90 @@ def render_poptavka():
           <p>Pokud si nejste jistí výběrem služby nebo zatím nemáte všechny podklady, popište projekt vlastními slovy. Potřebné doplnění vyjasníme při prvním jednání.</p>
         </div>
 
-        <form class="inquiry-form" id="poptavka-form-el">
+        <form class="inquiry-form is-multistep" id="poptavka-form-el" novalidate>
           <p class="inquiry-status" role="status" hidden></p>
-          <div class="inquiry-form-row">
-            <div class="inquiry-field">
-              <label for="name">Jméno a příjmení</label>
-              <input type="text" id="name" name="name" autocomplete="name" required />
+          <ol class="inquiry-steps" aria-label="Kroky formuláře">
+            <li class="is-active"><button type="button" class="inquiry-step-btn" data-step-target="1" aria-current="step"><span>01</span> Typ a rozsah</button></li>
+            <li><button type="button" class="inquiry-step-btn" data-step-target="2"><span>02</span> Lokalita a termín</button></li>
+            <li><button type="button" class="inquiry-step-btn" data-step-target="3"><span>03</span> Kontakt</button></li>
+          </ol>
+          <fieldset class="inquiry-step is-active" data-step="1">
+            <legend>Typ a rozsah projektu</legend>
+            <div class="inquiry-form-row">
+              <div class="inquiry-field">
+                <label for="typ-realizace">Typ realizace</label>
+                <select id="typ-realizace" name="typ-realizace">
+                  <option value="">Vyberte typ realizace</option>
+                  <option value="novostavba">Novostavba</option>
+                  <option value="rekonstrukce">Rekonstrukce a revitalizace</option>
+                  <option value="nejsem-si-jisty">Nejsem si jistý</option>
+                </select>
+              </div>
+              <div class="inquiry-field">
+                <label for="typ-stavby">Typ stavby</label>
+                <select id="typ-stavby" name="typ-stavby">
+                  <option value="">Vyberte typ</option>
+                  <option value="bytovy-dum">Bytový dům nebo rezidenční soubor</option>
+                  <option value="komercni">Komerční nebo administrativní budova</option>
+                  <option value="prumysl">Průmyslový objekt</option>
+                  <option value="provozni">Provozní nebo zemědělský areál</option>
+                  <option value="rekreacni">Rekreační nebo ubytovací objekt</option>
+                  <option value="individualni">Individuální rezidenční projekt</option>
+                  <option value="jine">Jiné</option>
+                </select>
+              </div>
             </div>
-            <div class="inquiry-field">
-              <label for="company">Společnost</label>
-              <input type="text" id="company" name="company" autocomplete="organization" />
+          </fieldset>
+          <fieldset class="inquiry-step" data-step="2" hidden>
+            <legend>Lokalita, termín a podrobnosti</legend>
+            <div class="inquiry-field inquiry-field--full">
+              <label for="location">Lokalita</label>
+              <input type="text" id="location" name="location" aria-describedby="location-hint" />
+              <p class="inquiry-hint" id="location-hint">Město nebo kraj, ve kterém plánujete realizaci.</p>
             </div>
-          </div>
-          <div class="inquiry-form-row">
-            <div class="inquiry-field">
-              <label for="email">E-mail</label>
-              <input type="email" id="email" name="email" autocomplete="email" required />
+            <div class="inquiry-field inquiry-field--full">
+              <label for="termin">Předpokládaný termín</label>
+              <input type="text" id="termin" name="termin" aria-describedby="termin-hint" />
+              <p class="inquiry-hint" id="termin-hint">Uveďte plánované zahájení nebo dokončení. Pokud termín ještě neznáte, nechte pole prázdné.</p>
             </div>
-            <div class="inquiry-field">
-              <label for="phone">Telefon</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+            <div class="inquiry-field inquiry-field--full">
+              <label for="message">Popis projektu</label>
+              <textarea id="message" name="message" aria-describedby="message-hint" required></textarea>
+              <p class="inquiry-hint" id="message-hint">Popište plánované práce a jejich rozsah. Uveďte také, zda máte projektovou dokumentaci a v jaké fázi přípravy se projekt nachází.</p>
             </div>
-          </div>
-          <div class="inquiry-form-row">
-            <div class="inquiry-field">
-              <label for="typ-realizace">Typ realizace</label>
-              <select id="typ-realizace" name="typ-realizace">
-                <option value="">Vyberte typ realizace</option>
-                <option value="novostavba">Novostavba</option>
-                <option value="rekonstrukce">Rekonstrukce a revitalizace</option>
-                <option value="nejsem-si-jisty">Nejsem si jistý</option>
-              </select>
+          </fieldset>
+          <fieldset class="inquiry-step" data-step="3" hidden>
+            <legend>Kontakt a souhlas</legend>
+            <div class="inquiry-form-row">
+              <div class="inquiry-field">
+                <label for="name">Jméno a příjmení</label>
+                <input type="text" id="name" name="name" autocomplete="name" required />
+              </div>
+              <div class="inquiry-field">
+                <label for="company">Společnost</label>
+                <input type="text" id="company" name="company" autocomplete="organization" />
+              </div>
             </div>
-            <div class="inquiry-field">
-              <label for="typ-stavby">Typ stavby</label>
-              <select id="typ-stavby" name="typ-stavby">
-                <option value="">Vyberte typ</option>
-                <option value="bytovy-dum">Bytový dům nebo rezidenční soubor</option>
-                <option value="komercni">Komerční nebo administrativní budova</option>
-                <option value="prumysl">Průmyslový objekt</option>
-                <option value="provozni">Provozní nebo zemědělský areál</option>
-                <option value="rekreacni">Rekreační nebo ubytovací objekt</option>
-                <option value="individualni">Individuální rezidenční projekt</option>
-                <option value="jine">Jiné</option>
-              </select>
+            <div class="inquiry-form-row">
+              <div class="inquiry-field">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email" required />
+              </div>
+              <div class="inquiry-field">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" />
+              </div>
             </div>
+            <label class="inquiry-consent">
+              <input type="checkbox" name="consent" required />
+              <span>Souhlasím se zpracováním osobních údajů za účelem vyřízení poptávky. <a href="osobni-udaje.html">Informace o zpracování osobních údajů</a></span>
+            </label>
+          </fieldset>
+          <div class="inquiry-nav">
+            <button type="button" class="austis-intro-more inquiry-back" data-inquiry-back hidden>Zpět</button>
+            <button type="button" class="btn btn-red inquiry-next" data-inquiry-next><span class="btn-label">Pokračovat</span></button>
+            <button type="submit" class="btn btn-red inquiry-submit-btn" hidden><span class="btn-label">Odeslat poptávku</span></button>
           </div>
-          <div class="inquiry-field inquiry-field--full">
-            <label for="location">Lokalita</label>
-            <input type="text" id="location" name="location" aria-describedby="location-hint" />
-            <p class="inquiry-hint" id="location-hint">Město nebo kraj, ve kterém plánujete realizaci.</p>
-          </div>
-          <div class="inquiry-field inquiry-field--full">
-            <label for="termin">Předpokládaný termín</label>
-            <input type="text" id="termin" name="termin" aria-describedby="termin-hint" />
-            <p class="inquiry-hint" id="termin-hint">Uveďte plánované zahájení nebo dokončení. Pokud termín ještě neznáte, nechte pole prázdné.</p>
-          </div>
-          <div class="inquiry-field inquiry-field--full">
-            <label for="message">Popis projektu</label>
-            <textarea id="message" name="message" aria-describedby="message-hint" required></textarea>
-            <p class="inquiry-hint" id="message-hint">Popište plánované práce a jejich rozsah. Uveďte také, zda máte projektovou dokumentaci a v jaké fázi přípravy se projekt nachází.</p>
-          </div>
-          <label class="inquiry-consent">
-            <input type="checkbox" name="consent" required />
-            <span>Souhlasím se zpracováním osobních údajů za účelem vyřízení poptávky. <a href="osobni-udaje.html">Informace o zpracování osobních údajů</a></span>
-          </label>
-          <button type="submit" class="btn btn-red"><span class="btn-label">Odeslat poptávku</span></button>
         </form>
 
         <aside class="inquiry-aside">
@@ -1268,7 +1573,7 @@ def render_privacy():
         "AUSTIS informace o zpracování osobních údajů",
         "Agrotechnology park Liberec",
         "Informace o zpracování osobních údajů",
-        "Text informací o zpracování osobních údajů provozovatel dosud nedodal.",
+        "Kdo je správcem osobních údajů a jak nás můžete kontaktovat.",
         "#osobni-udaje",
         "k textu",
         "k textu",
@@ -1276,8 +1581,37 @@ def render_privacy():
     body = f"""
       <section id="osobni-udaje" class="about-prose flow-first" aria-labelledby="privacy-title">
         <h2 id="privacy-title">Informace o zpracování osobních údajů</h2>
-        <p>Text informací o zpracování osobních údajů provozovatel dosud nedodal. Doplníme jej po dodání od odpovědné osoby.</p>
-        <p>Poptávky zatím posílejte na <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        <p>Tyto informace se týkají zpracování osobních údajů návštěvníků webu a osob, které nás kontaktují. Kde níže chybí údaj od provozovatele, je to výslovně označeno jako TODO.</p>
+
+        <h3>Správce osobních údajů</h3>
+        <p>Správcem je <strong>AUSTIS Pozemní stavby s.r.o.</strong>, IČ {ICO}, se sídlem K Austisu 680, 154 00 Praha 5 – Slivenec.</p>
+        <p>Kontakt: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        <p>TODO: jméno a kontakt pověřence pro ochranu osobních údajů, pokud je jmenován.</p>
+
+        <h3>Účely zpracování</h3>
+        <p>TODO: potvrdit účely. Na webu je formulář poptávky a e-mail {EMAIL}; zpracování údajů z poptávek a korespondence je zřejmým účelem, rozsah a další účely (newsletter, cookies, statistiky, kamerový systém sídla) provozovatel nedodal.</p>
+
+        <h3>Právní základy</h3>
+        <p>TODO: právní základy podle čl. 6 GDPR (smlouva / jednání o smlouvě, oprávněný zájem, souhlas, právní povinnost) provozovatel nedodal.</p>
+
+        <h3>Kategorie osobních údajů</h3>
+        <p>TODO: přesný výčet. Formulář poptávky sbírá jméno, společnost, e-mail, telefon, popis projektu a souhlas se zpracováním za účelem vyřízení poptávky. Další kategorie provozovatel nedodal.</p>
+
+        <h3>Příjemci a zpracovatelé</h3>
+        <p>TODO: seznam příjemců a zpracovatelů (hosting, e-mail, analytika) provozovatel nedodal.</p>
+
+        <h3>Doba uchování</h3>
+        <p>TODO: doby uchování jednotlivých kategorií údajů provozovatel nedodal.</p>
+
+        <h3>Předání mimo EU</h3>
+        <p>TODO: zda dochází k předání osobních údajů mimo Evropskou unii / Evropský hospodářský prostor, provozovatel nedodal.</p>
+
+        <h3>Práva subjektů údajů</h3>
+        <p>Podle nařízení GDPR můžete požádat o přístup k osobním údajům, jejich opravu nebo výmaz, omezení zpracování, vznést námitku a uplatnit právo na přenositelnost. Stížnost můžete podat u Úřadu pro ochranu osobních údajů.</p>
+        <p>TODO: postup vyřizování žádostí u společnosti (lhůty nad rámec zákona, formulář, interní kontaktní osoba).</p>
+
+        <h3>Cookies a měření webu</h3>
+        <p>TODO: zda web používá cookies nebo měřicí nástroje a na jakém právním základě, provozovatel nedodal.</p>
       </section>
 """
     write("osobni-udaje.html", html + start + body + page_end())
