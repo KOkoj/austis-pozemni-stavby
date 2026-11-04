@@ -12297,3 +12297,9 @@ html.has-media-parallax .realizace-media > img {
   align-self: flex-start;
   padding-bottom: 2px;
 }
+
+/* Všechny realizace aligned with card text */
+.picked-more {
+  margin-left: 32px;
+  margin-right: 32px;
+}
