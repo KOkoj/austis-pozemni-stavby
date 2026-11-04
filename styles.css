@@ -12287,3 +12287,7 @@ html.has-media-parallax .realizace-media > img {
 .picked-media {
   aspect-ratio: 16 / 9;
 }
+
+.picked-card .realizace-panel {
+  aspect-ratio: 16 / 9;
+}
