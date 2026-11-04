@@ -12209,3 +12209,9 @@ html.has-media-parallax .realizace-media > img {
     width: 100%; height: 100%; inset: 0; top: 0; left: 0; transform: none;
   }
 }
+
+/* contact-steps: bottom line */
+.contact-steps,
+.flow-subpage .contact-steps {
+  border-bottom: 1px solid rgba(30, 30, 30, 0.12);
+}
