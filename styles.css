@@ -9706,6 +9706,10 @@ img[src*="placeholder-blueprint.svg"],
   background: #fff;
 }
 
+.picked-card .realizace-panel {
+  width: 100%;
+}
+
 .picked-media {
   aspect-ratio: 4 / 3;
 }

@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_V = "20261104k"
+ASSET_V = "20261104m"
 # Hero may only use Liberec 4/5 from the approved set. Never use v4b-titulni-1.
 HERO_IMG = "assets/photos/agrotechnology-park-liberec-4.webp"
 PHOTO = {
@@ -899,11 +899,16 @@ def project_cards_html(items, use_item_period_label=False):
 
 def picked_card(item, href):
     photo = item.get("photo")
-    media = (
-        f'<div class="{media_classes(item, "picked-media")}">{media_img(item)}</div>'
-        if photo
-        else '<div class="picked-media"><div class="picked-empty" aria-hidden="true"></div></div>'
-    )
+    if photo:
+        media = (
+            f'<div class="{media_classes(item, "picked-media")}">{media_img(item)}</div>'
+        )
+    else:
+        initial = html.escape((item["title"][:1] or "").upper())
+        media = (
+            f'<div class="realizace-panel" aria-hidden="true">'
+            f'<span class="realizace-panel-mark">{initial}</span></div>'
+        )
     return f"""            <article class="picked-card">
               {media}
               <div class="picked-body">
