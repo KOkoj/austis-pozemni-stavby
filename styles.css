@@ -12606,4 +12606,7 @@ main .career-grid{margin:12px 0 28px}
 main .career-grid article{background:#f4f4f2;border-top:0;border-left:3px solid #9b1c2c;padding:28px!important}
 main .career-grid article h3{font-size:22px!important;margin:0 0 8px!important}
 main .career-block>.btn{justify-self:start;width:auto}
-@media(max-width:1024px){main .about-prose{grid-template-columns:1fr}main .about-prose>h2{position:static;grid-row:auto;margin-bottom:16px!important}main .about-prose>*:not(h2){grid-column:1}main .about-prose h2,main .trio>h2{font-size:30px!important}}
+@media(max-width:1024px){main .about-prose{grid-template-columns:1fr}main .about-prose>h2{position:static;grid-row:auto;margin-bottom:16px!important}main .about-prose>*:not(h2){grid-column:1}main .about-prose h2,main .trio>h2{font-size:30px!important}}@media(min-width:1025px){main .about-prose:has(> .hq-photo-hero){grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr)!important}
+main .about-prose:has(> .hq-photo-hero)>p,main .about-prose:has(> .hq-photo-hero)>.hq-photo-hero{grid-column:2!important;grid-row:auto!important}
+main .about-prose:has(> .hq-photo-hero)>.hq-photo-hero{margin-top:16px}
+main .about-prose.flow-first>p{grid-column:1/-1!important;max-width:68ch;font-size:22px!important;line-height:1.5}}
