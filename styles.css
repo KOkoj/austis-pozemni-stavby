@@ -12610,3 +12610,27 @@ main .career-block>.btn{justify-self:start;width:auto}
 main .about-prose:has(> .hq-photo-hero)>p,main .about-prose:has(> .hq-photo-hero)>.hq-photo-hero{grid-column:2!important;grid-row:auto!important}
 main .about-prose:has(> .hq-photo-hero)>.hq-photo-hero{margin-top:16px}
 main .about-prose.flow-first>p{grid-column:1/-1!important;max-width:68ch;font-size:22px!important;line-height:1.5}}
+/* kontakt refresh */
+main .contact-detail{display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)!important;gap:64px!important;align-items:stretch}
+main .contact-detail-lead{display:flex;flex-direction:column;gap:20px}
+main .contact-detail-lead h2{margin:0 0 4px!important}
+main .contact-mail{background:none!important;color:#1e1e1e!important;padding:0!important;border:0!important;display:flex;flex-direction:column;gap:4px;text-decoration:none}
+main .contact-mail-label{font-size:16px!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important;color:#76777a!important}
+main .contact-mail-value{font-size:30px!important;font-weight:500;color:#1e1e1e!important;border-bottom:1px solid currentColor;align-self:flex-start;line-height:1.3}
+main .contact-mail:hover .contact-mail-value{color:#9b1c2c!important}
+main .contact-address p,main .contact-ids{font-size:18px!important;font-weight:400!important;line-height:1.55;margin:0}
+main .contact-actions{display:flex!important;flex-wrap:wrap;align-items:center;gap:28px!important;margin-top:8px}
+.contact-textlink{font-size:16px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:#1e1e1e;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.contact-textlink:hover{color:#9b1c2c}
+main .contact-actions .btn-red{order:-1}
+main .contact-hq{width:100%!important;max-width:none!important;height:100%;min-height:320px;margin:0!important}
+main .contact-hq img{width:100%!important;height:100%!important;object-fit:cover}
+main .contact-steps{gap:0!important}
+main .contact-steps li{padding:28px 28px 32px!important}
+main .contact-steps h3{font-size:20px!important;font-weight:600!important;margin:16px 0 10px!important;line-height:1.3}
+main .contact-steps p{font-size:16px!important;line-height:1.6!important;font-weight:400!important}
+main .faq-trigger,main .faq-trigger span{font-size:20px!important;font-weight:500!important}
+main .faq-trigger{padding-top:20px!important;padding-bottom:20px!important}
+main .faq-panel p{font-size:18px!important;font-weight:400!important;line-height:1.6!important;max-width:68ch}
+main .faq-more{margin-top:12px!important}
+@media(max-width:1024px){main .contact-detail{grid-template-columns:1fr!important;gap:32px!important}main .contact-mail-value{font-size:24px!important}main .contact-hq{min-height:220px}main .faq-trigger,main .faq-trigger span{font-size:18px!important}}
