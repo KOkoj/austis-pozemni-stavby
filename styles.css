@@ -12329,3 +12329,7 @@ html.has-media-parallax .realizace-media > img {
 .service-row-body p + p {
   margin-top: 14px;
 }
+
+.service-row-body p + p {
+  margin-top: 0;
+}
