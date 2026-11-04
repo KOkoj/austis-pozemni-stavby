@@ -12577,3 +12577,4 @@ footer small {
 .sv-type::before{inset:-1px!important;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 80%)!important}
 .sv-type,.sv-type *{font-size:22px!important;font-weight:600!important;line-height:1.3!important;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 @media(max-width:1024px){.sv-type,.sv-type *{font-size:19px!important}.sv-type{min-height:180px}}
+.sv-type *{max-width:none!important}
