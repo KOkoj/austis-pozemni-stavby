@@ -1397,7 +1397,6 @@
     { title: "O společnosti", hint: "Skupina AUSTIS", href: "o-spolecnosti.html", keywords: "spolecnost skupina austis zázemí" },
     { title: "Kariéra", hint: "info@austis.cz", href: "o-spolecnosti.html#kariera", keywords: "kariera prace pozice stavbyvedouci info@austis.cz" },
     { title: "Kontakt", hint: "zakazky@austis.cz", href: "kontakt.html", keywords: "adresa telefon email slivenec zakazky" },
-    { title: "Časté otázky", hint: "Konzultace, nabídka, regiony", href: "kontakt.html#faq", keywords: "faq otazky caste" },
     { title: "Poptat spolupráci", hint: "Formulář poptávky", href: "poptavka.html#poptavka-form", keywords: "poptavka formular nabidka" },
   ].map((item) => ({ ...item, haystack: foldSearchText(`${item.title} ${item.hint} ${item.keywords}`) }));
 
@@ -1810,32 +1809,6 @@
     panel.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") setOpen(false);
-    });
-  }
-
-  function initFaq() {
-    const items = Array.from(document.querySelectorAll(".faq-item"));
-    if (!items.length) {
-      return;
-    }
-
-    items.forEach((item) => {
-      const trigger = item.querySelector(".faq-trigger");
-      const panel = item.querySelector(".faq-panel");
-      if (!trigger || !panel) {
-        return;
-      }
-
-      const setOpen = (open) => {
-        item.classList.toggle("is-open", open);
-        trigger.setAttribute("aria-expanded", open ? "true" : "false");
-        panel.toggleAttribute("hidden", !open);
-        panel.setAttribute("aria-hidden", open ? "false" : "true");
-      };
-
-      trigger.addEventListener("click", () => {
-        setOpen(!item.classList.contains("is-open"));
-      });
     });
   }
 
@@ -2314,7 +2287,6 @@
   initSmoothScroll();
   initMobileMenu();
   initSiteSearch();
-  initFaq();
   initInquiryForm();
   initHeroParallax();
   initMediaParallax();
