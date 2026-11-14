@@ -12635,3 +12635,62 @@ main .faq-panel p{font-size:18px!important;font-weight:400!important;line-height
 main .faq-more{margin-top:12px!important}
 @media(max-width:1024px){main .contact-detail{grid-template-columns:1fr!important;gap:32px!important}main .contact-mail-value{font-size:24px!important}main .contact-hq{min-height:220px}main .faq-trigger,main .faq-trigger span{font-size:18px!important}}
 .field-optional{font-weight:400;color:#6b6e70;font-size:16px}
+
+/* === Vizuální polish 14. 11. (jen layout, žádné texty) === */
+
+/* Karty vybraných realizací, tlačítko a první krok zarovnat na levou hranu nadpisů sekcí */
+.picked-body { padding-inline: var(--flow-pad-x); }
+.picked-more { margin-inline: var(--flow-pad-x); }
+@media (min-width: 1025px) {
+  main .contact-steps li:first-child { padding-left: var(--flow-pad-x) !important; }
+}
+@media (max-width: 1024px) {
+  main .contact-steps li { padding-inline: var(--flow-pad-x) !important; }
+}
+
+/* První sekce pod hero: stejné horní odsazení jako ostatní karty (hlavička ji nepřekrývá) */
+@media (max-width: 1024px) {
+  .flow-subpage .subpage-site > .flow-first,
+  .inquiry-section,
+  .contact-detail,
+  .services-intro,
+  .about-prose.flow-first,
+  .realizace-group.flow-first,
+  .trio.flow-first {
+    padding-top: var(--flow-pad-y);
+  }
+
+  /* Kontakt a poptávka: vnitřní blok má vlastní horní odsazení, neskládat dvě na sebe */
+  .flow-subpage .subpage-site > .contact-detail,
+  .flow-subpage .subpage-site > .inquiry-section,
+  .flow-subpage .contact-detail,
+  .flow-subpage .inquiry-section { padding-top: 0; }
+
+  /* Jednosloupcové kroky: čitelná délka řádku */
+  .contact-steps li p,
+  .sv-step p,
+  .trio-grid p { max-width: 64ch; }
+}
+
+/* Tablet: fotky realizací a typy staveb ve dvou sloupcích místo přerostlých jednosloupcových dlaždic */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .picked-grid,
+  .sv-types { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .sv-types .sv-type-5 { grid-column: 1 / -1; }
+}
+
+/* Mobil: užší vnitřní okraj karet, text se neláme do úzkého sloupce */
+@media (max-width: 640px) {
+  .flow-subpage { --flow-pad-x: 20px; }
+  main .contact-hq { padding-inline: var(--flow-pad-x); }
+}
+
+/* Poptávka: osamocené pole na celou šířku řádku jako pole pod ním */
+.inquiry-form-row .inquiry-field:has(#typ-realizace) { grid-column: 1 / -1; }
+
+/* Realizace: portrétní fotka OC Novodvorská ukáže průčelí s nápisem */
+.realizace-media img[src*="oc-novodvorska-1"] { object-position: 50% 12%; }
+
+/* Typografie: vyvážené nadpisy, odstavce bez sirotků */
+h1, h2, h3 { text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
