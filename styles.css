@@ -12694,3 +12694,47 @@ main .faq-more{margin-top:12px!important}
 /* Typografie: vyvážené nadpisy, odstavce bez sirotků */
 h1, h2, h3 { text-wrap: balance; }
 p, li, dd { text-wrap: pretty; }
+
+/* Mobil: Služby ve stejné šířce jako karty na ostatních stránkách, bez zdvojeného horního odsazení */
+@media (max-width: 640px) {
+  html body main > .sv-block {
+    width: calc(100% - 32px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0 !important;
+  }
+
+  /* Patička na stejné levé hraně jako obsah karet (16 + 20 px) */
+  html body .footer.site-footer {
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+  }
+
+  /* Patička: text ve velikosti běžného odstavce, IČ a DIČ na jednom řádku */
+  html body .footer.site-footer p { font-size: 17px; }
+
+  /* Poptávka: menší mezera mezi úvodem a kroky formuláře */
+  .inquiry-lead > p:last-child { margin-bottom: 0; }
+  .inquiry-section .inquiry-lead { padding-bottom: 12px; }
+
+  /* Dlouhá tlačítka: dvouřádkový popisek s rozumným řádkováním a výplní */
+  .sv-aside .btn,
+  .inquiry-form .btn {
+    height: auto;
+    min-height: 47px;
+    padding: 12px 20px;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+}
+
+/* Poptávka: odstup nadpisu kroku od prvního pole */
+.inquiry-step legend { margin-bottom: 16px; }
+
+/* Poptávka: formulář na stejné levé hraně jako úvodní text */
+@media (min-width: 1025px) {
+  .inquiry-section .inquiry-form.is-multistep {
+    padding-left: var(--flow-pad-x, var(--content-pad-x));
+    padding-right: var(--flow-pad-x, var(--content-pad-x));
+  }
+}
