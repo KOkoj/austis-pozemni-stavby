@@ -12738,3 +12738,43 @@ p, li, dd { text-wrap: pretty; }
     padding-right: var(--flow-pad-x, var(--content-pad-x));
   }
 }
+
+/* --- Fable visual review 16.11.2026 --- */
+/* Fable visual review 16.11.2026: first-load hero must not sit at mid-animation opacity. */
+.hero-bg-stack .hero-bg-still.is-settled,
+.hero-bg-still.is-settled {
+  animation: none;
+  opacity: 1;
+  transform: scale(1);
+  transition: none;
+}
+/* Fable visual review 16.11.2026: shorter subpage heroes (not homepages).
+   Keep the title panel at the bottom of a shorter photo window; do not float it mid-photo. */
+.austis-page:not(.austis-stavebni-home):not(.austis-home):not(.home-page) {
+  --hero-screen-height: 520px;
+  --hero-panel-height: 156px;
+  --hero-tail-visual: 48px;
+}
+.austis-page:not(.austis-stavebni-home):not(.austis-home):not(.home-page) .desktop-shell {
+  height: calc(var(--artboard-height) * var(--scale));
+}
+/* Fable visual review 16.11.2026: realizace without a photo must not render as an empty dark box. */
+.realizace-card.is-text {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: transparent;
+  box-shadow: none;
+  border-top: 1px solid rgba(30, 30, 30, 0.14);
+  padding: 18px 0 16px;
+  overflow: visible;
+  height: auto;
+  min-height: 0;
+}
+.realizace-card.is-text .realizace-panel {
+  display: none;
+}
+.realizace-card.is-text .realizace-body {
+  padding: 0;
+}
