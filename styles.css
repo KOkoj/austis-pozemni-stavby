@@ -12748,12 +12748,15 @@ p, li, dd { text-wrap: pretty; }
   transform: scale(1);
   transition: none;
 }
-/* Fable visual review 16.11.2026: shorter photo window on subpages only (not homepages). */
+/* Fable visual review 16.11.2026: shorter subpage heroes (not homepages).
+   Keep the title panel at the bottom of a shorter photo window; do not float it mid-photo. */
 .austis-page:not(.austis-stavebni-home):not(.austis-home):not(.home-page) {
-  --hero-panel-top: calc(var(--header-offset) + 220px);
+  --hero-screen-height: 520px;
   --hero-panel-height: 156px;
-  --hero-overlay-height: calc(var(--hero-panel-bottom) + 36px);
-  --hero-bg-stack-height: calc(var(--hero-overlay-height) + var(--hero-bg-bleed));
+  --hero-tail-visual: 48px;
+}
+.austis-page:not(.austis-stavebni-home):not(.austis-home):not(.home-page) .desktop-shell {
+  height: calc(var(--artboard-height) * var(--scale));
 }
 /* Fable visual review 16.11.2026: realizace without a photo must not render as an empty dark box. */
 .realizace-card.is-text {
